@@ -1,0 +1,13 @@
+{% extends 'definition/edit_base.html' %}
+
+{% block primary_content_inner %}
+    {% block form %}
+      {{- h.snippet('definition/snippets/definition_form.html', c=c) -}}
+    {% endblock %}
+{% endblock %}
+
+{% block breadcrumb_content %}
+    {{ super() }}
+    <li></li>
+    <li class="active">{% link_for c.definition_dict.label|truncate(35), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read', definition_id=c.definition_dict.id, named_route='definition_read' %}</li>
+{% endblock %}

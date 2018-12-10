@@ -1,0 +1,11 @@
+{% extends "page.html" %}
+
+{% set pkg = c.pkg_dict or pkg_dict %}
+
+{% block breadcrumb_content_selected %} class="active"{% endblock %}
+
+{% block subtitle %}{{ _('Definitions') }}{% endblock %}
+
+{% block breadcrumb_content %}
+    <li>{% link_for _('Definitions'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='search' %}</li>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "definition/edit_base.html" %}
+
+{% block primary_content %}
+  <section class="module">
+    {% block page_header %}{% endblock %}
+    <div class="module-content">
+      {% block primary_content_inner %}
+        {% block form %}
+          {{- h.snippet('definition/snippets/definition_form.html', c=c) -}}
+        {% endblock %}
+      {% endblock %}
+    </div>
+  </section>
+{% endblock %}
+

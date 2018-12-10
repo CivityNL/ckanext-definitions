@@ -1,0 +1,18 @@
+{% import 'macros/form.html' as form %}
+
+{% block definition_basic_fields_label %}
+  {{ form.input('label', id='field-title', label=_('Label'), placeholder=_('eg. A descriptive label'), value=data.label, is_required=true, error=errors.label, classes=['control-full', 'control-large']) }}
+{% endblock %}
+
+{% block definition_basic_fields_description %}
+  {{ form.markdown('description', id='field-description', label=_('Description'), is_required=true, placeholder=_('eg. Some useful notes about the data'), value=data.description, error=errors.description) }}
+{% endblock %}
+
+{% block package_metadata_fields_url %}
+    {{ form.input('url', id='field-url', label=_('URL'), placeholder=_('http://denhaag.nl/definition-1'), value=data.url, error=errors.url, classes=['control-medium']) }}
+{% endblock %}
+
+{% block definition_basic_fields_enabled %}
+{{ form.select('enabled', id='field-enabled', label=_('Enabled'), options=[{'name':"True", 'value': True},{'name': "False", 'value': False}], selected=data['enabled'] if data['enabled'], error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-control"}, is_required=False) }}
+{% endblock %}
+

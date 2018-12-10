@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block header_site_search_label %}
+    {% if type=='definition' -%}
+        {{ _('Search Definitions') }}
+    {%- else %}
+        {{ _('Search Datasets') }}
+    {%- endif %}
+{% endblock %}

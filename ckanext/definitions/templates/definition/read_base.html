@@ -1,0 +1,41 @@
+{% extends "page.html" %}
+
+{% set definition_dict = c.definition_dict%}
+
+{% block subtitle %}{{ c.definition_dict.label }} - {{ _('Definition') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{% link_for _('Definitions'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='search', named_route='definition_search' %}</li>
+  <li class="active">{% link_for c.definition_dict.label|truncate(35), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read', definition_id=c.definition_dict.id, named_route='definition_read' %}</li>
+{% endblock %}
+
+{% block content_action %}
+  {% if h.check_access('organization_update', {'id': c.definition_dict.id}) %}
+    {% link_for _('Edit Definition'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='edit', definition_id=c.definition_dict.id, class_='btn', icon='wrench', named_route='definition_edit' %}
+  {% endif %}
+{% endblock %}
+
+{% block content_primary_nav %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% block info_module %}
+    <section class="module module-narrow module-shallow">
+      <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('What are definitions?') }}</h2>
+      <div class="module-content">
+        <p>
+          {% trans %}
+          Helping Text Explaining what are Definitions and how to use them.
+          {% endtrans %}
+        </p>
+      </div>
+    </section>
+  {% endblock %}
+
+  {% block organization_facets %}{% endblock %}
+{% endblock %}
+
+{% block links %}
+  {{ super() }}
+  {% include "organization/snippets/feeds.html" %}
+{% endblock %}

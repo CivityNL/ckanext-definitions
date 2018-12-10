@@ -1,0 +1,27 @@
+{#
+Displays a list of definitions.
+
+definitions    - A list of definitions to display.
+list_class     - The class name for the list item.
+item_class     - The class name to use on each item.
+hide_resources - If true hides the resources (default: false).
+banner         - If true displays a popular banner (default: false).
+truncate       - The length to trucate the description to (default: 180)
+truncate_title - The length to truncate the title to (default: 80).
+
+Example:
+
+  {% snippet 'snippets/package_list.html', packages=c.datasets %}
+
+#}
+{% block definition_list %}
+  {% if definitions %}
+    <ul class="{{ list_class or 'dataset-list unstyled' }}">
+    	{% block definition_list_inner %}
+	      {% for definition in definitions %}
+	        {% snippet 'snippets/definition_item.html', definition=definition %}
+	      {% endfor %}
+	    {% endblock %}
+    </ul>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{#
+Displays a single of definition.
+
+definition - A definition to display.
+
+Example:
+
+  {% snippet 'snippets/definition_item.html', definition=c.definition %}
+
+#}
+{% set title = definition.label%}
+{% set truncate_title = truncate_title or 80 %}
+{% set description = h.markdown_extract(definition.description) %}
+
+{% block definition_item %}
+  <li class="{{ item_class or "dataset-item" }}">
+    {% block content %}
+      <div class="dataset-content">
+        {% block heading %}
+          <h3 class="dataset-heading">
+            {% block heading_title %}
+              {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read', definition_id=definition.id)) }}
+            {% endblock %}
+          </h3>
+        {% endblock %}
+        {% block description %}
+          {{ description }}
+        {% endblock %}
+      </div>
+    {% endblock %}
+  </li>
+{% endblock %}
