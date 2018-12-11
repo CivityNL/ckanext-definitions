@@ -57,6 +57,14 @@ def definition_create(context, data_dict):
     result = dictization.table_dictize(definition, context)
     return result
 
+
+##############################################################
+##############################################################
+#  Data Officer
+##############################################################
+##############################################################
+
+
 def data_officer_create(context, data_dict):
     '''
     Makes a User into a Data Officer

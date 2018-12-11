@@ -1,7 +1,8 @@
 import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
-NotFound = logic.NotFound
 import logging
+
+NotFound = logic.NotFound
 log = logging.getLogger(__name__)
 
 
@@ -16,4 +17,4 @@ def data_officer_read(context, data_dict):
     '''
     Publicly available
     '''
-    return {'success': True}
+    return {'success': False}

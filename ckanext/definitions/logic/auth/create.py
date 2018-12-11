@@ -10,10 +10,7 @@ def definition_create(context, data_dict):
     '''
 
     _data_dict = {'user_id': context['user']}
-    log.info('_data_dict = {0}'.format(_data_dict))
     result = toolkit.h.is_data_officer(context, _data_dict)
-    log.info('result = {0}'.format(result))
-
     return {'success': result}
 
 

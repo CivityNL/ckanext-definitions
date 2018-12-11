@@ -1,9 +1,6 @@
 import ckan.lib.base as base
 import ckan.model as model
-import ckan.authz as authz
-import ckanext.user_extra.logic.action.get as get
 import logging
-import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.navl.dictization_functions as dict_fns
 from ckan.common import OrderedDict
@@ -13,8 +10,7 @@ from urllib import urlencode
 import ckan.lib.search as search
 import ckan.lib.helpers as h
 import ckan.plugins as plugins
-
-import ckanext.definitions.model.definition as definition_model
+from ckan.lib.alphabet_paginate import AlphaPage
 
 tuplize_dict = logic.tuplize_dict
 clean_dict = logic.clean_dict
@@ -23,19 +19,71 @@ parse_params = logic.parse_params
 log = logging.getLogger(__name__)
 abort = base.abort
 
+LIMIT = 25
+
 
 class DefinitionController(base.BaseController):
 
     def search(self):
-        '''Render this package's public activity stream page.'''
+        toolkit.c.q = toolkit.request.params.get('q', '')
+
+        context = {'model': model, 'session': model.Session,
+                   'user': toolkit.c.user, 'auth_user_obj': toolkit.c.userobj,
+                   'for_view': True}
+
+        data_dict = {'all_fields': True}
+
+        if toolkit.c.q:
+            page = toolkit.h.get_page_number(toolkit.request.params)
+            data_dict['q'] = toolkit.c.q
+            data_dict['limit'] = LIMIT
+            data_dict['offset'] = (page - 1) * LIMIT
+            data_dict['return_objects'] = True
+
+        results = logic.get_action('definition_list')(context, data_dict)
+
+        if toolkit.c.q:
+            toolkit.c.page = h.Page(
+                collection=results,
+                page=page,
+                item_count=len(results),
+                items_per_page=LIMIT
+            )
+            toolkit.c.page.items = results
+        else:
+            toolkit.c.page = AlphaPage(
+                collection=results,
+                page=toolkit.request.params.get('page', 'A'),
+                alpha_attribute='label',
+                other_text=toolkit._('Other'),
+            )
+
+        extra_vars = {
+            'page': toolkit.c.page,
+            'q': toolkit.c.q,
+            'results': results
+        }
+        log.info('results = {0}'.format(results))
+        log.info('toolkit.c.page = {0}'.format(toolkit.c.page))
+        log.info('collection = {0}'.format(toolkit.c.page.collection))
+
+        return toolkit.render('definition/index.html', extra_vars=extra_vars)
+
+    def index(self):
+        '''
+        Render this package's public activity stream page.
+        '''
 
         context = {'model': model, 'session': model.Session,
                    'user': toolkit.c.user, 'for_view': True,
                    'auth_user_obj': toolkit.c.userobj}
 
-        extra_vars = {}
-        extra_vars['definitions'] = toolkit.get_action('definition_list')(
-            context, {})
+        definitions = toolkit.get_action('definition_list')(context, {
+            'all_fields': True})
+        log.info(
+            'toolkit.get_action(definition_list) = {0}'.format(definitions))
+        extra_vars = {'definitions': definitions}
+
         return toolkit.render('definition/index.html', extra_vars=extra_vars)
 
     def dataset_definition(self, id):
@@ -72,7 +120,8 @@ class DefinitionController(base.BaseController):
             # be ignored and get requested on the controller anyway
             data_dict['include_datasets'] = False
 
-            toolkit.c.definition_dict = toolkit.get_action('definition_show')(context, data_dict)
+            toolkit.c.definition_dict = toolkit.get_action('definition_show')(
+                context, data_dict)
             # toolkit.c.definition = context['definition']
         except (toolkit.ObjectNotFound, toolkit.NotAuthorized):
             abort(404, toolkit._('Definition not found'))
@@ -82,7 +131,6 @@ class DefinitionController(base.BaseController):
 
     def _read(self, definition_id, limit):
         ''' This is common code used by both read and bulk_process'''
-
 
         context = {'model': model, 'session': model.Session,
                    'user': toolkit.c.user,
@@ -95,7 +143,8 @@ class DefinitionController(base.BaseController):
         fq = 'definition:"%s"' % toolkit.c.definition_dict.get('id')
 
         toolkit.c.description_formatted = \
-            toolkit.h.render_markdown(toolkit.c.definition_dict.get('description'))
+            toolkit.h.render_markdown(
+                toolkit.c.definition_dict.get('description'))
 
         context['return_query'] = True
 
@@ -109,24 +158,32 @@ class DefinitionController(base.BaseController):
         def search_url(params):
             controller = 'ckanext.definitions.controllers.definition:DefinitionController'
             action = 'bulk_process' if toolkit.c.action == 'bulk_process' else 'read'
-            url = toolkit.h.url_for(controller=controller, action=action, definition_id=definition_id)
+            url = toolkit.h.url_for(controller=controller, action=action,
+                                    definition_id=definition_id)
             params = [(k, v.encode('utf-8') if isinstance(v, string_types)
-                       else str(v)) for k, v in params]
+            else str(v)) for k, v in params]
             return url + u'?' + urlencode(params)
 
         def drill_down_url(**by):
             return toolkit.h.add_url_param(alternative_url=None,
-                                   controller='ckanext.definitions.controllers.definition:DefinitionController', action='read',
-                                   extras=dict(definition_id=toolkit.c.definition_dict.get('id')),
-                                   new_params=by)
+                                           controller='ckanext.definitions.controllers.definition:DefinitionController',
+                                           action='read',
+                                           extras=dict(
+                                               definition_id=toolkit.c.definition_dict.get(
+                                                   'id')),
+                                           new_params=by)
 
         toolkit.c.drill_down_url = drill_down_url
 
         def remove_field(key, value=None, replace=None):
             controller = 'ckanext.definitions.controllers.definition:DefinitionController'
-            return toolkit.h.remove_url_param(key, value=value, replace=replace,
-                                      controller=controller, action='read',
-                                      extras=dict(definition_id=toolkit.c.definition_dict.get('name')))
+            return toolkit.h.remove_url_param(key, value=value,
+                                              replace=replace,
+                                              controller=controller,
+                                              action='read',
+                                              extras=dict(
+                                                  definition_id=toolkit.c.definition_dict.get(
+                                                      'name')))
 
         toolkit.c.remove_field = remove_field
 
@@ -202,7 +259,9 @@ class DefinitionController(base.BaseController):
             toolkit.c.search_facets_limits = {}
             for facet in toolkit.c.search_facets.keys():
                 limit = int(toolkit.request.params.get('_%s_limit' % facet,
-                                                       toolkit.config.get('search.facets.default', 10)))
+                                                       toolkit.config.get(
+                                                           'search.facets.default',
+                                                           10)))
                 toolkit.c.search_facets_limits[facet] = limit
                 toolkit.c.page.items = query['results']
 
@@ -246,8 +305,9 @@ class DefinitionController(base.BaseController):
         toolkit.c.error_summary = error_summary
         toolkit.c.action = 'new'
 
-        toolkit.c.form = toolkit.render('definition/snippets/definition_form.html',
-                                        extra_vars=extra_vars)
+        toolkit.c.form = toolkit.render(
+            'definition/snippets/definition_form.html',
+            extra_vars=extra_vars)
         return toolkit.render('definition/new.html', extra_vars=extra_vars)
 
     def _save_new(self, context):
@@ -287,39 +347,41 @@ class DefinitionController(base.BaseController):
         except toolkit.NotAuthorized:
             abort(403, toolkit._('Unauthorized to edit a definition'))
 
-
         if context['save'] and not data and toolkit.request.method == 'POST':
             return self._save_edit(definition_id, context)
 
         try:
             data_dict['include_datasets'] = False
-            old_data = toolkit.get_action('definition_show')(context, data_dict)
+            old_data = toolkit.get_action('definition_show')(context,
+                                                             data_dict)
             toolkit.c.definitionlabel = old_data.get('title')
-            toolkit.c.definitionid= old_data.get('name')
+            toolkit.c.definitionid = old_data.get('name')
             data = data or old_data
         except (toolkit.ObjectNotFound, toolkit.NotAuthorized):
             abort(404, _('Definition not found'))
 
         definition = context.get("definition")
         toolkit.c.definition = definition
-        toolkit.c.definition_dict = toolkit.get_action('definition_show')(context, data_dict)
+        toolkit.c.definition_dict = toolkit.get_action('definition_show')(
+            context, data_dict)
 
         try:
             toolkit.check_access('definition_update', context)
         except toolkit.NotAuthorized:
-            abort(403, _('User %r not authorized to edit %s') % (toolkit.c.user, definition_id))
+            abort(403, _('User %r not authorized to edit %s') % (
+            toolkit.c.user, definition_id))
 
         errors = errors or {}
         extra_vars = {'data': data, 'errors': errors,
-                'error_summary': error_summary}
-
+                      'error_summary': error_summary}
 
         # setup_template_variables equivalent
         toolkit.c.data = data
         toolkit.c.errors = errors
         toolkit.c.error_summary = error_summary
 
-        toolkit.c.form = toolkit.render('definition/snippets/definition_form.html', extra_vars=extra_vars)
+        toolkit.c.form = toolkit.render(
+            'definition/snippets/definition_form.html', extra_vars=extra_vars)
         return toolkit.render('definition/edit.html')
 
     def _save_edit(self, definition_id, context):
@@ -329,7 +391,8 @@ class DefinitionController(base.BaseController):
             context['message'] = data_dict.get('log_message', '')
             data_dict['id'] = definition_id
             context['allow_partial_update'] = True
-            definition = toolkit.get_action('definition_update')(context, data_dict)
+            definition = toolkit.get_action('definition_update')(context,
+                                                                 data_dict)
 
             h.redirect_to('definition_read', definition_id=definition_id)
         except (toolkit.ObjectNotFound, toolkit.NotAuthorized) as e:
@@ -343,27 +406,34 @@ class DefinitionController(base.BaseController):
 
     def delete(self, definition_id):
         if 'cancel' in toolkit.request.params:
-            toolkit.h.redirect_to('definition_edit', definition_id=definition_id)
+            toolkit.h.redirect_to('definition_edit',
+                                  definition_id=definition_id)
 
         context = {'model': model, 'session': model.Session,
                    'user': toolkit.c.user}
 
         try:
-            toolkit.check_access('definition_delete', context, {'id': definition_id})
+            toolkit.check_access('definition_delete', context,
+                                 {'id': definition_id})
         except toolkit.NotAuthorized:
             abort(403, toolkit._('Unauthorized to delete definition %s') % '')
 
         try:
             if toolkit.request.method == 'POST':
-                toolkit.get_action('definition_delete')(context, {'id': definition_id})
-                toolkit.h.flash_notice(toolkit._('Definition has been deleted.'))
+                toolkit.get_action('definition_delete')(context,
+                                                        {'id': definition_id})
+                toolkit.h.flash_notice(
+                    toolkit._('Definition has been deleted.'))
                 toolkit.h.redirect_to('definition_search')
-            toolkit.c.definition_dict = toolkit.get_action('definition_show')(context, {'id': definition_id})
+            toolkit.c.definition_dict = toolkit.get_action('definition_show')(
+                context, {'id': definition_id})
         except toolkit.NotAuthorized:
             abort(403, toolkit._('Unauthorized to delete definition %s') % '')
         except toolkit.ObjectNotFound:
             abort(404, toolkit._('Definition not found'))
         except toolkit.ValidationError as e:
             toolkit.h.flash_error(e.error_dict['message'])
-            toolkit.h.redirect_to(controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', id=definition_id)
+            toolkit.h.redirect_to(
+                controller='ckanext.definitions.controllers.definition:DefinitionController',
+                action='read', id=definition_id)
         return toolkit.render_template('definition/confirm_delete.html')

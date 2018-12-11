@@ -60,6 +60,13 @@ def definition_delete(context, data_dict):
     model.repo.commit()
 
 
+##############################################################
+##############################################################
+#  Data Officer
+##############################################################
+##############################################################
+
+
 def data_officer_delete(context, data_dict):
     '''
     Removes the role Data Officer from a User

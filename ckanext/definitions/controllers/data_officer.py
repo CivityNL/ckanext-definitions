@@ -30,6 +30,11 @@ class DataOfficerController(base.BaseController):
         context = {'model': model, 'session': model.Session,
                    'user': toolkit.c.user}
 
+        try:
+            toolkit.check_access('data_officer_read', context)
+        except toolkit.NotAuthorized:
+            abort(403, toolkit._('Unauthorized to see data officers %s') % '')
+
         data_officer_list = toolkit.get_action('data_officer_list')(context, {})
 
         extra_vars = {'data_officer_list': data_officer_list}

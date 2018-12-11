@@ -1,6 +1,7 @@
 import ckan.logic as logic
 import logging
 import ckan.plugins.toolkit as toolkit
+from ckanext.definitions.logic.auth.create import definition_create
 
 log = logging.getLogger(__name__)
 NotFound = logic.NotFound
@@ -10,11 +11,7 @@ def definition_update(context, data_dict):
     '''
     Only for Data Officers
     '''
-
-    _data_dict = {'user_id': context['user']}
-    result = toolkit.h.is_data_officer(context, _data_dict)
-
-    return {'success': result}
+    return definition_create(context, data_dict)
 
 
 def data_officer_manage(context, data_dict):
