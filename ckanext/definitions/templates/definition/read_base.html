@@ -5,13 +5,13 @@
 {% block subtitle %}{{ c.definition_dict.label }} - {{ _('Definition') }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for _('Definitions'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='search', named_route='definition_search' %}</li>
-  <li class="active">{% link_for c.definition_dict.label|truncate(35), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read', definition_id=c.definition_dict.id, named_route='definition_read' %}</li>
+  <li>{% link_for _('Definitions'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='search', named_route='definition_search' %}</li>
+  <li class="active">{% link_for c.definition_dict.label|truncate(35), controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', definition_id=c.definition_dict.id, named_route='definition_read' %}</li>
 {% endblock %}
 
 {% block content_action %}
-  {% if h.check_access('organization_update', {'id': c.definition_dict.id}) %}
-    {% link_for _('Edit Definition'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='edit', definition_id=c.definition_dict.id, class_='btn', icon='wrench', named_route='definition_edit' %}
+  {% if h.check_access('definition_update', {'id': c.definition_dict.id}) %}
+    {% link_for _('Edit Definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='edit', definition_id=c.definition_dict.id, class_='btn', icon='wrench', named_route='definition_edit' %}
   {% endif %}
 {% endblock %}
 

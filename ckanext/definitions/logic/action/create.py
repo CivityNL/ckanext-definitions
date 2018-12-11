@@ -23,7 +23,7 @@ def definition_create(context, data_dict):
     enabled = data_dict.get('enabled', True)
 
     # Authorization Check
-    # _check_access('definition_create', context, data_dict)
+    toolkit.check_access('definition_create', context, data_dict)
 
     # Validators
     errors = {}
@@ -56,6 +56,30 @@ def definition_create(context, data_dict):
 
     result = dictization.table_dictize(definition, context)
     return result
+
+def data_officer_create(context, data_dict):
+    '''
+    Makes a User into a Data Officer
+    :param context:
+    :param data_dict: contains 'user_id'
+    :return: the definition added to the DB
+    '''
+
+    user_id = data_dict['user_id']
+    user_extras = toolkit.get_action('user_extra_show')(context, {"user_id": user_id})['extras']
+
+    for extra_dict in user_extras:
+        if extra_dict['key'] == 'Data Officer':
+            if extra_dict['value'] == 'True':
+                return "User is already a Data Officer"
+            else:
+                _data_dict = {"user_id": user_id, "extras": [{"key":"Data Officer", "new_value":"True"}]}
+                result = toolkit.get_action('user_extra_update')(context, _data_dict)
+                return "User added Successfuly to the Data Officers List."
+
+    _data_dict = {"user_id": user_id, "extras": [{"key":"Data Officer", "value":"True"}]}
+    result = toolkit.get_action('user_extra_create')(context, _data_dict)
+    return "User added Successfuly to the Data Officers List."
 
 
 

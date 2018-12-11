@@ -1,0 +1,53 @@
+{% extends "data_officer/index.html" %}
+
+{% block breadcrumb_content %}
+  <li class="active"><a href="/data_officer">{{ _('Data Officers') }}</a></li>
+  <li></li>
+  <li class="active"><a href="">{{ _('Manage') }}</a></li>
+{% endblock %}
+
+{% block primary_content %}
+  <article class="module">
+    <div class="module-content">
+      {% block page_primary_action %}
+        {% if h.check_access('data_officer_read') %}
+          <div class="page_primary_action">
+            {% link_for _('Back to Data Officer list'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='index', class_='btn pull-right', icon='arrow-left', named_route='data_officer_index' %}
+          </div>
+        {% endif %}
+      {% endblock %}
+      <div>
+
+      {{ h.snippet('data_officer/snippets/data_officer_list.html', data_officer_list=data_officer_list) }}
+
+      {% block primary_content_inner %}
+        <div style="width: 50%; float: right; text-align: center;">
+          <h3>
+            {% block page_heading %}{{ _('Add New Data Officer') }}{% endblock %}
+          </h3>
+          {% block form %}
+          <form class="dataset-form form-horizontal add-member-form" method='post' action="new">
+            <div class="row-fluid">
+              <div class="control-group control-medium" style="display: inline-block; float: none; width: 70%;" >
+                <div class="controls">
+                     <input id="user_id" type="text" name="user_id" placeholder="{{ _('User') }}"
+                            value="" class="control-medium" data-module="autocomplete"
+                            data-module-source="/api/2/util/user/autocomplete?q=?"
+                            data-module-label="fullname" data-module-key="id">
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit" name="submit" >{{ _('Add Data Officer') }}</button>
+          </form>
+        </div>
+        {% endblock %}
+      {% endblock %}
+
+      </div>
+
+
+    </div>
+  </article>
+{% endblock %}
+
+

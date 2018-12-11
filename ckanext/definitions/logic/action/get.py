@@ -38,3 +38,33 @@ def definition_list(context, data_dict):
         result_dict.append(dictization.table_dictize(definition, context))
 
     return result_dict
+
+@toolkit.side_effect_free
+def data_officer_list(context, data_dict):
+    '''
+    Retrieves all users which are data officers
+    :param context:
+    :param include_all_user_info:
+    :return: List of all data officers
+    '''
+    result = []
+    user_list = toolkit.get_action('user_list')(context, {})
+
+    for user in user_list:
+        user_extras = toolkit.get_action('user_extra_show')(context, {"user_id": user['id']})['extras']
+        for extra_dict in user_extras:
+            if extra_dict['key'] == 'Data Officer' and extra_dict['value'] == 'True':
+                if 'include_all_user_info' in data_dict and data_dict['include_all_user_info']:
+                    result.append(user)
+                else:
+                    user_dict = {
+                        "id":user['id'],
+                        "name": user['name'],
+                        "display_name": user['display_name']
+                    }
+                    result.append(user_dict)
+                break
+
+    return result
+
+

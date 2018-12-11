@@ -1,23 +1,24 @@
-from ckan.plugins import toolkit
+import ckan.logic as logic
 import logging
-
+import ckan.plugins.toolkit as toolkit
 log = logging.getLogger(__name__)
 
+NotFound = logic.NotFound
 
-def definition_create(context, data_dict):
+
+def definition_delete(context, data_dict):
     '''
     Only for Data Officers
     '''
 
     _data_dict = {'user_id': context['user']}
-    log.info('_data_dict = {0}'.format(_data_dict))
     result = toolkit.h.is_data_officer(context, _data_dict)
-    log.info('result = {0}'.format(result))
 
     return {'success': result}
 
 
-def data_officer_create(context, data_dict):
+
+def data_officer_delete(context, data_dict):
     '''
     SysAdmin Only
     '''

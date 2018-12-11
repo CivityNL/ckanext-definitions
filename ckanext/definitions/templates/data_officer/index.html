@@ -1,0 +1,42 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Data Officers') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active"><a href="">{{ _('Data Officers') }}</a></li>
+{% endblock %}
+
+{% block primary_content %}
+  <article class="module">
+    <div class="module-content">
+      {% block page_primary_action %}
+          <div class="page_primary_action">
+            {% if h.check_access('data_officer_manage') %}
+              {% link_for _('Manage'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='edit', class_='btn btn-primary', icon='fa fa-wrench' %}
+            {% endif %}
+            {% if h.check_access('definition_read') %}
+              {% link_for _('Back to Definitions list'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='search', class_='btn pull-right', icon='arrow-left'%}
+            {% endif %}
+          </div>
+      {% endblock %}
+
+      {{ h.snippet('data_officer/snippets/data_officer_list.html', data_officer_list=data_officer_list) }}
+
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary_content %}
+  {% block info_module %}
+    <section class="module module-narrow module-shallow">
+      <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('What are Data Officers?') }}</h2>
+      <div class="module-content">
+        <p>
+          {% trans %}
+          Helping Text Explaining what are Data Officers and how to set them.
+          {% endtrans %}
+        </p>
+      </div>
+    </section>
+  {% endblock %}
+{% endblock %}

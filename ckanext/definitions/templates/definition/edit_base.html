@@ -8,12 +8,12 @@
 {% block breadcrumb_content %}
   {{ super() }}
   {% if definition %}
-    <li class="active">{% link_for _('Edit'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='edit', definition_id=definition.id %}</li>
+    <li class="active">{% link_for _('Edit'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='edit', definition_id=definition.id %}</li>
   {% endif %}
 {% endblock %}
 
 {% block content_action %}
-  {% link_for _('View definition'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read', definition_id=definition.id, class_='btn', icon='eye' %}
+  {% link_for _('View definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', definition_id=definition.id, class_='btn', icon='eye' %}
 {% endblock %}
 
 {% block content_primary_nav %}

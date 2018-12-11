@@ -1,20 +1,19 @@
-'''
-Created on July 2nd, 2015
-
-@author: dan
-'''
-
 import ckan.logic as logic
-import logic.auth.create as user_extra_create
-
+import ckan.plugins.toolkit as toolkit
 NotFound = logic.NotFound
 import logging
 log = logging.getLogger(__name__)
 
 
-def user_extra_show(context, data_dict):
+def definition_read(context, data_dict):
     '''
-    A user has access only to his own metainformation (user_extra).
+    Authorization Info...
     '''
+    return {'success': True}
 
-    return user_extra_create(context, data_dict)
+
+def data_officer_read(context, data_dict):
+    '''
+    Publicly available
+    '''
+    return {'success': True}

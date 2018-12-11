@@ -19,7 +19,6 @@ import ckanext.definitions.model.definition as definition_model
 tuplize_dict = logic.tuplize_dict
 clean_dict = logic.clean_dict
 parse_params = logic.parse_params
-_check_access = logic.check_access
 
 log = logging.getLogger(__name__)
 abort = base.abort
@@ -108,7 +107,7 @@ class DefinitionController(base.BaseController):
         sort_by = toolkit.request.params.get('sort', None)
 
         def search_url(params):
-            controller = 'ckanext.definitions.controllers.definitioncontroller:DefinitionController'
+            controller = 'ckanext.definitions.controllers.definition:DefinitionController'
             action = 'bulk_process' if toolkit.c.action == 'bulk_process' else 'read'
             url = toolkit.h.url_for(controller=controller, action=action, definition_id=definition_id)
             params = [(k, v.encode('utf-8') if isinstance(v, string_types)
@@ -117,14 +116,14 @@ class DefinitionController(base.BaseController):
 
         def drill_down_url(**by):
             return toolkit.h.add_url_param(alternative_url=None,
-                                   controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read',
+                                   controller='ckanext.definitions.controllers.definition:DefinitionController', action='read',
                                    extras=dict(definition_id=toolkit.c.definition_dict.get('id')),
                                    new_params=by)
 
         toolkit.c.drill_down_url = drill_down_url
 
         def remove_field(key, value=None, replace=None):
-            controller = 'ckanext.definitions.controllers.definitioncontroller:DefinitionController'
+            controller = 'ckanext.definitions.controllers.definition:DefinitionController'
             return toolkit.h.remove_url_param(key, value=value, replace=replace,
                                       controller=controller, action='read',
                                       extras=dict(definition_id=toolkit.c.definition_dict.get('name')))
@@ -224,10 +223,10 @@ class DefinitionController(base.BaseController):
                    'parent': toolkit.request.params.get('parent', None)}
 
         # Authorization Check
-        # try:
-        #     self._check_access('definition_create', context)
-        # except NotAuthorized:
-        #     abort(403, _('Unauthorized to create a group'))
+        try:
+            toolkit.check_access('definition_create', context)
+        except toolkit.NotAuthorized:
+            abort(403, toolkit._('Unauthorized to create a definition'))
 
         if context['save'] and not data and toolkit.request.method == 'POST':
             return self._save_new(context)
@@ -282,6 +281,13 @@ class DefinitionController(base.BaseController):
                    }
         data_dict = {'id': definition_id, 'include_datasets': False}
 
+        # Authorization Check
+        try:
+            toolkit.check_access('definition_update', context)
+        except toolkit.NotAuthorized:
+            abort(403, toolkit._('Unauthorized to edit a definition'))
+
+
         if context['save'] and not data and toolkit.request.method == 'POST':
             return self._save_edit(definition_id, context)
 
@@ -299,7 +305,7 @@ class DefinitionController(base.BaseController):
         toolkit.c.definition_dict = toolkit.get_action('definition_show')(context, data_dict)
 
         try:
-            toolkit.check_access('group_update', context)
+            toolkit.check_access('definition_update', context)
         except toolkit.NotAuthorized:
             abort(403, _('User %r not authorized to edit %s') % (toolkit.c.user, definition_id))
 
@@ -343,9 +349,9 @@ class DefinitionController(base.BaseController):
                    'user': toolkit.c.user}
 
         try:
-            toolkit.check_access('group_delete', context, {'id': definition_id})
+            toolkit.check_access('definition_delete', context, {'id': definition_id})
         except toolkit.NotAuthorized:
-            abort(403, toolkit._('Unauthorized to delete group %s') % '')
+            abort(403, toolkit._('Unauthorized to delete definition %s') % '')
 
         try:
             if toolkit.request.method == 'POST':
@@ -359,5 +365,5 @@ class DefinitionController(base.BaseController):
             abort(404, toolkit._('Definition not found'))
         except toolkit.ValidationError as e:
             toolkit.h.flash_error(e.error_dict['message'])
-            toolkit.h.redirect_to(controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='read', id=definition_id)
+            toolkit.h.redirect_to(controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', id=definition_id)
         return toolkit.render_template('definition/confirm_delete.html')

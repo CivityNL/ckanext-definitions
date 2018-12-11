@@ -15,9 +15,13 @@ It can then itself be extended to add/remove blocks of functionality. #}
     <div class="form-actions">
 
       {% block delete_button %}
-        {% if h.check_access('group_delete', {'id': c.data.id}) and c.action != 'new'%}
-          <a class="btn btn-danger pull-left" href="{% url_for controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='delete', definition_id=c.data.id %}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to delete this definition?') }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+        {% if h.check_access('definition_delete', {'id': c.data.id}) and c.action != 'new'%}
+          <a class="btn btn-danger pull-left" href="{% url_for controller='ckanext.definitions.controllers.definition:DefinitionController', action='delete', definition_id=c.data.id %}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to delete this definition?') }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
         {% endif %}
+      {% endblock %}
+
+      {% block cancel_button %}
+        {% link_for _('Cancel'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='search', class_='btn'%}
       {% endblock %}
 
       {% block save_button %}

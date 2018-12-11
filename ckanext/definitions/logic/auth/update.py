@@ -1,20 +1,24 @@
-'''
-Created on July 2nd, 2015
-
-@author: dan
-'''
-
 import ckan.logic as logic
 import logging
-log = logging.getLogger(__name__)
-import logic.auth.create as user_extra_create
+import ckan.plugins.toolkit as toolkit
 
+log = logging.getLogger(__name__)
 NotFound = logic.NotFound
 
 
-def user_extra_update(context, data_dict):
+def definition_update(context, data_dict):
     '''
-    A user has access only to his own metainformation (user_extra).
+    Only for Data Officers
     '''
 
-    return user_extra_create(context, data_dict)
+    _data_dict = {'user_id': context['user']}
+    result = toolkit.h.is_data_officer(context, _data_dict)
+
+    return {'success': result}
+
+
+def data_officer_manage(context, data_dict):
+    '''
+    SysAdmin Only
+    '''
+    return {'success': False}

@@ -10,11 +10,15 @@
   <article class="module">
     <div class="module-content">
       {% block page_primary_action %}
-        {% if h.check_access('package_create') %}
           <div class="page_primary_action">
-            {% link_for _('Add Definition'), controller='ckanext.definitions.controllers.definitioncontroller:DefinitionController', action='new', class_='btn btn-primary', icon='plus-square' %}
+            {% if h.check_access('definition_create') %}
+              {% link_for _('Add Definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='new', class_='btn btn-primary', icon='plus-square' %}
+            {% endif %}
+
+            {% if h.check_access('data_officer_read') %}
+              {% link_for _('Data Officers'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='index', class_='btn btn-primary pull-right', icon='fa fa-info-circle', named_route='data_officer_index' %}
+            {% endif %}
           </div>
-        {% endif %}
       {% endblock %}
 
       {% block form %}

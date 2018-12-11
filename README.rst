@@ -34,7 +34,9 @@ ckanext-definitions
 
 
 Needs Shceming.
-Need to add field "definition" to your schema
+Needs User Extra.
+Need to add field "definition" to your dataset schema
+
 
 
 
