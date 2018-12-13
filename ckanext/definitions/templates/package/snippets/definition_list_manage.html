@@ -5,7 +5,7 @@
       <tr>
         <th scope="col">{{ _('Label') }}</th>
         <th scope="col">{{ _('Description') }}</th>
-        {% if h.check_access('package_update')%}
+          {% if h.check_access('package_update', {'id':pkg.id }) %}
           <th scope="col"></th>
         {% endif %}
       </tr>
