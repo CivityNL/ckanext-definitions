@@ -47,36 +47,3 @@ def definition_list_dictize(definition_list, context):
 
     return result_list
 
-
-def definition_dictize(definition, context, include_datasets=True):
-    definition_dict = d.table_dictize(definition, context)
-
-    if include_datasets:
-        query = search.PackageSearchQuery()
-
-        definition_query = u'+capacity:public '
-        tag_query += u'+definition:"{0}"'.format(definition.id)
-
-        q = {'q': definition_query, 'fl': 'data_dict', 'wt': 'json', 'rows': 1000}
-
-        package_dicts = [h.json.loads(result['data_dict'])
-                         for result in query.run(q)['results']]
-
-    # Add display_names to tags. At first a tag's display_name is just the
-    # same as its name, but the display_name might get changed later (e.g.
-    # translated into another language by the multilingual extension).
-    assert 'display_name' not in definition_dict
-    definition_dict['display_name'] = definition_dict['label']
-
-    if context.get('for_view'):
-        if include_datasets:
-            definition_dict['packages'] = []
-            for package_dict in package_dicts:
-                for item in plugins.PluginImplementations(plugins.IPackageController):
-                    package_dict = item.before_view(package_dict)
-                    definition_dict['packages'].append(package_dict)
-    else:
-        if include_datasets:
-            definition_dict['packages'] = package_dicts
-
-    return definition_dict

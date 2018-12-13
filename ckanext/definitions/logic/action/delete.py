@@ -43,7 +43,6 @@ def definition_delete(context, data_dict):
 
     model = context['model']
 
-    log.info('model = {0}'.format(model ))
     if not data_dict.has_key('id') or not data_dict['id']:
         raise ValidationError({'id': _('id not in data')})
 
@@ -84,4 +83,44 @@ def data_officer_delete(context, data_dict):
             result = toolkit.get_action('user_extra_update')(context, _data_dict)
             return "User removed Successfuly from the Data Officers List."
     return "User is not a Data Officer"
+
+
+def package_definition_delete(context, data_dict):
+    '''
+    Removes the role Definitions from the dataset
+    :param context:
+    :param data_dict: contains 'package_id' and 'definition_id'
+    :return: True if Successfull, otherwise False
+    '''
+
+    package_id = data_dict['package_id']
+    definition_id = data_dict['definition_id']
+
+    pkg_dict = toolkit.get_action('package_show')(context, {"id": package_id})
+
+    #  Check if 'definition' field is already in package
+    try:
+        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
+        log.info('pkg_dict definitions -> {0}'.format(pkg_dict['definition']))
+        log.info('Looking for definition_id -> {0}'.format(definition_id))
+        for definition in definitions:
+            log.info('for definition -> {0}'.format(definition))
+            if definition == definition_id:
+                log.info('Found and removing -> {0}'.format(definition_id))
+                log.info('From pkg_dict definitions -> {0}'.format(pkg_dict['definition']))
+
+                pkg_dict['definition'].remove(definition_id)
+
+                log.info('After pkg_dict definitions -> {0}'.format(pkg_dict['definition']))
+                break
+
+        pkg_dict['save_metadata_only'] = True
+        result = toolkit.get_action("package_update")(data_dict=pkg_dict)
+        return {'Success': True, "msg": "Definition removed from package."}
+
+    except toolkit.ValidationError:
+        log.info('ValidationError')
+        return {'Success': False, "msg": "Could not find the definition in the package"}
+
+
 

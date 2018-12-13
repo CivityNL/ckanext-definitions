@@ -1,0 +1,36 @@
+<div class="definition-info" style="float: left; width: 60%;">
+  <h3>{{ _('Definitions List') }}</h3>
+  <table class="table table-striped table-bordered table-condensed" style="table-layout: auto;" >
+    <thead>
+      <tr>
+        <th scope="col">{{ _('Label') }}</th>
+        <th scope="col">{{ _('Description') }}</th>
+        {% if h.check_access('package_update')%}
+          <th scope="col"></th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% block definition_info %}
+
+        {% for definition in pkg_definitions %}
+          <tr>
+              <td class="dataset-details" property="dc:enabled">{{ definition.label }}</td>
+              <td class="dataset-details" property="dc:enabled">{{ definition.description }}</td>
+
+                {% if h.check_access('package_update')%}
+                <td class="dataset-details" property="dc:enabled" style="text-align: center;">
+                  <a class="fa fa-times fa-2x" style="color: red;"
+                     href="{% url_for controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
+                     action='delete', package_id=pkg.name, definition_id=definition.id %}"
+                     data-module="confirm-action" data-module-content="{{ _('Are you sure you want to remove this definition from the dataset?') }}">
+                  </a>
+                </td>
+              {% endif %}
+          </tr>
+        {% endfor %}
+
+      {% endblock %}
+    </tbody>
+  </table>
+</div>

@@ -18,3 +18,10 @@ def data_officer_read(context, data_dict):
     Publicly available
     '''
     return {'success': False}
+
+
+def definition_autocomplete(context, data_dict):
+    '''
+    Publicly available
+    '''
+    return {'success': False}

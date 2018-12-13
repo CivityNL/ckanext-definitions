@@ -58,13 +58,6 @@ def definition_create(context, data_dict):
     return result
 
 
-##############################################################
-##############################################################
-#  Data Officer
-##############################################################
-##############################################################
-
-
 def data_officer_create(context, data_dict):
     '''
     Makes a User into a Data Officer
@@ -90,12 +83,29 @@ def data_officer_create(context, data_dict):
     return "User added Successfuly to the Data Officers List."
 
 
+def package_definition_create(context, data_dict):
+    try:
+        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
+    except toolkit.ValidationError:
+        return {'success': False, 'msg': 'Input was not right'}
+
+    pkg_dict = toolkit.get_action("package_show")(data_dict={"id": package_id, "internal_call": True})
 
 
-def add_package_definition(context, data_dict):
-    # pkg_dict does not bring up all fields to UI
-    pkg_dict = toolkit.get_action("package_show")(data_dict={"id": data_dict['id'], "internal_call": True})
+    #  Check if 'definition' field is already in package
+    try:
+        toolkit.get_or_bust(pkg_dict, ['definition'])
+    except toolkit.ValidationError:
+        pkg_dict['definition'] = list()
 
-    modifior_id = context['model'].User.get(context['user']).id
+    #  Add the new definition in case it does not exist there yet
+    if definition_id not in pkg_dict['definition']:
 
-    definition_model.add_package_definition(context['session'], pkg_dict, modifior_id=modifior_id)
+        pkg_dict['definition'].append(definition_id)
+
+        # TODO mind the workflow for fuck sake
+        pkg_dict['save_metadata_only'] = True
+        result = toolkit.get_action("package_update")(data_dict=pkg_dict)
+        return result
+
+    return pkg_dict

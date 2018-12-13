@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block content_action %}
+
+
   {% if h.check_access('definition_update', {'id': c.definition_dict.id}) %}
     {% link_for _('Edit Definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='edit', definition_id=c.definition_dict.id, class_='btn', icon='wrench', named_route='definition_edit' %}
   {% endif %}

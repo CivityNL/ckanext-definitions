@@ -38,13 +38,18 @@ class DefinitionsPlugin(plugins.SingletonPlugin):
         return {
             'definition_show': action_get.definition_show,
             'definition_list': action_get.definition_list,
+            'definition_autocomplete': action_get.definition_autocomplete,
             'definition_create': action_create.definition_create,
+            'definition_update': action_update.definition_update,
             'definition_delete': action_delete.definition_delete,
+            'search_packages_by_definition': action_get.search_packages_by_definition,
+            'search_definitions_by_package': action_get.search_definitions_by_package,
             'data_officer_list': action_get.data_officer_list,
             'data_officer_create': action_create.data_officer_create,
             'data_officer_delete': action_delete.data_officer_delete,
-            'add_package_definition': action_create.add_package_definition,
-            'definition_update': action_update.definition_update
+            'package_definition_create': action_create.package_definition_create,
+            'package_definition_delete': action_delete.package_definition_delete
+
         }
 
 
@@ -52,6 +57,7 @@ class DefinitionsPlugin(plugins.SingletonPlugin):
     def get_auth_functions(self):
         return {
             'definition_read': auth_get.definition_read,
+            'definition_autocomplete': auth_get.definition_autocomplete,
             'definition_create': auth_create.definition_create,
             'definition_update': auth_update.definition_update,
             'definition_delete': auth_delete.definition_delete,
@@ -61,8 +67,8 @@ class DefinitionsPlugin(plugins.SingletonPlugin):
             'data_officer_delete': auth_delete.data_officer_delete
         }
 
-    # ITemplateHelpers
 
+    # ITemplateHelpers
     def get_helpers(self):
         return {'is_data_officer': h.is_data_officer}
 
@@ -104,23 +110,18 @@ class DefinitionsPlugin(plugins.SingletonPlugin):
 
         # Package Definitions
 
-        map.connect('dataset_definition', '/dataset/:id/definition',
-                    controller='ckanext.definitions.controllers.definition:DefinitionController',
-                    action='dataset_definition')
+        map.connect('dataset_definition_index', '/dataset/:package_id/definition',
+                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
+                    action='index')
+        map.connect('dataset_definition_new', '/dataset/:package_id/definition/new',
+                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
+                    action='new')
+        map.connect('dataset_definition_edit', '/dataset/:package_id/definition/edit',
+                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
+                    action='edit')
+        map.connect('dataset_definition_delete', '/dataset/:package_id/definition/delete/:definition_id',
+                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
+                    action='delete')
 
-        # map.connect('definition_list', '/definition',
-        #             controller='ckanext.definitions.controllers.definition:DefinitionController',
-        #             action='user_preferences')
-        #
-        # map.connect('definition_read', '/definition/:id',
-        #             controller='ckanext.definitions.controllers.definition:DefinitionController',
-        #             action='definition_show')
-        #
-        # map.connect('definition_edit', '/definition/:id/edit',
-        #             controller='ckanext.definitions.controllers.definition:DefinitionController',
-        #             action='definition_edit')
-        # map.connect('/dataset/definition/:package_id',
-        #             controller='ckanext.user_preferences.controllers.userpreferencecontroller:UserPreferenceController',
-        #             method=['POST'], action='user_preferences_save')
 
         return map

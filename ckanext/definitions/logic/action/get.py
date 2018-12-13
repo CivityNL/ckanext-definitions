@@ -1,5 +1,6 @@
 import ckanext.definitions.model.definition as definitions_model
 import ckanext.definitions.model_dictize as model_dictize
+import ckan.lib.dictization.model_dictize as ckan_model_dictize
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 import logging
@@ -29,22 +30,6 @@ def definition_show(context, data_dict):
 
     return result_dict
 
-# @toolkit.side_effect_free
-# def definition_list(context, data_dict):
-#     '''
-#     Retrieves all the definitions
-#     :param context:
-#     :return: List of all definitions
-#     '''
-#     all_definitions = definitions_model.Definition.all()
-#     result_dict = []
-#
-#     for definition in all_definitions:
-#         result_dict.append(dictization.table_dictize(definition, context))
-#
-#     return result_dict
-
-
 
 def definition_list(context, data_dict):
     '''Return a list of the site's tags.
@@ -67,7 +52,6 @@ def definition_list(context, data_dict):
 
     '''
 
-    log.info('definition_list ACION ')
     query = data_dict.get('query') or data_dict.get('q')
 
     if query:
@@ -92,42 +76,22 @@ def definition_list(context, data_dict):
     return result
 
 
-
 def _definition_search(context, data_dict):
     model = context['model']
 
-    terms = data_dict.get('query') or data_dict.get('q') or []
-    if isinstance(terms, string_types):
-        terms = [terms]
-    terms = [t.strip() for t in terms if t.strip()]
+    term = data_dict.get('query') or data_dict.get('q') or []
 
-    if 'fields' in data_dict:
-        log.warning('"fields" parameter is deprecated.  '
-                    'Use the "query" parameter instead')
-
-    fields = data_dict.get('fields', {})
     offset = data_dict.get('offset')
     limit = data_dict.get('limit')
 
     # TODO: should we check for user authentication first?
     q = model.Session.query(definitions_model.Definition)
 
-    # If we're searching free tags, limit results to tags that are
-    # currently applied to a package.
-    # q = q.distinct().join(model.Tag.package_tags)
-
-    for field, value in fields.items():
-        log.info('FIELD -> {0}'.format(field))
-        if field in ('tag', 'tags'):
-            terms.append(value)
-
-    if not len(terms):
+    if not len(term):
         return [], 0
 
-    for term in terms:
-        escaped_term = misc.escape_sql_like_special_characters(
-            term, escape='\\')
-        q = q.filter(definitions_model.Definition.label.ilike('%' + escaped_term + '%'))
+    escaped_term = misc.escape_sql_like_special_characters(term, escape='\\')
+    q = q.filter(definitions_model.Definition.label.ilike('%' + escaped_term + '%'))
 
     count = q.count()
     q = q.offset(offset)
@@ -162,7 +126,7 @@ def definition_search(context, data_dict):
     return {'count': count,
             'results': [_table_dictize(definition, context) for definition in definitions]}
 
-
+@toolkit.side_effect_free
 def definition_autocomplete(context, data_dict):
     '''Return a list of definition labels that contain a given string.
 
@@ -180,9 +144,69 @@ def definition_autocomplete(context, data_dict):
     toolkit.check_access('definition_autocomplete', context, data_dict)
     matching_definitions, count = _definition_search(context, data_dict)
     if matching_definitions:
-        return [definition.label for definition in matching_definitions]
+
+        return [dictization.table_dictize(definition, context) for definition in matching_definitions]
     else:
         return []
+
+
+def search_packages_by_definition(context, data_dict):
+    '''Return a list of packages associated with the definition.
+
+    :param definition_id: a tag name query to search for, if given only tags whose
+    :type definition_id: string
+    :param all_fields: return full tag dictionaries instead of just names
+    :type all_fields: bool
+
+    :rtype: list of dictionaries
+
+    '''
+
+    definition_id = data_dict.get('definition_id')
+    all_fields = data_dict.get('all_fields', None)
+
+    toolkit.check_access('definition_read', context, data_dict)
+    definition = definitions_model.Definition.get(definition_id=definition_id)
+    packages = definition.packages
+
+    if packages:
+        if all_fields:
+                result = [toolkit.get_action('package_show')(context, {'id': package}) for package in packages]
+        else:
+            result = [package.name for package in packages]
+    else:
+        result = []
+
+    return result
+
+
+def search_definitions_by_package(context, data_dict):
+    '''Return a list of definitions associated with the package.
+
+    :param package_id: a tag name query to search for, if given only tags whose
+    :type package_id: string
+
+    :rtype: list of dictionaries
+
+    '''
+
+    package_id = data_dict.get('package_id')
+
+    toolkit.check_access('package_show', context, {'id': package_id})
+    pkg_dict = toolkit.get_action('package_show')(context, {'id': package_id})
+
+
+    try:
+        toolkit.get_or_bust(pkg_dict, ['definition'])
+        result = []
+
+        for definition in pkg_dict['definition']:
+            result.append(toolkit.get_action('definition_show')(context, {'id': definition}))
+
+    except toolkit.ValidationError:
+        return []
+
+    return result
 
 
 ##############################################################
@@ -218,5 +242,4 @@ def data_officer_list(context, data_dict):
                 break
 
     return result
-
 

@@ -80,29 +80,9 @@ class DefinitionController(base.BaseController):
 
         definitions = toolkit.get_action('definition_list')(context, {
             'all_fields': True})
-        log.info(
-            'toolkit.get_action(definition_list) = {0}'.format(definitions))
         extra_vars = {'definitions': definitions}
 
         return toolkit.render('definition/index.html', extra_vars=extra_vars)
-
-    def dataset_definition(self, id):
-        '''Render this package's public activity stream page.'''
-
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user, 'for_view': True,
-                   'auth_user_obj': toolkit.c.userobj}
-        data_dict = {'id': id}
-        try:
-            toolkit.c.pkg_dict = toolkit.get_action('package_show')(context,
-                                                                    data_dict)
-            toolkit.c.pkg = context['package']
-        except toolkit.ObjectNotFound:
-            abort(404, toolkit._('Dataset not found'))
-        except toolkit.NotAuthorized:
-            abort(403, toolkit._('Unauthorized to read dataset %s') % id)
-
-        return toolkit.render('package/definition.html')
 
     def read(self, definition_id, limit=20):
 
@@ -242,7 +222,7 @@ class DefinitionController(base.BaseController):
 
             context_ = dict((k, v) for (k, v) in context.items()
                             if k != 'schema')
-            log.info('query is = {0}'.format(data_dict))
+
             query = toolkit.get_action('package_search')(context_, data_dict)
 
             toolkit.c.page = h.Page(
