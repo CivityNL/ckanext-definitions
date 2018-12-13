@@ -24,4 +24,4 @@ def definition_autocomplete(context, data_dict):
     '''
     Publicly available
     '''
-    return {'success': False}
+    return {'success': True}

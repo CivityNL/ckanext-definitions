@@ -105,7 +105,7 @@ def package_definition_create(context, data_dict):
 
         # TODO mind the workflow for fuck sake
         pkg_dict['save_metadata_only'] = True
-        result = toolkit.get_action("package_update")(data_dict=pkg_dict)
+        result = toolkit.get_action("package_update")(context, data_dict=pkg_dict)
         return result
 
     return pkg_dict
