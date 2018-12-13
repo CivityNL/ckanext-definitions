@@ -18,7 +18,7 @@
               <td class="dataset-details" property="dc:enabled">{{ definition.label }}</td>
               <td class="dataset-details" property="dc:enabled">{{ definition.description }}</td>
 
-                {% if h.check_access('package_update')%}
+                {% if h.check_access('package_update', {'id':pkg.id }) %}
                 <td class="dataset-details" property="dc:enabled" style="text-align: center;">
                   <a class="fa fa-times fa-2x" style="color: red;"
                      href="{% url_for controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
