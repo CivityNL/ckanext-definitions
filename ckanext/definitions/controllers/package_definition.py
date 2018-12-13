@@ -40,7 +40,7 @@ class PackageDefinitionController(base.BaseController):
         definition_id = toolkit.request.params.get('definition_id', None)
 
         try:
-            toolkit.check_access('package_update', context)
+            toolkit.check_access('package_update', context, {'id':package_id})
         except toolkit.NotAuthorized:
             abort(403, toolkit._('Unauthorized to add definition to dataset %s') % '')
 
@@ -55,7 +55,7 @@ class PackageDefinitionController(base.BaseController):
                    'user': toolkit.c.user}
 
         try:
-            toolkit.check_access('package_update', context)
+            toolkit.check_access('package_update', context, {'id':package_id})
         except toolkit.NotAuthorized:
             abort(403, toolkit._('Unauthorized to delete definition to dataset %s') % '')
 
