@@ -52,5 +52,16 @@
 {% endblock %}
 
 {% block secondary_content %}
-
+  {% block info_module %}
+    <section class="module module-narrow module-shallow">
+      <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('What are definitions?') }}</h2>
+      <div class="module-content">
+        <p>
+          {% trans %}
+          Helping Text Explaining what are Definitions and how to use them.
+          {% endtrans %}
+        </p>
+      </div>
+    </section>
+  {% endblock %}
 {% endblock %}
