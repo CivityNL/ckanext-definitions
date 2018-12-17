@@ -80,9 +80,9 @@ class DefinitionController(base.BaseController):
             'q': toolkit.c.q,
             'results': results
         }
-        log.info('results = {0}'.format(results))
-        log.info('toolkit.c.page = {0}'.format(toolkit.c.page))
-        log.info('collection = {0}'.format(toolkit.c.page.collection))
+        # log.info('results = {0}'.format(results))
+        # log.info('toolkit.c.page = {0}'.format(toolkit.c.page))
+        # log.info('collection = {0}'.format(toolkit.c.page.collection))
 
         return toolkit.render('definition/index.html', extra_vars=extra_vars)
 
@@ -208,7 +208,7 @@ class DefinitionController(base.BaseController):
 
             h.redirect_to('definition_read', definition_id=definition_id)
         except (toolkit.ObjectNotFound, toolkit.NotAuthorized) as e:
-            abort(404, toolkit._('Group not found'))
+            abort(404, toolkit._('Definition not found'))
         except dict_fns.DataError:
             abort(400, _(u'Integrity Error'))
         except toolkit.ValidationError as e:

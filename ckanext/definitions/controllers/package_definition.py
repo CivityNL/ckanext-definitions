@@ -57,7 +57,7 @@ class PackageDefinitionController(base.BaseController):
         try:
             toolkit.check_access('package_update', context, {'id':package_id})
         except toolkit.NotAuthorized:
-            abort(403, toolkit._('Unauthorized to delete definition to dataset %s') % '')
+            abort(403, toolkit._('Unauthorized to delete definition from dataset %s') % '')
 
         data_dict = {'package_id': package_id, 'definition_id': definition_id}
         toolkit.get_action('package_definition_delete')(context, data_dict)

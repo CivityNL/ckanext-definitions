@@ -12,8 +12,11 @@ import ckanext.definitions.logic.auth.create as auth_create
 import ckanext.definitions.logic.auth.update as auth_update
 import ckanext.definitions.logic.auth.delete as auth_delete
 
+from ckan.lib.plugins import DefaultTranslation
 
-class DefinitionsPlugin(plugins.SingletonPlugin):
+
+class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
+    plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurable)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
