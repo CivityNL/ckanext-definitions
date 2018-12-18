@@ -35,6 +35,7 @@ def definition_delete(context, data_dict):
     '''Delete a definition.
 
     You must be a Data Officer to delete definitions.
+    Also deletes all Package_definitions from the packages associated
 
     :param id: the id of the definition
     :type id: string
@@ -55,6 +56,14 @@ def definition_delete(context, data_dict):
 
     toolkit.check_access('definition_delete', context, data_dict)
 
+    # Delete all package_definitions associated
+    _data_dict = {'definition_id': definition_id, 'all_fields': True}
+    pkg_list = toolkit.get_action('search_packages_by_definition')(context, _data_dict)
+    for package in pkg_list:
+        _data_dict = {'package_id': package['id'], 'definition_id': definition_id}
+        toolkit.get_action('package_definition_delete')(context, _data_dict)
+
+    # Delete the actual Definition
     definition_obj.delete()
     model.repo.commit()
 
@@ -95,6 +104,7 @@ def package_definition_delete(context, data_dict):
 
     package_id = data_dict['package_id']
     definition_id = data_dict['definition_id']
+    log.info('package_definition_delete -> {0}'.format(package_id))
 
     pkg_dict = toolkit.get_action('package_show')(context, {"id": package_id})
 
@@ -115,7 +125,7 @@ def package_definition_delete(context, data_dict):
                 break
 
         pkg_dict['save_metadata_only'] = True
-        result = toolkit.get_action("package_update")(data_dict=pkg_dict)
+        toolkit.get_action("package_update")({'user': 'admingil'}, data_dict=pkg_dict)
         return {'Success': True, "msg": "Definition removed from package."}
 
     except toolkit.ValidationError:

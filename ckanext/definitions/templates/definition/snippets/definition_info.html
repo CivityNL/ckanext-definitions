@@ -10,21 +10,16 @@
     <tbody>
       {% block definition_info %}
 
-        {% if definition_dict.label %}
           <tr>
             <th scope="row" class="definition-label">{{ _("Label") }}</th>
             <td class="definition-details" property="dc:label">{{ definition_dict.label }}</td>
           </tr>
-        {% endif %}
 
-        {% if definition_dict.description %}
           <tr>
             <th scope="row" class="definition-label">{{ _("Description") }}</th>
             <td class="definition-details" property="dc:description">{{ definition_dict.description }}</td>
           </tr>
-        {% endif %}
 
-        {% if definition_dict.url %}
           <tr>
             <th scope="row" class="definition-label">{{ _('URL') }}</th>
             {% if h.is_url(definition_dict.url) %}
@@ -33,25 +28,17 @@
               <td class="definition-details" property="foaf:homepage">{{ definition_dict.url }}</td>
             {% endif %}
           </tr>
-        {% endif %}
 
-
-        {% if definition_dict.enabled %}
           <tr>
             <th scope="row" class="definition-label">{{ _("Enabled") }}</th>
-            <td class="dataset-details" property="dc:enabled">{{ definition_dict.enabled }}</td>
+            <td class="dataset-details" property="dc:enabled">{{ definition_dict.enabled|string }}</td>
           </tr>
-        {% endif %}
 
-
-        {% if definition_dict.creator_id %}
           <tr>
             <th scope="row" class="definition-label">{{ _("Creator") }}</th>
             <td class="definition-details" property="dc:creator">{{ definition_dict.creator_id }}</td>
           </tr>
-        {% endif %}
 
-        {% if definition_dict.created_date %}
           <tr>
             <th scope="row" class="definition-label">{{ _("Created Date") }}</th>
 
@@ -59,17 +46,13 @@
                 {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=definition_dict.created_date %}
             </td>
           </tr>
-        {% endif %}
 
-        {% if definition_dict.modified_date %}
           <tr>
             <th scope="row" class="dataset-label">{{ _("Modified Date") }}</th>
             <td class="dataset-details">
                 {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=definition_dict.modified_date %}
             </td>
           </tr>
-        {% endif %}
-
 
       {% endblock %}
     </tbody>

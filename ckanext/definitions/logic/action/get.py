@@ -63,7 +63,11 @@ def definition_list(context, data_dict):
     if query:
         definitions, count = _definition_search(context, data_dict)
     else:
-        definitions = definitions_model.Definition.all()
+        try:
+            toolkit.check_access('definition_update', context, data_dict)
+            definitions = definitions_model.Definition.all(include_disabled=True)
+        except toolkit.NotAuthorized:
+            definitions = definitions_model.Definition.all(include_disabled=False)
 
     if definitions:
         if all_fields:
@@ -78,6 +82,7 @@ def definition_list(context, data_dict):
 
 def _definition_search(context, data_dict):
     model = context['model']
+    user = context['user']
 
     term = data_dict.get('query') or data_dict.get('q') or []
 
@@ -93,6 +98,13 @@ def _definition_search(context, data_dict):
     escaped_term = misc.escape_sql_like_special_characters(term, escape='\\')
     q = q.filter(definitions_model.Definition.label.ilike('%' + escaped_term + '%'))
 
+    try:
+        toolkit.check_access('definition_update', context)
+        if 'include_disabled' not in data_dict or data_dict['include_disabled']==False:
+            q = q.filter(definitions_model.Definition.enabled == True)
+    except toolkit.NotAuthorized:
+        q = q.filter(definitions_model.Definition.enabled==True)
+
     count = q.count()
     q = q.offset(offset)
     q = q.limit(limit)
@@ -104,6 +116,8 @@ def definition_search(context, data_dict):
 
     :param query: the string(s) to search for
     :type query: string or list of strings
+    :param include_disabled: if authorized, returns the definitions that are disabled as well
+    :type include_disabled: boolean
     :param limit: the maximum number of tags to return
     :type limit: int
     :param offset: when ``limit`` is given, the offset to start returning tags
@@ -158,7 +172,7 @@ def search_packages_by_definition(context, data_dict):
     :param all_fields: return full tag dictionaries instead of just names
     :type all_fields: bool
 
-    :rtype: list of dictionaries
+    :rtype: list of package dictionaries
 
     '''
 

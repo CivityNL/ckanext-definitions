@@ -81,7 +81,7 @@ class Definition(domain_object.DomainObject):
         return query
 
     @classmethod
-    def all(cls):
+    def all(cls, include_disabled):
         '''Return all definition
 
         :param vocab_id_or_name: the id or name of the vocabulary to look in
@@ -94,6 +94,9 @@ class Definition(domain_object.DomainObject):
         '''
 
         query = meta.Session.query(Definition)
+        if not include_disabled:
+            query = query.filter(Definition.enabled==True)
+
         return query
 
     @property

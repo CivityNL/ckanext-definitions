@@ -11,6 +11,7 @@ def definition_create(context, data_dict):
 
     _data_dict = {'user_id': context['user']}
     result = toolkit.h.is_data_officer(context, _data_dict)
+    # log.info('Check Permission to definition_create to the user -> {0}  Result --> {1}'.format(context['user'], result))
     return {'success': result}
 
 

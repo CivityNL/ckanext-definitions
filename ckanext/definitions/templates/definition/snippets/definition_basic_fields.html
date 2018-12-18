@@ -13,6 +13,6 @@
 {% endblock %}
 
 {% block definition_basic_fields_enabled %}
-{{ form.select('enabled', id='field-enabled', label=_('Enabled'), options=[{'name':"True", 'value': True},{'name': "False", 'value': False}], selected=data['enabled'] if data['enabled'], error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-control"}, is_required=False) }}
+    {{ form.select('enabled', id='field-enabled', label=_('Enabled'), options=[{'name':"True", 'value': True},{'name': "False", 'value': False}], selected=data.enabled, error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-control"}, is_required=False) }}
 {% endblock %}
 
