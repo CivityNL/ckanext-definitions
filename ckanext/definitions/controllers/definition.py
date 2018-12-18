@@ -57,7 +57,10 @@ class DefinitionController(base.BaseController):
             data_dict['offset'] = (page - 1) * LIMIT
             data_dict['return_objects'] = True
 
-        results = logic.get_action('definition_list')(context, data_dict)
+        try:
+            results = logic.get_action('definition_list')(context, data_dict)
+        except toolkit.NotAuthorized:
+            abort(403, toolkit._('Unauthorized to see definitions'))
 
         if toolkit.c.q:
             toolkit.c.page = h.Page(
