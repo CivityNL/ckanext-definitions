@@ -40,7 +40,11 @@
       {% endblock %}
 
       {% block definitions_search_results_list %}
-        {{ h.snippet('snippets/definition_list.html', definitions=page.collection) }}
+        {% if h.check_access('definition_create') %}
+          {{ h.snippet('snippets/definition_list.html', definitions=page.collection, show_enabled=True) }}
+        {% else %}
+          {{ h.snippet('snippets/definition_list.html', definitions=page.collection, show_enabled=False) }}
+        {% endif %}
       {% endblock %}
 
         {% block page_pagination %}

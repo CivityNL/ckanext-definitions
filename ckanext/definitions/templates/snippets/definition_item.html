@@ -10,6 +10,7 @@ Example:
 #}
 {% set title = definition.label%}
 {% set truncate_title = truncate_title or 80 %}
+{% set enabled = definition.enabled%}
 {% set description = h.markdown_extract(definition.description) %}
 
 {% block definition_item %}
@@ -20,6 +21,15 @@ Example:
           <h3 class="dataset-heading">
             {% block heading_title %}
               {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', definition_id=definition.id)) }}
+            {% endblock %}
+            {% block enabled %}
+              {% if show_enabled %}
+                {% if enabled %}
+                  <i class="fa fa-eye" aria-hidden="true" style="color: green;"></i>
+                {% else %}
+                  <i class="fa fa-eye-slash" aria-hidden="true" style="color: red;"></i>
+                {% endif %}
+              {% endif %}
             {% endblock %}
           </h3>
         {% endblock %}

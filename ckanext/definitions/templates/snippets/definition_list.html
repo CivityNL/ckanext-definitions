@@ -8,10 +8,11 @@ hide_resources - If true hides the resources (default: false).
 banner         - If true displays a popular banner (default: false).
 truncate       - The length to trucate the description to (default: 180)
 truncate_title - The length to truncate the title to (default: 80).
+show_enabled   - If true shows the enabled value with a green/red eye icon
 
 Example:
 
-  {% snippet 'snippets/package_list.html', packages=c.datasets %}
+  {% snippet 'snippets/package_list.html', packages=c.datasets, show_enabled=False %}
 
 #}
 {% block definition_list %}
@@ -19,7 +20,7 @@ Example:
     <ul class="{{ list_class or 'dataset-list unstyled' }}">
       {% block definition_list_inner %}
         {% for definition in definitions %}
-          {% snippet 'snippets/definition_item.html', definition=definition %}
+          {% snippet 'snippets/definition_item.html', definition=definition, show_enabled=show_enabled%}
         {% endfor %}
       {% endblock %}
     </ul>
