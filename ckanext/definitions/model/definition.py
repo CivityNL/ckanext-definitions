@@ -36,6 +36,7 @@ class Definition(domain_object.DomainObject):
         self.url = url
         self.enabled = enabled
         self.creator_id = creator_id
+        self.display_name = label + ' - ' + description
 
     # not stateful so same as purge
     def delete(self):
@@ -133,6 +134,7 @@ def define_definition_table():
                default=_types.make_uuid),
         Column('label', types.UnicodeText, nullable=False),
         Column('description', types.UnicodeText),
+        Column('display_name', types.UnicodeText),
         Column('url', types.UnicodeText),
         Column('enabled', types.Boolean),
         Column('creator_id', types.UnicodeText),

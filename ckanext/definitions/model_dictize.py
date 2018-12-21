@@ -36,13 +36,6 @@ def definition_list_dictize(definition_list, context):
         else:
             dictized = d.table_dictize(definition, context)
 
-        # Add display_names to tag dicts. At first a tag's display_name is just
-        # the same as its name, but the display_name might get changed later
-        # (e.g.  translated into another language by the multilingual
-        # extension).
-        assert not dictized.has_key('display_name')
-        dictized['display_name'] = dictized['label']
-
         result_list.append(dictized)
 
     return result_list
