@@ -1,8 +1,11 @@
 {% ckan_extends %}
 
 {% block header_site_navigation_tabs %}
-  {{ super()}}
   {{ h.build_nav_main(
+    ('vermelding_search', _('Vermelding')),
     ('definition_search', _('Definitions')),
+    ('organizations_index', _('Organizations')),
+    ('group_index', _('Groups')),
+    ('home.about', _('About'))
   ) }}
 {% endblock %}
