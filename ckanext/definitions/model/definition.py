@@ -3,7 +3,7 @@ from ckan.model import package as _package, package_extra as _package_extra, met
 import ckan.model as model
 import logging
 import datetime
-from sqlalchemy import types, Column, Table
+from sqlalchemy import types, Column, Table, func
 
 log = logging.getLogger(__name__)
 definition_table = None
@@ -65,21 +65,44 @@ class Definition(domain_object.DomainObject):
         return definition
 
     @classmethod
-    def search_by_label(cls, search_term):
-        '''Return all definitions whose names contain a given string.
+    def search(cls, search_dict, q,):
+        '''Return all definitions whoo match the criteria.
 
-        :param search_term: the string to search for in the definition labels
-        :type search_term: string
+        :param search_dict: dictionary with key's and values to search.
+        :type search_dict: dict
 
-        :returns: a list of definitions that match the search term
-        :rtype: list of ckanext-definition.model.definition.Definition objects
+        :returns: a dictionary, with a count of results, and the results
+        :rtype: dict, with an count and a list of ckanext-definition.model.definition.Definition objects
 
         '''
+
+
+        # Apply the Facets
         query = meta.Session.query(Definition)
-        search_term = search_term.strip().lower()
-        query = query.filter(Definition.label.contains(search_term))
-        query = query.distinct().join(Definition.package_definitions)
-        return query
+        for key, value in search_dict.iteritems():
+            if key in vars(Definition):
+                attribute = getattr(Definition, key)
+                query = query.filter(attribute == value)
+
+        # Apply the q
+        if q:
+            q = q.strip().lower()
+            query = query.filter(func.lower(Definition.label).contains(q))
+
+
+        # TODO remove this from the model
+        # Build Facets
+        facets = ['creator_id', 'enabled', 'label']
+        search_facets = {}
+        for key in facets:
+            if key in vars(Definition):
+                search_facets[key] = {'items': [], 'title': key}
+                attribute = getattr(Definition, key)
+                for row_value, row_count in query.with_entities(attribute, func.count(attribute)).group_by(attribute).all():
+                    search_facets[key]['items'].append({'count': row_count, 'display_name': str(row_value), 'name': str(row_value)})
+
+        return {'search_facets': search_facets, 'count': query.count(), 'results': query.all()}
+
 
     @classmethod
     def all(cls, include_disabled):

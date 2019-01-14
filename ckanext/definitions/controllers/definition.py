@@ -12,6 +12,7 @@ import ckan.lib.search as search
 import ckan.lib.helpers as h
 import ckan.plugins as plugins
 from ckan.lib.alphabet_paginate import AlphaPage
+import ckanext.definitions.model.definition as definitions_model
 
 tuplize_dict = logic.tuplize_dict
 clean_dict = logic.clean_dict
@@ -42,26 +43,58 @@ def setup_template_variables(context, data_dict):
 class DefinitionController(base.BaseController):
 
     def search(self):
-        toolkit.c.q = toolkit.request.params.get('q', '')
 
         context = {'model': model, 'session': model.Session,
                    'user': toolkit.c.user, 'auth_user_obj': toolkit.c.userobj,
                    'for_view': True}
 
-        data_dict = {'all_fields': True}
 
-        if toolkit.c.q:
-            page = toolkit.h.get_page_number(toolkit.request.params)
-            data_dict['q'] = toolkit.c.q
-            data_dict['limit'] = LIMIT
-            data_dict['offset'] = (page - 1) * LIMIT
-            data_dict['return_objects'] = True
+        # Set Facets Structure
+        facets = OrderedDict()
+        facets['creator_id'] = toolkit._('Creator')
+        facets['enabled'] = toolkit._('Status')
+        facets['label'] = toolkit._('Label')
+        toolkit.c.facet_titles = facets
 
-        try:
-            results = logic.get_action('definition_list')(context, data_dict)
-        except toolkit.NotAuthorized:
-            abort(403, toolkit._('Unauthorized to see definitions'))
+        page = toolkit.h.get_page_number(toolkit.request.params)
+        toolkit.c.q = toolkit.request.params.get('q', '')
+        sort_by = toolkit.request.params.get('sort', None)
 
+        # TODO handle URL Params with Facets
+        search_dict = {}
+
+        # log.info('toolkit.request.params = {0}'.format(toolkit.request.params))
+        # log.info('facets = {0}'.format(facets))
+
+        for key in facets:
+            if key in toolkit.request.params:
+                search_dict[key] = toolkit.request.params.get(key, '')
+        log.info('search_dict  FROM REQUEST = {0}'.format(search_dict))
+
+        #
+        # try:
+        #     results = logic.get_action('definition_list')(context, data_dict)
+        # except toolkit.NotAuthorized:
+        #     abort(403, toolkit._('Unauthorized to see definitions'))
+
+
+        # Call search function
+        # TODO create a action to do this. with Auth functions and etc...
+        # search_dict = {'creator_id': 'admingil'}
+        search_result = definitions_model.Definition.search(search_dict=search_dict, q=toolkit.c.q)
+        results = search_result['results']
+
+        # Set Facets Content
+        toolkit.c.search_facets = search_result['search_facets']
+        toolkit.c.search_facets_limits = {}
+        for facet in toolkit.c.search_facets.keys():
+            limit = int(toolkit.request.params.get('_%s_limit' % facet,
+                                                   toolkit.config.get(
+                                                       'search.facets.default',
+                                                       10)))
+            toolkit.c.search_facets_limits[facet] = limit
+
+        # Set Page
         if toolkit.c.q:
             toolkit.c.page = h.Page(
                 collection=results,
@@ -78,14 +111,31 @@ class DefinitionController(base.BaseController):
                 other_text=toolkit._('Other'),
             )
 
+        def pager_url(q=None, page=None):
+            params = list(params_nopage)
+            params.append(('page', page))
+            return search_url(params)
+
+
+        toolkit.c.page = h.Page(
+            collection=search_result['results'],
+            page=page,
+            url=pager_url,
+            item_count=search_result['count'],
+            items_per_page=limit
+        )
+
+        # Set Items
+        toolkit.c.page.items = results
+        # Set Sort By
+        toolkit.c.sort_by_selected = sort_by
+
         extra_vars = {
             'page': toolkit.c.page,
             'q': toolkit.c.q,
             'results': results
         }
-        # log.info('results = {0}'.format(results))
-        # log.info('toolkit.c.page = {0}'.format(toolkit.c.page))
-        # log.info('collection = {0}'.format(toolkit.c.page.collection))
+        # log.info('toolkit.c.fields = {0}'.format(toolkit.c.fields))
 
         return toolkit.render('definition/index.html', extra_vars=extra_vars)
 
@@ -238,6 +288,7 @@ class DefinitionController(base.BaseController):
             toolkit.c.query_error = True
             toolkit.c.page = h.Page(collection=[])
 
+        # log.info('toolkit.c.fields = {0}'.format(toolkit.c.fields))
         setup_template_variables(context, {'id': id})
 
     def new(self, data=None, errors=None, error_summary=None):
