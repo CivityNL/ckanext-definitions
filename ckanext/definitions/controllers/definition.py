@@ -52,7 +52,7 @@ class DefinitionController(base.BaseController):
         # Set Facets Structure
         facets = OrderedDict()
         facets['creator_id'] = toolkit._('Creator')
-        facets['enabled'] = toolkit._('Status')
+        facets['enabled'] = toolkit._('Enabled')
         facets['label'] = toolkit._('Label')
         toolkit.c.facet_titles = facets
 

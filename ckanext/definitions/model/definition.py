@@ -3,7 +3,7 @@ from ckan.model import package as _package, package_extra as _package_extra, met
 import ckan.model as model
 import logging
 import datetime
-from sqlalchemy import types, Column, Table, func
+from sqlalchemy import types, Column, Table, func, or_
 
 log = logging.getLogger(__name__)
 definition_table = None
@@ -87,7 +87,7 @@ class Definition(domain_object.DomainObject):
         # Apply the q
         if q:
             q = q.strip().lower()
-            query = query.filter(func.lower(Definition.label).contains(q))
+            query = query.filter(or_(func.lower(Definition.label).contains(q), func.lower(Definition.description).contains(q)))
 
 
         # TODO remove this from the model

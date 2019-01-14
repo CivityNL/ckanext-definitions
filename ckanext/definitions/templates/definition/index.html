@@ -75,7 +75,12 @@
     <div class="filters">
       <div>
         {% for facet in c.facet_titles %}
-          {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+          {% if facet == 'creator_id' %}
+            {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.catalogthehague_owner_facet_list_help, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+          {% else %}
+            {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+          {%- endif %}
+
         {% endfor %}
       </div>
       <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
