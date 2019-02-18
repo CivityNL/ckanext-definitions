@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-definitions 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-02-17 16:02-0500\n"
+"POT-Creation-Date: 2019-02-18 05:53-0500\n"
 "PO-Revision-Date: 2018-12-17 03:47-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -57,11 +57,11 @@ msgstr "Actief"
 msgid "Label"
 msgstr "Begrip"
 
-#: ckanext/definitions/controllers/definition.py:99
+#: ckanext/definitions/controllers/definition.py:101
 msgid "Other"
 msgstr "Anders"
 
-#: ckanext/definitions/controllers/definition.py:144
+#: ckanext/definitions/controllers/definition.py:146
 #: ckanext/definitions/controllers/definition.py:341
 #: ckanext/definitions/controllers/definition.py:375
 #: ckanext/definitions/controllers/definition.py:413
@@ -69,29 +69,29 @@ msgstr "Anders"
 msgid "Definition not found"
 msgstr "Definitie niet gevonden"
 
-#: ckanext/definitions/controllers/definition.py:230
+#: ckanext/definitions/controllers/definition.py:232
 #: ckanext/definitions/templates/header.html:7
 msgid "Organizations"
 msgstr "Organisaties"
 
-#: ckanext/definitions/controllers/definition.py:231
+#: ckanext/definitions/controllers/definition.py:233
 #: ckanext/definitions/templates/header.html:8
 msgid "Groups"
 msgstr "Groepen"
 
-#: ckanext/definitions/controllers/definition.py:232
+#: ckanext/definitions/controllers/definition.py:234
 msgid "Tags"
 msgstr "Tags"
 
-#: ckanext/definitions/controllers/definition.py:233
+#: ckanext/definitions/controllers/definition.py:235
 msgid "Formats"
 msgstr "Formaten"
 
-#: ckanext/definitions/controllers/definition.py:234
+#: ckanext/definitions/controllers/definition.py:236
 msgid "Licenses"
 msgstr "Licenties"
 
-#: ckanext/definitions/controllers/definition.py:304
+#: ckanext/definitions/controllers/definition.py:306
 msgid "Unauthorized to create a definition"
 msgstr "Geen rechten om definitie te maken."
 
@@ -119,12 +119,12 @@ msgstr "Geen rechten om definitie %s te verwijderen."
 msgid "Definition has been deleted."
 msgstr "Definitie is verwijderd."
 
-#: ckanext/definitions/controllers/package_definition.py:40
+#: ckanext/definitions/controllers/package_definition.py:41
 #, python-format
 msgid "Unauthorized to add definition to dataset %s"
 msgstr "Geen rechten om definitie aan vermelding %s te koppelen."
 
-#: ckanext/definitions/controllers/package_definition.py:56
+#: ckanext/definitions/controllers/package_definition.py:57
 #, python-format
 msgid "Unauthorized to delete definition from dataset %s"
 msgstr "Geen rechten om definitie te verwijderen bij vermelding %s."
@@ -138,10 +138,10 @@ msgstr "Vermelding niet gevonden"
 msgid "Unauthorized to read dataset %s"
 msgstr "Geen rechten om vermelding %s te bekijken."
 
-#: ckanext/definitions/logic/action/create.py:36
-#: ckanext/definitions/logic/action/create.py:38
-#: ckanext/definitions/logic/action/create.py:41
-#: ckanext/definitions/logic/action/create.py:43
+#: ckanext/definitions/logic/action/create.py:35
+#: ckanext/definitions/logic/action/create.py:37
+#: ckanext/definitions/logic/action/create.py:40
+#: ckanext/definitions/logic/action/create.py:42
 msgid "Value cannot be empty."
 msgstr "Waarde kan niet leeg zijn."
 

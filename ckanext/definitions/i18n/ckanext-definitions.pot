@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-definitions 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-02-17 16:02-0500\n"
+"POT-Creation-Date: 2019-02-18 05:53-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,11 +56,11 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:99
+#: ckanext/definitions/controllers/definition.py:101
 msgid "Other"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:144
+#: ckanext/definitions/controllers/definition.py:146
 #: ckanext/definitions/controllers/definition.py:341
 #: ckanext/definitions/controllers/definition.py:375
 #: ckanext/definitions/controllers/definition.py:413
@@ -68,29 +68,29 @@ msgstr ""
 msgid "Definition not found"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:230
+#: ckanext/definitions/controllers/definition.py:232
 #: ckanext/definitions/templates/header.html:7
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:231
+#: ckanext/definitions/controllers/definition.py:233
 #: ckanext/definitions/templates/header.html:8
 msgid "Groups"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:232
+#: ckanext/definitions/controllers/definition.py:234
 msgid "Tags"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:233
+#: ckanext/definitions/controllers/definition.py:235
 msgid "Formats"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:234
+#: ckanext/definitions/controllers/definition.py:236
 msgid "Licenses"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:304
+#: ckanext/definitions/controllers/definition.py:306
 msgid "Unauthorized to create a definition"
 msgstr ""
 
@@ -118,12 +118,12 @@ msgstr ""
 msgid "Definition has been deleted."
 msgstr ""
 
-#: ckanext/definitions/controllers/package_definition.py:40
+#: ckanext/definitions/controllers/package_definition.py:41
 #, python-format
 msgid "Unauthorized to add definition to dataset %s"
 msgstr ""
 
-#: ckanext/definitions/controllers/package_definition.py:56
+#: ckanext/definitions/controllers/package_definition.py:57
 #, python-format
 msgid "Unauthorized to delete definition from dataset %s"
 msgstr ""
@@ -137,10 +137,10 @@ msgstr ""
 msgid "Unauthorized to read dataset %s"
 msgstr ""
 
-#: ckanext/definitions/logic/action/create.py:36
-#: ckanext/definitions/logic/action/create.py:38
-#: ckanext/definitions/logic/action/create.py:41
-#: ckanext/definitions/logic/action/create.py:43
+#: ckanext/definitions/logic/action/create.py:35
+#: ckanext/definitions/logic/action/create.py:37
+#: ckanext/definitions/logic/action/create.py:40
+#: ckanext/definitions/logic/action/create.py:42
 msgid "Value cannot be empty."
 msgstr ""
 
