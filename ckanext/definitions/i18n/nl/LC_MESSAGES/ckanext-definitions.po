@@ -174,7 +174,7 @@ msgstr "Definities"
 
 #: ckanext/definitions/templates/header.html:9
 msgid "About"
-msgstr ""
+msgstr "Over"
 
 #: ckanext/definitions/templates/data_officer/edit.html:4
 #: ckanext/definitions/templates/data_officer/index.html:3
