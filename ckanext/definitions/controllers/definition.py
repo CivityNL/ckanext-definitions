@@ -48,7 +48,6 @@ class DefinitionController(base.BaseController):
                    'user': toolkit.c.user, 'auth_user_obj': toolkit.c.userobj,
                    'for_view': True}
 
-
         # Set Facets Structure
         facets = OrderedDict()
         facets['creator_id'] = toolkit._('Creator')
@@ -62,26 +61,15 @@ class DefinitionController(base.BaseController):
 
         # TODO handle URL Params with Facets
         search_dict = {}
-
-        # log.info('toolkit.request.params = {0}'.format(toolkit.request.params))
-        # log.info('facets = {0}'.format(facets))
-
         for key in facets:
             if key in toolkit.request.params:
                 search_dict[key] = toolkit.request.params.get(key, '')
         log.info('search_dict  FROM REQUEST = {0}'.format(search_dict))
 
-        #
-        # try:
-        #     results = logic.get_action('definition_list')(context, data_dict)
-        # except toolkit.NotAuthorized:
-        #     abort(403, toolkit._('Unauthorized to see definitions'))
-
-
-        # Call search function
-        # TODO create a action to do this. with Auth functions and etc...
-        # search_dict = {'creator_id': 'admingil'}
+        # TODO Call search Action function instead of model directly
         search_result = definitions_model.Definition.search(search_dict=search_dict, q=toolkit.c.q)
+
+
         results = search_result['results']
 
         # Set Facets Content
@@ -116,7 +104,6 @@ class DefinitionController(base.BaseController):
             params.append(('page', page))
             return search_url(params)
 
-
         toolkit.c.page = h.Page(
             collection=search_result['results'],
             page=page,
@@ -150,7 +137,8 @@ class DefinitionController(base.BaseController):
         toolkit.c.q = toolkit.request.params.get('q', '')
 
         try:
-            toolkit.c.definition_dict = toolkit.get_action('definition_show')(context, data_dict)
+            toolkit.c.definition_dict = toolkit.get_action('definition_show')(
+                context, data_dict)
             toolkit.c.definition = definition_id
         except (toolkit.ObjectNotFound, toolkit.NotAuthorized, KeyError):
             abort(404, toolkit._('Definition not found'))
@@ -169,7 +157,8 @@ class DefinitionController(base.BaseController):
         fq = 'extras_definition:"%s"' % toolkit.c.definition_dict.get('id')
 
         toolkit.c.description_formatted = \
-            toolkit.h.render_markdown(toolkit.c.definition_dict.get('description'))
+            toolkit.h.render_markdown(
+                toolkit.c.definition_dict.get('description'))
 
         context['return_query'] = True
 
@@ -183,26 +172,34 @@ class DefinitionController(base.BaseController):
         def search_url(params):
             controller = 'ckanext.definitions.controllers.definition:DefinitionController'
             action = 'bulk_process' if toolkit.c.action == 'bulk_process' else 'read'
-            url = toolkit.h.url_for(controller=controller, action=action, id=id)
+            url = toolkit.h.url_for(controller=controller, action=action,
+                                    id=id)
             params = [(k, v.encode('utf-8') if isinstance(v, string_types)
-                       else str(v)) for k, v in params]
+            else str(v)) for k, v in params]
             return url + u'?' + urlencode(params)
 
         def drill_down_url(**by):
             return toolkit.h.add_url_param(alternative_url=None,
-                                   controller='ckanext.definitions.controllers.definition:DefinitionController', action='read',
-                                   extras=dict(id=c.definition_dict.get('id')),
-                                   new_params=by)
+                                           controller='ckanext.definitions.controllers.definition:DefinitionController',
+                                           action='read',
+                                           extras=dict(
+                                               id=c.definition_dict.get('id')),
+                                           new_params=by)
 
         toolkit.c.drill_down_url = drill_down_url
 
         def remove_field(key, value=None, replace=None):
-            alternative_url = '/definition/'+toolkit.c.definition_dict.get('id')
+            alternative_url = '/definition/' + toolkit.c.definition_dict.get(
+                'id')
             controller = 'ckanext.definitions.controllers.definition:DefinitionController'
-            return toolkit.h.remove_url_param(key, value=value, replace=replace,
-                                      controller=controller, action='read',
-                                      alternative_url=alternative_url,
-                                      extras=dict(definition_id=toolkit.c.definition_dict.get('id')))
+            return toolkit.h.remove_url_param(key, value=value,
+                                              replace=replace,
+                                              controller=controller,
+                                              action='read',
+                                              alternative_url=alternative_url,
+                                              extras=dict(
+                                                  definition_id=toolkit.c.definition_dict.get(
+                                                      'id')))
 
         toolkit.c.remove_field = remove_field
 
@@ -277,7 +274,9 @@ class DefinitionController(base.BaseController):
             toolkit.c.search_facets_limits = {}
             for facet in toolkit.c.search_facets.keys():
                 limit = int(toolkit.request.params.get('_%s_limit' % facet,
-                                                       toolkit.config.get('search.facets.default', 10)))
+                                                       toolkit.config.get(
+                                                           'search.facets.default',
+                                                           10)))
                 toolkit.c.search_facets_limits[facet] = limit
             toolkit.c.page.items = query['results']
 
@@ -308,9 +307,6 @@ class DefinitionController(base.BaseController):
             return self._save_new(context)
 
         data = data or {}
-        if not data.get('image_url', '').startswith('http'):
-            data.pop('image_url', None)
-
         errors = errors or {}
         error_summary = error_summary or {}
         extra_vars = {'data': data, 'errors': errors,
@@ -334,8 +330,7 @@ class DefinitionController(base.BaseController):
             context['message'] = data_dict.get('log_message', '')
             data_dict['users'] = [
                 {'name': toolkit.c.user, 'capacity': 'admin'}]
-            definition = toolkit.get_action('definition_create')(context,
-                                                                 data_dict)
+            toolkit.get_action('definition_create')(context, data_dict)
 
             # Redirect to the appropriate _read route for the definition
             toolkit.h.redirect_to('/definition')
@@ -386,7 +381,7 @@ class DefinitionController(base.BaseController):
             toolkit.check_access('definition_update', context)
         except toolkit.NotAuthorized:
             abort(403, toolkit._('User %r not authorized to edit %s') % (
-            toolkit.c.user, definition_id))
+                toolkit.c.user, definition_id))
 
         errors = errors or {}
         extra_vars = {'data': data, 'errors': errors,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-definitions 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-12-17 03:47-0500\n"
+"POT-Creation-Date: 2019-02-17 16:02-0500\n"
 "PO-Revision-Date: 2018-12-17 03:47-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: ckanext/definitions/controllers/data_officer.py:26
+#: ckanext/definitions/controllers/data_officer.py:25
 #, python-format
 msgid "Unauthorized to see data officers %s"
 msgstr "Geen rechten om data officer %s te zien."
@@ -29,110 +29,134 @@ msgstr "Geen rechten om data officer %s te zien."
 msgid "Unauthorized to manage data officer %s"
 msgstr "Geen rechten om data officer %s te beheren."
 
-#: ckanext/definitions/controllers/data_officer.py:59
+#: ckanext/definitions/controllers/data_officer.py:58
 #, python-format
 msgid "Unauthorized to create data officer %s"
 msgstr "Geen rechten om data officer %s aan te maken."
 
-#: ckanext/definitions/controllers/data_officer.py:78
+#: ckanext/definitions/controllers/data_officer.py:81
 #, python-format
 msgid "Unauthorized to delete data officer %s"
 msgstr "Geen rechten om data officer %s te verwijderen."
 
-#: ckanext/definitions/controllers/definition.py:75
+#: ckanext/definitions/controllers/definition.py:53
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:40
+msgid "Creator"
+msgstr "Maker"
+
+#: ckanext/definitions/controllers/definition.py:54
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:30
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:35
+msgid "Enabled"
+msgstr "Actief"
+
+#: ckanext/definitions/controllers/definition.py:55
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:9
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:14
+#: ckanext/definitions/templates/package/snippets/definition_list_manage.html:7
+msgid "Label"
+msgstr "Begrip"
+
+#: ckanext/definitions/controllers/definition.py:99
 msgid "Other"
 msgstr "Anders"
 
-#: ckanext/definitions/controllers/definition.py:100
-msgid "Unauthorized to create a definition"
-msgstr "Geen rechten om definitie te maken."
-
-#: ckanext/definitions/controllers/definition.py:139
-#: ckanext/definitions/controllers/definition.py:173
-#: ckanext/definitions/controllers/definition.py:211
-#: ckanext/definitions/controllers/definition.py:245
-#: ckanext/definitions/controllers/definition.py:267
+#: ckanext/definitions/controllers/definition.py:144
+#: ckanext/definitions/controllers/definition.py:341
+#: ckanext/definitions/controllers/definition.py:375
+#: ckanext/definitions/controllers/definition.py:413
+#: ckanext/definitions/controllers/definition.py:447
 msgid "Definition not found"
 msgstr "Definitie niet gevonden"
 
-#: ckanext/definitions/controllers/definition.py:141
-#: ckanext/definitions/controllers/definition.py:213
+#: ckanext/definitions/controllers/definition.py:230
+#: ckanext/definitions/templates/header.html:7
+msgid "Organizations"
+msgstr "Organisaties"
+
+#: ckanext/definitions/controllers/definition.py:231
+#: ckanext/definitions/templates/header.html:8
+msgid "Groups"
+msgstr "Groepen"
+
+#: ckanext/definitions/controllers/definition.py:232
+msgid "Tags"
+msgstr "Tags"
+
+#: ckanext/definitions/controllers/definition.py:233
+msgid "Formats"
+msgstr "Formaten"
+
+#: ckanext/definitions/controllers/definition.py:234
+msgid "Licenses"
+msgstr "Licenties"
+
+#: ckanext/definitions/controllers/definition.py:304
+msgid "Unauthorized to create a definition"
+msgstr "Geen rechten om definitie te maken."
+
+#: ckanext/definitions/controllers/definition.py:343
+#: ckanext/definitions/controllers/definition.py:415
 msgid "Integrity Error"
 msgstr "Integriteitsfout"
 
-#: ckanext/definitions/controllers/definition.py:160
+#: ckanext/definitions/controllers/definition.py:362
 msgid "Unauthorized to edit a definition"
 msgstr "Geen rechten om definitie aan te passen."
 
-#: ckanext/definitions/controllers/definition.py:183
+#: ckanext/definitions/controllers/definition.py:385
 #, python-format
 msgid "User %r not authorized to edit %s"
 msgstr "Gebruiker %r heeft geen rechten voor aanpassingen %s."
 
-#: ckanext/definitions/controllers/definition.py:231
-#: ckanext/definitions/controllers/definition.py:243
+#: ckanext/definitions/controllers/definition.py:433
+#: ckanext/definitions/controllers/definition.py:445
 #, python-format
 msgid "Unauthorized to delete definition %s"
 msgstr "Geen rechten om definitie %s te verwijderen."
 
-#: ckanext/definitions/controllers/definition.py:238
+#: ckanext/definitions/controllers/definition.py:440
 msgid "Definition has been deleted."
 msgstr "Definitie is verwijderd."
 
-#: ckanext/definitions/controllers/definition.py:344
-msgid "Organizations"
-msgstr "Organisaties"
-
-#: ckanext/definitions/controllers/definition.py:345
-#: ckanext/definitions/templates/package/read_base.html:5
-msgid "Groups"
-msgstr "Groepen"
-
-#: ckanext/definitions/controllers/definition.py:346
-msgid "Tags"
-msgstr "Tags"
-
-#: ckanext/definitions/controllers/definition.py:347
-msgid "Formats"
-msgstr "Formaten"
-
-#: ckanext/definitions/controllers/definition.py:348
-msgid "Licenses"
-msgstr "Licenties"
-
-#: ckanext/definitions/controllers/package_definition.py:45
+#: ckanext/definitions/controllers/package_definition.py:40
 #, python-format
 msgid "Unauthorized to add definition to dataset %s"
 msgstr "Geen rechten om definitie aan vermelding %s te koppelen."
 
-#: ckanext/definitions/controllers/package_definition.py:60
+#: ckanext/definitions/controllers/package_definition.py:56
 #, python-format
 msgid "Unauthorized to delete definition from dataset %s"
 msgstr "Geen rechten om definitie te verwijderen bij vermelding %s."
 
-#: ckanext/definitions/controllers/package_definition.py:84
+#: ckanext/definitions/controllers/package_definition.py:82
 msgid "Dataset not found"
 msgstr "Vermelding niet gevonden"
 
-#: ckanext/definitions/controllers/package_definition.py:86
+#: ckanext/definitions/controllers/package_definition.py:84
 #, python-format
 msgid "Unauthorized to read dataset %s"
 msgstr "Geen rechten om vermelding %s te bekijken."
 
-#: ckanext/definitions/logic/action/create.py:33
-#: ckanext/definitions/logic/action/create.py:39
+#: ckanext/definitions/logic/action/create.py:36
+#: ckanext/definitions/logic/action/create.py:38
 #: ckanext/definitions/logic/action/create.py:41
+#: ckanext/definitions/logic/action/create.py:43
 msgid "Value cannot be empty."
 msgstr "Waarde kan niet leeg zijn."
 
-#: ckanext/definitions/logic/action/delete.py:47
+#: ckanext/definitions/logic/action/delete.py:48
 msgid "id not in data"
 msgstr "id niet in data gevonden"
 
-#: ckanext/definitions/logic/action/delete.py:54
+#: ckanext/definitions/logic/action/delete.py:55
 #, python-format
 msgid "Could not find definition \"%s\""
 msgstr "Kon definitie niet vinden \"%s\""
+
+#: ckanext/definitions/templates/header.html:5
+msgid "Vermelding"
+msgstr ""
 
 #: ckanext/definitions/templates/definition/base.html:7
 #: ckanext/definitions/templates/definition/base.html:10
@@ -140,12 +164,17 @@ msgstr "Kon definitie niet vinden \"%s\""
 #: ckanext/definitions/templates/definition/index.html:6
 #: ckanext/definitions/templates/definition/read_base.html:8
 #: ckanext/definitions/templates/header.html:6
-#: ckanext/definitions/templates/package/definition_edit.html:3
-#: ckanext/definitions/templates/package/definition_index.html:3
-#: ckanext/definitions/templates/package/definition_index.html:6
-#: ckanext/definitions/templates/package/read_base.html:7
+#: ckanext/definitions/templates/package/definitions_edit.html:3
+#: ckanext/definitions/templates/package/definitions_read.html:3
+#: ckanext/definitions/templates/package/definitions_read.html:7
+#: ckanext/definitions/templates/package/edit_base.html:5
+#: ckanext/definitions/templates/package/read_base.html:5
 msgid "Definitions"
 msgstr "Definities"
+
+#: ckanext/definitions/templates/header.html:9
+msgid "About"
+msgstr ""
 
 #: ckanext/definitions/templates/data_officer/edit.html:4
 #: ckanext/definitions/templates/data_officer/index.html:3
@@ -185,7 +214,9 @@ msgstr "Wat zijn Data Officers?"
 
 #: ckanext/definitions/templates/data_officer/index.html:35
 msgid " Helping Text Explaining what are Data Officers and how to set them. "
-msgstr "Helptekst om uit te leggen wat Data Officers zijn en hoe je ze kunt creëren."
+msgstr ""
+"Helptekst om uit te leggen wat Data Officers zijn en hoe je ze kunt "
+"creëren."
 
 #: ckanext/definitions/templates/data_officer/snippets/data_officer_list.html:2
 msgid "Data Officers List"
@@ -201,7 +232,9 @@ msgstr "Gebruikersnaam"
 
 #: ckanext/definitions/templates/data_officer/snippets/data_officer_list.html:25
 msgid "Are you sure you want to remove this user from the Data Officers?"
-msgstr "Weet je zeker dat je deze gebruiker van de lijst met Data Officers wilt verwijderen?"
+msgstr ""
+"Weet je zeker dat je deze gebruiker van de lijst met Data Officers wilt "
+"verwijderen?"
 
 #: ckanext/definitions/templates/definition/confirm_delete.html:3
 #: ckanext/definitions/templates/definition/confirm_delete.html:15
@@ -213,7 +246,7 @@ msgid "Are you sure you want to delete definition - {label}?"
 msgstr "Weet je zeker dat je definitie - {label} wilt verwijderen?"
 
 #: ckanext/definitions/templates/definition/confirm_delete.html:14
-#: ckanext/definitions/templates/definition/snippets/definition_form.html:24
+#: ckanext/definitions/templates/definition/snippets/definition_form.html:30
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -226,25 +259,27 @@ msgid "View definition"
 msgstr "Bekijk definitie"
 
 #: ckanext/definitions/templates/definition/edit_base.html:25
-#: ckanext/definitions/templates/definition/index.html:57
+#: ckanext/definitions/templates/definition/index.html:61
 #: ckanext/definitions/templates/definition/read_base.html:26
 msgid "What are definitions?"
 msgstr "Wat zijn definities?"
 
 #: ckanext/definitions/templates/definition/edit_base.html:28
-#: ckanext/definitions/templates/definition/index.html:60
+#: ckanext/definitions/templates/definition/index.html:64
 #: ckanext/definitions/templates/definition/read_base.html:29
 msgid " Helping Text Explaining what are Definitions and how to use them. "
-msgstr "Helptekst om uit te leggen wat definities zijn en hoe je ze kunt gebruiken."
+msgstr ""
+"Helptekst om uit te leggen wat definities zijn en hoe je ze kunt "
+"gebruiken."
 
 #: ckanext/definitions/templates/definition/index.html:15
-#: ckanext/definitions/templates/package/definition_edit.html:12
-#: ckanext/definitions/templates/package/definition_edit.html:26
+#: ckanext/definitions/templates/package/definitions_edit.html:12
+#: ckanext/definitions/templates/package/definitions_edit.html:33
 msgid "Add Definition"
 msgstr "Voeg definitie toe"
 
 #: ckanext/definitions/templates/definition/index.html:33
-#: ckanext/definitions/templates/definition/read.html:40
+#: ckanext/definitions/templates/definition/read.html:39
 msgid "Relevance"
 msgstr "Relevantie"
 
@@ -257,12 +292,12 @@ msgid "Label Descending"
 msgstr "Toon aflopend"
 
 #: ckanext/definitions/templates/definition/index.html:36
-#: ckanext/definitions/templates/definition/read.html:43
+#: ckanext/definitions/templates/definition/read.html:42
 msgid "Last Modified"
 msgstr "Laatst gewijzigd"
 
 #: ckanext/definitions/templates/definition/index.html:37
-#: ckanext/definitions/templates/definition/read.html:44
+#: ckanext/definitions/templates/definition/read.html:43
 msgid "Popular"
 msgstr "Populair"
 
@@ -279,20 +314,20 @@ msgstr "Maak definitie"
 msgid "Datasets Associated"
 msgstr "Gekoppelde vermeldingen"
 
-#: ckanext/definitions/templates/definition/read.html:41
+#: ckanext/definitions/templates/definition/read.html:40
 msgid "Name Ascending"
 msgstr "Naam oplopend"
 
-#: ckanext/definitions/templates/definition/read.html:42
+#: ckanext/definitions/templates/definition/read.html:41
 msgid "Name Descending"
 msgstr "Naam aflopend"
 
-#: ckanext/definitions/templates/definition/read.html:46
+#: ckanext/definitions/templates/definition/read.html:44
 msgid "Search datasets..."
 msgstr "Zoek vermeldingen ..."
 
 #: ckanext/definitions/templates/definition/read_base.html:5
-#: ckanext/definitions/templates/package/definition_edit.html:19
+#: ckanext/definitions/templates/package/definitions_edit.html:23
 msgid "Definition"
 msgstr "Definitie"
 
@@ -300,51 +335,28 @@ msgstr "Definitie"
 msgid "Edit Definition"
 msgstr "Wijzig Definitie"
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:4
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:15
-#: ckanext/definitions/templates/package/snippets/definition_list_manage.html:6
-msgid "Label"
-msgstr "Label"
-
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:4
-msgid "eg. A descriptive label"
-msgstr "bijv. een beschrijvend label"
-
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:8
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:22
-#: ckanext/definitions/templates/package/snippets/definition_list_manage.html:7
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:21
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:19
+#: ckanext/definitions/templates/package/snippets/definition_list_manage.html:8
 msgid "Description"
 msgstr "Beschrijving"
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:8
-msgid "eg. Some useful notes about the data"
-msgstr "bijv. nuttige info over de data"
-
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:12
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:29
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:25
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:24
 msgid "URL"
 msgstr "URL"
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:12
-msgid "http://denhaag.nl/definition-1"
-msgstr "http://denhaag.nl/definition-1"
-
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:16
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:41
-msgid "Enabled"
-msgstr "Actief"
-
-#: ckanext/definitions/templates/definition/snippets/definition_form.html:19
+#: ckanext/definitions/templates/definition/snippets/definition_form.html:23
 msgid "Are you sure you want to delete this definition?"
 msgstr "Weet je zeker dat je deze definitie wilt verwijderen?"
 
-#: ckanext/definitions/templates/definition/snippets/definition_form.html:19
+#: ckanext/definitions/templates/definition/snippets/definition_form.html:25
 msgid "Delete"
 msgstr "Verwijder"
 
-#: ckanext/definitions/templates/definition/snippets/definition_form.html:28
+#: ckanext/definitions/templates/definition/snippets/definition_form.html:36
 msgid "Save Definition"
-msgstr "Bewaar definitie"
+msgstr "Opslaan definitie"
 
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:2
 msgid "Definition Info"
@@ -358,39 +370,19 @@ msgstr "Veld"
 msgid "Value"
 msgstr "Waarde"
 
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:49
-msgid "Creator"
-msgstr "Maker"
-
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:56
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:45
 msgid "Created Date"
-msgstr "Aanmaak datum"
+msgstr "Gecreëerd"
 
-#: ckanext/definitions/templates/definition/snippets/definition_info.html:66
+#: ckanext/definitions/templates/definition/snippets/definition_info.html:53
 msgid "Modified Date"
-msgstr "Wijzigings datum"
-
-#: ckanext/definitions/templates/package/definition_edit.html:31
-msgid "Back"
-msgstr "Terug"
-
-#: ckanext/definitions/templates/package/definition_index.html:9
-msgid "Edit Definitions"
-msgstr "Wijzig definities"
-
-#: ckanext/definitions/templates/package/read_base.html:4
-msgid "Dataset"
-msgstr "Vermelding"
-
-#: ckanext/definitions/templates/package/read_base.html:6
-msgid "Activity Stream"
-msgstr "Activiteitenstroom"
+msgstr "Laatst gewijzigd"
 
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:2
 msgid "Definitions List"
 msgstr "Lijst met definities"
 
-#: ckanext/definitions/templates/package/snippets/definition_list_manage.html:26
+#: ckanext/definitions/templates/package/snippets/definition_list_manage.html:31
 msgid "Are you sure you want to remove this definition from the dataset?"
 msgstr "Weet je zeker dat je deze definitie wilt verwijderen bij de vermelding?"
 
@@ -481,4 +473,25 @@ msgstr[1] "{number} definities gevonden"
 #: ckanext/definitions/templates/snippets/search_result_text.html:38
 msgid "No definitions found"
 msgstr "Geen definities gevonden"
+
+#~ msgid "eg. A descriptive label"
+#~ msgstr "bijv. een beschrijvend label"
+
+#~ msgid "eg. Some useful notes about the data"
+#~ msgstr "bijv. nuttige info over de data"
+
+#~ msgid "http://denhaag.nl/definition-1"
+#~ msgstr "http://denhaag.nl/definition-1"
+
+#~ msgid "Back"
+#~ msgstr "Terug"
+
+#~ msgid "Edit Definitions"
+#~ msgstr "Wijzig definities"
+
+#~ msgid "Dataset"
+#~ msgstr "Vermelding"
+
+#~ msgid "Activity Stream"
+#~ msgstr "Activiteitenstroom"
 

@@ -21,3 +21,19 @@ def is_data_officer(context, data_dict={}):
 
     return False
 
+
+
+def definition_list_choices():
+    """
+    Get the Definitions List and converts it to the Scheming Choices format
+    """
+    choices = []
+
+    # context = {'user': ''}
+    definitions = toolkit.get_action('definition_list')({}, {'all_fields': True})
+
+    for definition in definitions:
+        choice = dict(value=definition['label'], label=definition['display_name'])
+        choices.append(choice)
+
+    return choices

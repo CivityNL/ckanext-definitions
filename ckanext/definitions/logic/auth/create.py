@@ -9,10 +9,8 @@ def definition_create(context, data_dict):
     Only for Data Officers
     '''
 
-    _data_dict = {'user_id': context['user']}
-    result = toolkit.h.is_data_officer(context, _data_dict)
-    # log.info('Check Permission to definition_create to the user -> {0}  Result --> {1}'.format(context['user'], result))
-    return {'success': result}
+    return {'success': toolkit.h.is_data_officer(context,
+                                                 {'user_id': context['user']})}
 
 
 def data_officer_create(context, data_dict):

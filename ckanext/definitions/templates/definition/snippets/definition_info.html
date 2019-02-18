@@ -24,6 +24,8 @@
             <th scope="row" class="definition-label">{{ _('URL') }}</th>
             {% if h.is_url(definition_dict.url) %}
               <td class="definition-details" property="foaf:homepage">{{ h.link_to(definition_dict.url, definition_dict.url, rel='foaf:homepage', target='_blank') }}</td>
+            {% elif definition_dict.url and h.is_url('http://'+definition_dict.url) %}
+                <td class="definition-details" property="foaf:homepage">{{ h.link_to(definition_dict.url, 'http://'+definition_dict.url, rel='foaf:homepage', target='_blank') }}</td>
             {% else %}
               <td class="definition-details" property="foaf:homepage">{{ definition_dict.url }}</td>
             {% endif %}

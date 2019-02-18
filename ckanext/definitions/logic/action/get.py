@@ -7,9 +7,9 @@ import logging
 import ckan.lib.dictization as dictization
 import ckan.model.misc as misc
 import ckan
+import ast
 from six import string_types
 
-NotFound = logic.NotFound
 log = logging.getLogger(__name__)
 _table_dictize = ckan.lib.dictization.table_dictize
 
@@ -25,12 +25,13 @@ def definition_show(context, data_dict):
     definition_id = data_dict.get('id')
     result = definitions_model.Definition.get(definition_id)
     if result is None:
-        raise NotFound
+        raise toolkit.ObjectNotFound
     result_dict = dictization.table_dictize(result, context)
 
     return result_dict
 
 
+@toolkit.side_effect_free
 def definition_list(context, data_dict):
     '''Return a list of the site's tags.
 
@@ -85,7 +86,6 @@ def _definition_search(context, data_dict):
     user = context['user']
 
     term = data_dict.get('query') or data_dict.get('q') or []
-
     offset = data_dict.get('offset')
     limit = data_dict.get('limit')
 
@@ -111,6 +111,7 @@ def _definition_search(context, data_dict):
     return q.all(), count
 
 
+@toolkit.side_effect_free
 def definition_search(context, data_dict):
     '''Return a list of definitions whose labels contain a given string.
 
@@ -140,6 +141,7 @@ def definition_search(context, data_dict):
     return {'count': count,
             'results': [_table_dictize(definition, context) for definition in definitions]}
 
+
 @toolkit.side_effect_free
 def definition_autocomplete(context, data_dict):
     '''Return a list of definition labels that contain a given string.
@@ -164,6 +166,7 @@ def definition_autocomplete(context, data_dict):
         return []
 
 
+@toolkit.side_effect_free
 def search_packages_by_definition(context, data_dict):
     '''Return a list of packages associated with the definition.
 
@@ -194,6 +197,7 @@ def search_packages_by_definition(context, data_dict):
     return result
 
 
+@toolkit.side_effect_free
 def search_definitions_by_package(context, data_dict):
     '''Return a list of definitions associated with the package.
 
@@ -205,20 +209,26 @@ def search_definitions_by_package(context, data_dict):
     '''
 
     package_id = data_dict.get('package_id')
-
-    toolkit.check_access('package_show', context, {'id': package_id})
     pkg_dict = toolkit.get_action('package_show')(context, {'id': package_id})
 
-
     try:
-        toolkit.get_or_bust(pkg_dict, ['definition'])
-        result = []
-
-        for definition in pkg_dict['definition']:
-            result.append(toolkit.get_action('definition_show')(context, {'id': definition}))
-
+        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
     except toolkit.ValidationError:
         return []
+
+    if definitions:
+        definitions = ast.literal_eval(definitions)
+    else:
+        definitions = list()
+
+    result = []
+
+    for definition in definitions:
+        log.info('definition = {0}'.format(definition))
+        try:
+            result.append(toolkit.get_action('definition_show')(context, {'id': definition}))
+        except toolkit.ObjectNotFound:
+            pass
 
     return result
 

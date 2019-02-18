@@ -16,13 +16,15 @@ Example:
 
 #}
 {% block definition_list %}
-  {% if definitions %}
-    <ul class="{{ list_class or 'dataset-list unstyled' }}">
-      {% block definition_list_inner %}
-        {% for definition in definitions %}
-          {% snippet 'snippets/definition_item.html', definition=definition, show_enabled=show_enabled%}
-        {% endfor %}
-      {% endblock %}
-    </ul>
-  {% endif %}
+    {% if definitions %}
+        <ul class="{{ list_class or 'dataset-list unstyled' }}">
+            {% block definition_list_inner %}
+                {% for definition in definitions %}
+                    {% if definition.enabled %}
+                        {% snippet 'snippets/definition_item.html', definition=definition, show_enabled=show_enabled %}
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+        </ul>
+    {% endif %}
 {% endblock %}

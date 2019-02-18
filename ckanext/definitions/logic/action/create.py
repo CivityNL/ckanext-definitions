@@ -1,3 +1,5 @@
+import ast
+
 from ckan.plugins import toolkit
 
 import ckanext.definitions.model.definition as definition_model
@@ -32,14 +34,12 @@ def definition_create(context, data_dict):
         if 'label' in errors:
             errors['label'].append(toolkit._('Value cannot be empty.'))
         else:
-            errors['label'] = ['Value cannot be empty.']
-
+            errors['label'] = [toolkit._('Value cannot be empty.')]
     if not description:
         if 'description' in errors:
             errors['description'].append(toolkit._('Value cannot be empty.'))
         else:
             errors['description'] = [toolkit._('Value cannot be empty.')]
-
     if errors:
         model.Session.rollback()
         raise toolkit.ValidationError(errors)
@@ -66,46 +66,74 @@ def data_officer_create(context, data_dict):
     :return: the definition added to the DB
     '''
 
-    user_id = data_dict['user_id']
+    # check for valid input
+    try:
+        user_id = toolkit.get_or_bust(data_dict, ['user_id'])
+    except toolkit.ValidationError:
+        return {'success': False, 'msg': 'Input was not right'}
+
+    # check if User exists
+    try:
+        toolkit.get_action("user_id_show")(data_dict={"id": user_id})
+    except toolkit.ObjectNotFound:
+        return {'success': False, 'msg': 'User Not Found'}
+
     user_extras = toolkit.get_action('user_extra_show')(context, {"user_id": user_id})['extras']
 
     for extra_dict in user_extras:
         if extra_dict['key'] == 'Data Officer':
             if extra_dict['value'] == 'True':
-                return "User is already a Data Officer"
+                return {'success': True, 'msg': 'User is already a Data Officer'}
             else:
-                _data_dict = {"user_id": user_id, "extras": [{"key":"Data Officer", "new_value":"True"}]}
-                result = toolkit.get_action('user_extra_update')(context, _data_dict)
-                return "User added Successfuly to the Data Officers List."
+                _data_dict = {"user_id": user_id, "extras": [{"key": "Data Officer", "new_value":"True"}]}
+                toolkit.get_action('user_extra_update')(context, _data_dict)
+                return {'success': True, 'msg': 'User added Successfuly to the Data Officers List.'}
 
     _data_dict = {"user_id": user_id, "extras": [{"key":"Data Officer", "value":"True"}]}
     result = toolkit.get_action('user_extra_create')(context, _data_dict)
-    return "User added Successfuly to the Data Officers List."
+    return {'success': True, 'msg': 'User added Successfuly to the Data Officers List.'}
 
 
 def package_definition_create(context, data_dict):
+    # check for valid input
     try:
         package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
     except toolkit.ValidationError:
         return {'success': False, 'msg': 'Input was not right'}
 
-    pkg_dict = toolkit.get_action("package_show")(data_dict={"id": package_id, "internal_call": True})
+    # check if package exists
+    try:
+        pkg_dict = toolkit.get_action("package_show")(
+            data_dict={"id": package_id, "internal_call": True})
+    except toolkit.ObjectNotFound:
+        return {'success': False, 'msg': 'Package Not Found'}
 
+    # check if definition exists
+    try:
+        toolkit.get_action("definition_show")(data_dict={"id": definition_id})
+    except toolkit.ObjectNotFound:
+        return {'success': False, 'msg': 'Definition Not Found'}
 
     #  Check if 'definition' field is already in package
     try:
-        toolkit.get_or_bust(pkg_dict, ['definition'])
+        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
+        if definitions:
+            definitions = ast.literal_eval(definitions)
+        else:
+            definitions = list()
     except toolkit.ValidationError:
-        pkg_dict['definition'] = list()
+        definitions = list()
+    except SyntaxError:
+        definitions = list()
 
     #  Add the new definition in case it does not exist there yet
-    if definition_id not in pkg_dict['definition']:
+    if definition_id not in definitions:
+        definitions.append(definition_id)
 
-        pkg_dict['definition'].append(definition_id)
+        pkg_dict['definition'] = unicode(definitions)
 
-        # TODO mind the workflow for fuck sake
-        pkg_dict['save_metadata_only'] = True
-        result = toolkit.get_action("package_update")(context, data_dict=pkg_dict)
-        return result
+        # TODO Replace with patch?
+        pkg_dict = toolkit.get_action("package_update")(context, data_dict=pkg_dict)
+        return pkg_dict
 
     return pkg_dict

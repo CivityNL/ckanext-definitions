@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block content_primary_nav %}
+    {{ super() }}
+    {{ h.build_nav_icon('dataset_definition_edit', _('Definitions'), package_id=pkg.name) }}
+{% endblock %}

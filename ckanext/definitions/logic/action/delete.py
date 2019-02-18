@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 '''API functions for deleting data from CKAN.'''
-
+import ast
 import logging
 from ckan.plugins import toolkit
 
@@ -102,35 +102,47 @@ def package_definition_delete(context, data_dict):
     :return: True if Successfull, otherwise False
     '''
 
-    package_id = data_dict['package_id']
-    definition_id = data_dict['definition_id']
-    log.info('package_definition_delete -> {0}'.format(package_id))
+    # check for valid input
+    try:
+        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
+    except toolkit.ValidationError:
+        return {'success': False, 'msg': 'Input was not right'}
 
-    pkg_dict = toolkit.get_action('package_show')(context, {"id": package_id})
+    # check if package exists
+    try:
+        pkg_dict = toolkit.get_action("package_show")(
+            data_dict={"id": package_id, "internal_call": True})
+    except toolkit.ObjectNotFound:
+        return {'success': False, 'msg': 'Package Not Found'}
+
+    # check if definition exists
+    try:
+        toolkit.get_action("definition_show")(data_dict={"id": definition_id})
+    except toolkit.ObjectNotFound:
+        return {'success': False, 'msg': 'Definition Not Found'}
 
     #  Check if 'definition' field is already in package
     try:
         definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
-        log.info('pkg_dict definitions -> {0}'.format(pkg_dict['definition']))
-        log.info('Looking for definition_id -> {0}'.format(definition_id))
-        for definition in definitions:
-            log.info('for definition -> {0}'.format(definition))
-            if definition == definition_id:
-                log.info('Found and removing -> {0}'.format(definition_id))
-                log.info('From pkg_dict definitions -> {0}'.format(pkg_dict['definition']))
-
-                pkg_dict['definition'].remove(definition_id)
-
-                log.info('After pkg_dict definitions -> {0}'.format(pkg_dict['definition']))
-                break
-
-        pkg_dict['save_metadata_only'] = True
-        toolkit.get_action("package_update")({'user': 'admingil'}, data_dict=pkg_dict)
-        return {'Success': True, "msg": "Definition removed from package."}
-
+        if definitions:
+            definitions = ast.literal_eval(definitions)
+        else:
+            return {'success': False, 'msg': 'Definition Not Found'}
     except toolkit.ValidationError:
-        log.info('ValidationError')
-        return {'Success': False, "msg": "Could not find the definition in the package"}
+        return {'success': False, 'msg': 'Definition Not Found'}
+    except SyntaxError:
+        return {'success': False, 'msg': 'Definition Not Found'}
 
 
+    #  Add the new definition in case it does not exist there yet
+    if definition_id in definitions:
+        definitions.remove(definition_id)
+
+        pkg_dict['definition'] = unicode(definitions)
+
+        # TODO Replace with patch?
+        pkg_dict = toolkit.get_action("package_update")(context, data_dict=pkg_dict)
+        return pkg_dict
+
+    return pkg_dict
 

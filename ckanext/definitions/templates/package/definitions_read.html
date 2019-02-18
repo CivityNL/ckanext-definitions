@@ -5,9 +5,6 @@
 {% block primary_content_inner %}
   <h1 class="heading">
     {% block page_heading %}{{ _('Definitions') }}{% endblock %}
-    {% if h.check_access('package_update', {'id':pkg.id }) %}
-      {% link_for _('Manage Definitions'), controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController', action='edit', package_id=pkg.name, class_='btn btn-primary pull-right', icon='fa fa-wrench', named_route='dataset_definition_edit' %}
-    {% endif %}
   </h1>
 
   {% block package_definitions_list %}

@@ -11,19 +11,9 @@ The basic recipe is to call:
 
 which builds the dictionary by iterating over the table columns.
 '''
-import datetime
-import urlparse
 
-from ckan.common import config
-from sqlalchemy.sql import select
-
-import ckan.logic as logic
-import ckan.plugins as plugins
-import ckan.lib.helpers as h
 import ckan.lib.dictization as d
-import ckan.authz as authz
-import ckan.lib.search as search
-import ckan.lib.munge as munge
+
 
 
 def definition_list_dictize(definition_list, context):

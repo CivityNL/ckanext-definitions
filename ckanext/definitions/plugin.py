@@ -11,7 +11,6 @@ import ckanext.definitions.logic.auth.get as auth_get
 import ckanext.definitions.logic.auth.create as auth_create
 import ckanext.definitions.logic.auth.update as auth_update
 import ckanext.definitions.logic.auth.delete as auth_delete
-
 from ckan.lib.plugins import DefaultTranslation
 
 
@@ -73,7 +72,8 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # ITemplateHelpers
     def get_helpers(self):
-        return {'is_data_officer': h.is_data_officer}
+        return {'is_data_officer': h.is_data_officer,
+                'definition_list_choices': h.definition_list_choices}
 
 
     #IRoutes
@@ -112,17 +112,16 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
 
         # Package Definitions
-
-        map.connect('dataset_definition_index', '/dataset/:package_id/definition',
+        map.connect('dataset_definition_read', '/dataset/definitions/:package_id',
                     controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                    action='index')
-        map.connect('dataset_definition_new', '/dataset/:package_id/definition/new',
-                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                    action='new')
-        map.connect('dataset_definition_edit', '/dataset/:package_id/definition/edit',
+                    action='read')
+        map.connect('dataset_definition_edit', '/dataset/definitions/:package_id/edit',
                     controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
                     action='edit')
-        map.connect('dataset_definition_delete', '/dataset/:package_id/definition/delete/:definition_id',
+        map.connect('dataset_definition_new', '/dataset/definitions/:package_id/new',
+                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
+                    action='new')
+        map.connect('dataset_definition_delete', '/dataset/definitions/{package_id}/delete/{definition_id}',
                     controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
                     action='delete')
 
