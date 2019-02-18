@@ -100,7 +100,7 @@ def _definition_search(context, data_dict):
 
     try:
         toolkit.check_access('definition_update', context)
-        if 'include_disabled' not in data_dict or data_dict['include_disabled']==False:
+        if 'include_disabled' not in data_dict or not data_dict['include_disabled']:
             q = q.filter(definitions_model.Definition.enabled == True)
     except toolkit.NotAuthorized:
         q = q.filter(definitions_model.Definition.enabled==True)

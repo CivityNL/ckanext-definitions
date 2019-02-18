@@ -66,8 +66,14 @@ class DefinitionController(base.BaseController):
                 search_dict[key] = toolkit.request.params.get(key, '')
         log.info('search_dict  FROM REQUEST = {0}'.format(search_dict))
 
-        # TODO Call search Action function instead of model directly
-        search_result = definitions_model.Definition.search(search_dict=search_dict, q=toolkit.c.q)
+        # # TODO Call search Action function instead of model directly
+        try:
+            enabled = not toolkit.check_access('definition_update', context)
+        except toolkit.NotAuthorized:
+            enabled = True
+
+        search_result = definitions_model.Definition.search(
+            search_dict=search_dict, q=toolkit.c.q, enabled=enabled)
 
 
         results = search_result['results']

@@ -1,9 +1,10 @@
 import ckan.model.types as _types
-from ckan.model import package as _package, package_extra as _package_extra, meta, domain_object
+from ckan.model import package as _package, package_extra as _package_extra, \
+    meta, domain_object
 import ckan.model as model
 import logging
 import datetime
-from sqlalchemy import types, Column, Table, func, or_
+from sqlalchemy import types, Column, Table, func, or_, and_
 
 log = logging.getLogger(__name__)
 definition_table = None
@@ -65,8 +66,8 @@ class Definition(domain_object.DomainObject):
         return definition
 
     @classmethod
-    def search(cls, search_dict, q,):
-        '''Return all definitions whoo match the criteria.
+    def search(cls, search_dict, q, enabled=True):
+        '''Return all definitions which match the criteria.
 
         :param search_dict: dictionary with key's and values to search.
         :type search_dict: dict
@@ -76,9 +77,13 @@ class Definition(domain_object.DomainObject):
 
         '''
 
-
         # Apply the Facets
         query = meta.Session.query(Definition)
+
+        # Show only public Definitions by default
+        if enabled:
+            query = query.filter(Definition.enabled == enabled)
+
         for key, value in search_dict.iteritems():
             if key in vars(Definition):
                 attribute = getattr(Definition, key)
@@ -87,8 +92,10 @@ class Definition(domain_object.DomainObject):
         # Apply the q
         if q:
             q = q.strip().lower()
-            query = query.filter(or_(func.lower(Definition.label).contains(q), func.lower(Definition.description).contains(q)))
-
+            query = query.filter(
+                or_(func.lower(Definition.label).contains(q),
+                    func.lower(Definition.description).contains(q))
+            )
 
         # TODO remove this from the model
         # Build Facets
@@ -98,11 +105,16 @@ class Definition(domain_object.DomainObject):
             if key in vars(Definition):
                 search_facets[key] = {'items': [], 'title': key}
                 attribute = getattr(Definition, key)
-                for row_value, row_count in query.with_entities(attribute, func.count(attribute)).group_by(attribute).all():
-                    search_facets[key]['items'].append({'count': row_count, 'display_name': str(row_value), 'name': str(row_value)})
+                for row_value, row_count in query.with_entities(attribute,
+                                                                func.count(
+                                                                    attribute)).group_by(
+                    attribute).all():
+                    search_facets[key]['items'].append(
+                        {'count': row_count, 'display_name': str(row_value),
+                         'name': str(row_value)})
 
-        return {'search_facets': search_facets, 'count': query.count(), 'results': query.all()}
-
+        return {'search_facets': search_facets, 'count': query.count(),
+                'results': query.all()}
 
     @classmethod
     def all(cls, include_disabled):
@@ -119,7 +131,7 @@ class Definition(domain_object.DomainObject):
 
         query = meta.Session.query(Definition)
         if not include_disabled:
-            query = query.filter(Definition.enabled==True)
+            query = query.filter(Definition.enabled == True)
 
         return query
 
