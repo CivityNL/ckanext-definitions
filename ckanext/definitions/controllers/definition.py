@@ -85,7 +85,7 @@ class DefinitionController(base.BaseController):
             limit = int(toolkit.request.params.get('_%s_limit' % facet,
                                                    toolkit.config.get(
                                                        'search.facets.default',
-                                                       10)))
+                                                       30)))
             toolkit.c.search_facets_limits[facet] = limit
 
         # Set Page
@@ -282,7 +282,7 @@ class DefinitionController(base.BaseController):
                 limit = int(toolkit.request.params.get('_%s_limit' % facet,
                                                        toolkit.config.get(
                                                            'search.facets.default',
-                                                           10)))
+                                                           30)))
                 toolkit.c.search_facets_limits[facet] = limit
             toolkit.c.page.items = query['results']
 
