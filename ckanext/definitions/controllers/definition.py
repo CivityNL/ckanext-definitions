@@ -75,7 +75,6 @@ class DefinitionController(base.BaseController):
         search_result = definitions_model.Definition.search(
             search_dict=search_dict, q=toolkit.c.q, enabled=enabled)
 
-
         results = search_result['results']
 
         # Set Facets Content

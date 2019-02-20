@@ -74,7 +74,7 @@ def data_officer_create(context, data_dict):
 
     # check if User exists
     try:
-        toolkit.get_action("user_id_show")(data_dict={"id": user_id})
+        toolkit.get_action("user_show")(data_dict={"id": user_id})
     except toolkit.ObjectNotFound:
         return {'success': False, 'msg': 'User Not Found'}
 
