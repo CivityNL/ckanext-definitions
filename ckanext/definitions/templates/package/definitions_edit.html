@@ -36,3 +36,7 @@
     </div>
 {% endblock %}
 
+
+{% block content_action %}
+  {% link_for _('View dataset'), controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController', action='read', package_id=pkg.name, class_='btn', icon='eye' %}
+{% endblock %}
