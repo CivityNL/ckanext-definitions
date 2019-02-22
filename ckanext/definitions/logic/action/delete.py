@@ -3,20 +3,15 @@
 '''API functions for deleting data from CKAN.'''
 import ast
 import logging
-from ckan.plugins import toolkit
-
-import sqlalchemy as sqla
 
 import ckan.lib.jobs as jobs
 import ckan.logic
-import ckan.logic.action
-import ckan.plugins as plugins
-import ckan.lib.dictization.model_dictize as model_dictize
-import ckanext.definitions.model.definition as definitions_model
-from ckan import authz
-
+import ckan.model as model
+from ckanext.definitions.constants import DELETE_DEFINITION_EMAIL
 from ckan.common import _
+from ckan.plugins import toolkit
 
+import ckanext.definitions.model.definition as definitions_model
 
 log = logging.getLogger('ckan.logic')
 
@@ -43,29 +38,71 @@ def definition_delete(context, data_dict):
     '''
 
     model = context['model']
+    if not data_dict.has_key('id') or not data_dict['id']:
+        raise ValidationError({'id': _('id not in data')})
 
+    toolkit.check_access('definition_delete', context, data_dict)
+
+    definition_id = data_dict['id']
+
+    # check if definition exists
+    definition_obj = definitions_model.Definition.get(definition_id)
+    if definition_obj is None:
+        raise NotFound(_('Could not find definition "%s"') % definition_id)
+
+    _delete_all_package_definitions_for_definition(context, data_dict)
+
+    # Delete the actual Definition
+    definition_obj.delete()
+    model.repo.commit()
+
+    return {'success': True,
+            'msg': 'successfully deleted definition {0}'.format(definition_id)}
+
+
+# NOT AN PUBLIC ACTION
+def _delete_all_package_definitions_for_definition(context, data_dict):
     if not data_dict.has_key('id') or not data_dict['id']:
         raise ValidationError({'id': _('id not in data')})
 
     definition_id = data_dict['id']
 
+    # check if definition exists
     definition_obj = definitions_model.Definition.get(definition_id)
-
     if definition_obj is None:
-        raise NotFound(_('Could not find definition "%s"') % definition_id)
-
-    toolkit.check_access('definition_delete', context, data_dict)
+        raise toolkit.ObjectNotFound(_('Could not find definition "%s"') % definition_id)
 
     # Delete all package_definitions associated
-    _data_dict = {'definition_id': definition_id, 'all_fields': True}
-    pkg_list = toolkit.get_action('search_packages_by_definition')(context, _data_dict)
+    context['ignore_auth'] = True
+    data_dict_2 = {'definition_id': definition_id, 'all_fields': True}
+    pkg_list = toolkit.get_action('search_packages_by_definition')(context,
+                                                                   data_dict_2)
+
     for package in pkg_list:
-        _data_dict = {'package_id': package['id'], 'definition_id': definition_id}
+        _data_dict = {'package_id': package['id'],
+                      'definition_id': definition_id}
+
         toolkit.get_action('package_definition_delete')(context, _data_dict)
 
-    # Delete the actual Definition
-    definition_obj.delete()
-    model.repo.commit()
+        # Email Notification for Mandated or Owner
+        if package['state'] == 'active':
+            try:
+                receiver_email = _get_receiver_email(
+                    package['mandated'])
+            except (KeyError, AttributeError):
+                # Send email to Owner
+                receiver_email = _get_receiver_email(
+                    package['owner'])
+
+            url_for_dataset = toolkit.url_for(controller='package',
+                                              action='read',
+                                              id=package['name'],
+                                              _external=True)
+            subject = DELETE_DEFINITION_EMAIL['subject']
+            message = DELETE_DEFINITION_EMAIL['message'].format(
+                data_dict['id'], package['title'], url_for_dataset)
+
+            toolkit.h.workflow_send_email(receiver_email, subject, message)
 
 
 ##############################################################
@@ -84,12 +121,16 @@ def data_officer_delete(context, data_dict):
     '''
 
     user_id = data_dict['user_id']
-    user_extras = toolkit.get_action('user_extra_show')(context, {"user_id": user_id})['extras']
+    user_extras = \
+        toolkit.get_action('user_extra_show')(context, {"user_id": user_id})[
+            'extras']
 
     for extra_dict in user_extras:
         if extra_dict['key'] == 'Data Officer':
-            _data_dict = {"user_id": user_id, "extras": [{"key":"Data Officer", "new_value":""}]}
-            result = toolkit.get_action('user_extra_update')(context, _data_dict)
+            _data_dict = {"user_id": user_id,
+                          "extras": [{"key": "Data Officer", "new_value": ""}]}
+            result = toolkit.get_action('user_extra_update')(context,
+                                                             _data_dict)
             return "User removed Successfuly from the Data Officers List."
     return "User is not a Data Officer"
 
@@ -104,7 +145,9 @@ def package_definition_delete(context, data_dict):
 
     # check for valid input
     try:
-        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
+        package_id, definition_id = toolkit.get_or_bust(data_dict,
+                                                        ['package_id',
+                                                         'definition_id'])
     except toolkit.ValidationError:
         return {'success': False, 'msg': 'Input was not right'}
 
@@ -116,6 +159,7 @@ def package_definition_delete(context, data_dict):
         return {'success': False, 'msg': 'Package Not Found'}
 
     # check if definition exists
+    # Should we check this?
     try:
         toolkit.get_action("definition_show")(data_dict={"id": definition_id})
     except toolkit.ObjectNotFound:
@@ -133,16 +177,24 @@ def package_definition_delete(context, data_dict):
     except SyntaxError:
         return {'success': False, 'msg': 'Definition Not Found'}
 
-
-    #  Add the new definition in case it does not exist there yet
+    #  Remove the definition if it is found
     if definition_id in definitions:
         definitions.remove(definition_id)
 
         pkg_dict['definition'] = unicode(definitions)
 
         # TODO Replace with patch?
-        pkg_dict = toolkit.get_action("package_update")(context, data_dict=pkg_dict)
+        pkg_dict = toolkit.get_action("package_update")(context,
+                                                        data_dict=pkg_dict)
         return pkg_dict
 
     return pkg_dict
 
+
+def _get_receiver_email(user_id):
+    group_mailbox = toolkit.h.catalogthehague_get_group_mailbox_for_user(
+        user_id)
+    if group_mailbox:
+        return group_mailbox
+    else:
+        return model.User.get(user_id).email

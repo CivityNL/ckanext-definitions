@@ -401,6 +401,7 @@ class DefinitionController(base.BaseController):
             'definition/snippets/definition_form.html', extra_vars=extra_vars)
         return toolkit.render('definition/edit.html')
 
+
     def _save_edit(self, definition_id, context):
         try:
             data_dict = clean_dict(dict_fns.unflatten(
@@ -420,6 +421,7 @@ class DefinitionController(base.BaseController):
             errors = e.error_dict
             error_summary = e.error_summary
             return self.edit(definition_id, data_dict, errors, error_summary)
+
 
     def delete(self, definition_id):
         if 'cancel' in toolkit.request.params:
