@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-definitions 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-02-18 05:53-0500\n"
+"POT-Creation-Date: 2019-02-24 15:41-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgid "Creator"
 msgstr ""
 
 #: ckanext/definitions/controllers/definition.py:54
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:30
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:35
 msgid "Enabled"
 msgstr ""
@@ -56,65 +56,65 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:101
+#: ckanext/definitions/controllers/definition.py:104
 msgid "Other"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:146
-#: ckanext/definitions/controllers/definition.py:341
-#: ckanext/definitions/controllers/definition.py:375
-#: ckanext/definitions/controllers/definition.py:413
-#: ckanext/definitions/controllers/definition.py:447
+#: ckanext/definitions/controllers/definition.py:149
+#: ckanext/definitions/controllers/definition.py:344
+#: ckanext/definitions/controllers/definition.py:378
+#: ckanext/definitions/controllers/definition.py:417
+#: ckanext/definitions/controllers/definition.py:452
 msgid "Definition not found"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:232
+#: ckanext/definitions/controllers/definition.py:235
 #: ckanext/definitions/templates/header.html:7
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:233
+#: ckanext/definitions/controllers/definition.py:236
 #: ckanext/definitions/templates/header.html:8
 msgid "Groups"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:234
+#: ckanext/definitions/controllers/definition.py:237
 msgid "Tags"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:235
+#: ckanext/definitions/controllers/definition.py:238
 msgid "Formats"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:236
+#: ckanext/definitions/controllers/definition.py:239
 msgid "Licenses"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:306
+#: ckanext/definitions/controllers/definition.py:309
 msgid "Unauthorized to create a definition"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:343
-#: ckanext/definitions/controllers/definition.py:415
+#: ckanext/definitions/controllers/definition.py:346
+#: ckanext/definitions/controllers/definition.py:419
 msgid "Integrity Error"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:362
+#: ckanext/definitions/controllers/definition.py:365
 msgid "Unauthorized to edit a definition"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:385
+#: ckanext/definitions/controllers/definition.py:388
 #, python-format
 msgid "User %r not authorized to edit %s"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:433
-#: ckanext/definitions/controllers/definition.py:445
+#: ckanext/definitions/controllers/definition.py:438
+#: ckanext/definitions/controllers/definition.py:450
 #, python-format
 msgid "Unauthorized to delete definition %s"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:440
+#: ckanext/definitions/controllers/definition.py:445
 msgid "Definition has been deleted."
 msgstr ""
 
@@ -144,11 +144,13 @@ msgstr ""
 msgid "Value cannot be empty."
 msgstr ""
 
-#: ckanext/definitions/logic/action/delete.py:48
+#: ckanext/definitions/logic/action/delete.py:42
+#: ckanext/definitions/logic/action/delete.py:66
 msgid "id not in data"
 msgstr ""
 
-#: ckanext/definitions/logic/action/delete.py:55
+#: ckanext/definitions/logic/action/delete.py:51
+#: ckanext/definitions/logic/action/delete.py:74
 #, python-format
 msgid "Could not find definition \"%s\""
 msgstr ""
@@ -184,6 +186,7 @@ msgstr ""
 
 #: ckanext/definitions/templates/data_officer/edit.html:6
 #: ckanext/definitions/templates/data_officer/index.html:15
+#: ckanext/definitions/templates/package/definitions_read.html:18
 msgid "Manage"
 msgstr ""
 
@@ -328,15 +331,23 @@ msgstr ""
 msgid "Edit Definition"
 msgstr ""
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:21
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:17
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:19
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:8
 msgid "Description"
 msgstr ""
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:25
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:21
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:24
 msgid "URL"
+msgstr ""
+
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
+msgid "Yes"
+msgstr ""
+
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
+msgid "No"
 msgstr ""
 
 #: ckanext/definitions/templates/definition/snippets/definition_form.html:23
@@ -369,6 +380,10 @@ msgstr ""
 
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:53
 msgid "Modified Date"
+msgstr ""
+
+#: ckanext/definitions/templates/package/definitions_edit.html:41
+msgid "View dataset"
 msgstr ""
 
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:2

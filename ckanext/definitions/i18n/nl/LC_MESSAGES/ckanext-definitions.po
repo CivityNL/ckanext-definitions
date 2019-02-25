@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-definitions 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-02-18 05:53-0500\n"
+"POT-Creation-Date: 2019-02-24 15:41-0500\n"
 "PO-Revision-Date: 2018-12-17 03:47-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -45,7 +45,7 @@ msgid "Creator"
 msgstr "Maker"
 
 #: ckanext/definitions/controllers/definition.py:54
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:30
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:35
 msgid "Enabled"
 msgstr "Actief"
@@ -57,65 +57,65 @@ msgstr "Actief"
 msgid "Label"
 msgstr "Begrip"
 
-#: ckanext/definitions/controllers/definition.py:101
+#: ckanext/definitions/controllers/definition.py:104
 msgid "Other"
 msgstr "Anders"
 
-#: ckanext/definitions/controllers/definition.py:146
-#: ckanext/definitions/controllers/definition.py:341
-#: ckanext/definitions/controllers/definition.py:375
-#: ckanext/definitions/controllers/definition.py:413
-#: ckanext/definitions/controllers/definition.py:447
+#: ckanext/definitions/controllers/definition.py:149
+#: ckanext/definitions/controllers/definition.py:344
+#: ckanext/definitions/controllers/definition.py:378
+#: ckanext/definitions/controllers/definition.py:417
+#: ckanext/definitions/controllers/definition.py:452
 msgid "Definition not found"
 msgstr "Definitie niet gevonden"
 
-#: ckanext/definitions/controllers/definition.py:232
+#: ckanext/definitions/controllers/definition.py:235
 #: ckanext/definitions/templates/header.html:7
 msgid "Organizations"
 msgstr "Organisaties"
 
-#: ckanext/definitions/controllers/definition.py:233
+#: ckanext/definitions/controllers/definition.py:236
 #: ckanext/definitions/templates/header.html:8
 msgid "Groups"
 msgstr "Groepen"
 
-#: ckanext/definitions/controllers/definition.py:234
+#: ckanext/definitions/controllers/definition.py:237
 msgid "Tags"
 msgstr "Tags"
 
-#: ckanext/definitions/controllers/definition.py:235
+#: ckanext/definitions/controllers/definition.py:238
 msgid "Formats"
 msgstr "Formaten"
 
-#: ckanext/definitions/controllers/definition.py:236
+#: ckanext/definitions/controllers/definition.py:239
 msgid "Licenses"
 msgstr "Licenties"
 
-#: ckanext/definitions/controllers/definition.py:306
+#: ckanext/definitions/controllers/definition.py:309
 msgid "Unauthorized to create a definition"
 msgstr "Geen rechten om definitie te maken."
 
-#: ckanext/definitions/controllers/definition.py:343
-#: ckanext/definitions/controllers/definition.py:415
+#: ckanext/definitions/controllers/definition.py:346
+#: ckanext/definitions/controllers/definition.py:419
 msgid "Integrity Error"
 msgstr "Integriteitsfout"
 
-#: ckanext/definitions/controllers/definition.py:362
+#: ckanext/definitions/controllers/definition.py:365
 msgid "Unauthorized to edit a definition"
 msgstr "Geen rechten om definitie aan te passen."
 
-#: ckanext/definitions/controllers/definition.py:385
+#: ckanext/definitions/controllers/definition.py:388
 #, python-format
 msgid "User %r not authorized to edit %s"
 msgstr "Gebruiker %r heeft geen rechten voor aanpassingen %s."
 
-#: ckanext/definitions/controllers/definition.py:433
-#: ckanext/definitions/controllers/definition.py:445
+#: ckanext/definitions/controllers/definition.py:438
+#: ckanext/definitions/controllers/definition.py:450
 #, python-format
 msgid "Unauthorized to delete definition %s"
 msgstr "Geen rechten om definitie %s te verwijderen."
 
-#: ckanext/definitions/controllers/definition.py:440
+#: ckanext/definitions/controllers/definition.py:445
 msgid "Definition has been deleted."
 msgstr "Definitie is verwijderd."
 
@@ -145,11 +145,13 @@ msgstr "Geen rechten om vermelding %s te bekijken."
 msgid "Value cannot be empty."
 msgstr "Waarde kan niet leeg zijn."
 
-#: ckanext/definitions/logic/action/delete.py:48
+#: ckanext/definitions/logic/action/delete.py:42
+#: ckanext/definitions/logic/action/delete.py:66
 msgid "id not in data"
 msgstr "id niet in data gevonden"
 
-#: ckanext/definitions/logic/action/delete.py:55
+#: ckanext/definitions/logic/action/delete.py:51
+#: ckanext/definitions/logic/action/delete.py:74
 #, python-format
 msgid "Could not find definition \"%s\""
 msgstr "Kon definitie niet vinden \"%s\""
@@ -185,6 +187,7 @@ msgstr "Data Officers"
 
 #: ckanext/definitions/templates/data_officer/edit.html:6
 #: ckanext/definitions/templates/data_officer/index.html:15
+#: ckanext/definitions/templates/package/definitions_read.html:18
 msgid "Manage"
 msgstr "Beheer"
 
@@ -268,9 +271,7 @@ msgstr "Wat zijn definities?"
 #: ckanext/definitions/templates/definition/index.html:64
 #: ckanext/definitions/templates/definition/read_base.html:29
 msgid " Helping Text Explaining what are Definitions and how to use them. "
-msgstr ""
-"Helptekst om uit te leggen wat definities zijn en hoe je ze kunt "
-"gebruiken."
+msgstr "Een definitie is een samenvattende beschrijving van een begrip."
 
 #: ckanext/definitions/templates/definition/index.html:15
 #: ckanext/definitions/templates/package/definitions_edit.html:12
@@ -335,16 +336,24 @@ msgstr "Definitie"
 msgid "Edit Definition"
 msgstr "Wijzig Definitie"
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:21
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:17
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:19
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:8
 msgid "Description"
 msgstr "Beschrijving"
 
-#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:25
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:21
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:24
 msgid "URL"
 msgstr "URL"
+
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
+msgid "Yes"
+msgstr "Ja"
+
+#: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
+msgid "No"
+msgstr "Nee"
 
 #: ckanext/definitions/templates/definition/snippets/definition_form.html:23
 msgid "Are you sure you want to delete this definition?"
@@ -377,6 +386,12 @@ msgstr "Gecreëerd"
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:53
 msgid "Modified Date"
 msgstr "Laatst gewijzigd"
+
+#: ckanext/definitions/templates/package/definitions_edit.html:41
+#, fuzzy
+#| msgid "Search datasets..."
+msgid "View dataset"
+msgstr "Zoek vermeldingen ..."
 
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:2
 msgid "Definitions List"

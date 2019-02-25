@@ -229,8 +229,9 @@ def search_definitions_by_package(context, data_dict):
             result.append(toolkit.get_action('definition_show')(context, {'id': definition}))
         except toolkit.ObjectNotFound:
             pass
+    ordered_result = sorted(result, key=lambda k: k['label'])
 
-    return result
+    return ordered_result
 
 
 ##############################################################

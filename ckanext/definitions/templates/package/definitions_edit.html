@@ -3,11 +3,7 @@
 {% block subtitle %}{{ _('Definitions') }} - {{ super() }}{% endblock %}
 
 {% block primary_content_inner %}
-    {% block package_definitions_list %}
-        {{ h.snippet('package/snippets/definition_list_manage.html', pkg_definitions=pkg_definitions, pkg=pkg) }}
-    {% endblock %}
-
-    <div style="width: 40%; float: right; text-align: center;">
+    <div style="width: 100%; float: right; text-align: center;">
         <h3>
             {% block page_heading %}{{ _('Add Definition') }}{% endblock %}
         </h3>
@@ -34,9 +30,13 @@
             </form>
         {% endblock %}
     </div>
+
+    {% block package_definitions_list %}
+        {{ h.snippet('package/snippets/definition_list_manage.html', pkg_definitions=pkg_definitions, pkg=pkg) }}
+    {% endblock %}
 {% endblock %}
 
 
 {% block content_action %}
-  {% link_for _('View dataset'), controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController', action='read', package_id=pkg.name, class_='btn', icon='eye' %}
+    {% link_for _('View dataset'), controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController', action='read', package_id=pkg.name, class_='btn', icon='eye' %}
 {% endblock %}

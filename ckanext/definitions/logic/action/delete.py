@@ -70,7 +70,8 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
     # check if definition exists
     definition_obj = definitions_model.Definition.get(definition_id)
     if definition_obj is None:
-        raise toolkit.ObjectNotFound(_('Could not find definition "%s"') % definition_id)
+        raise toolkit.ObjectNotFound(
+            _('Could not find definition "%s"') % definition_id)
 
     # Delete all package_definitions associated
     context['ignore_auth'] = True
@@ -100,7 +101,7 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
                                               _external=True)
             subject = DELETE_DEFINITION_EMAIL['subject']
             message = DELETE_DEFINITION_EMAIL['message'].format(
-                data_dict['id'], package['title'], url_for_dataset)
+                definition_obj.label, package['title'], url_for_dataset)
 
             toolkit.h.workflow_send_email(receiver_email, subject, message)
 

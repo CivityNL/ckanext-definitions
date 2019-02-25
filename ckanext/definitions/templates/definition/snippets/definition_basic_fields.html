@@ -13,10 +13,6 @@
 {% endblock %}
 
 
-
-
-
-
 {% block definition_basic_fields_description %}
     {{ form.markdown('description', id='field-description', label=_('Description'), is_required=true, value=data.description, error=errors.description) }}
 {% endblock %}
@@ -27,6 +23,6 @@
 
 {% block definition_basic_fields_enabled %}
     {# TODO  change options labels to use translations #}
-    {{ form.select('enabled', id='field-enabled', label=_('Enabled'), options=[{'name':"Ja", 'value': True},{'name': "Nee", 'value': False}], selected=data.enabled, error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-control"}, is_required=False) }}
+    {{ form.select('enabled', id='field-enabled', label=_('Enabled'), options=[{'text': _('Yes'), 'value': True},{'text': _('No'), 'value': False}], selected=data.enabled, error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-control"}, is_required=False) }}
 {% endblock %}
 
