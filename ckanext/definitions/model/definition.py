@@ -66,7 +66,7 @@ class Definition(domain_object.DomainObject):
         return definition
 
     @classmethod
-    def search(cls, search_dict, q, enabled=True):
+    def search(cls, search_dict, q, enabled=True, sort='asc', limit=20, start=0):
         '''Return all definitions which match the criteria.
 
         :param search_dict: dictionary with key's and values to search.
@@ -97,6 +97,9 @@ class Definition(domain_object.DomainObject):
                     func.lower(Definition.description).contains(q))
             )
 
+
+
+
         # TODO remove this from the model
         # Build Facets
         facets = ['creator_id', 'enabled', 'label']
@@ -112,6 +115,16 @@ class Definition(domain_object.DomainObject):
                     search_facets[key]['items'].append(
                         {'count': row_count, 'display_name': str(row_value),
                          'name': str(row_value)})
+
+        # Sorting
+        if sort == 'desc':
+            query = query.order_by(Definition.label.desc())
+        else:
+            query = query.order_by(Definition.label.asc())
+
+        # Offset Start
+        query = query.offset(start)
+
 
         return {'search_facets': search_facets, 'count': query.count(),
                 'results': query.all()}

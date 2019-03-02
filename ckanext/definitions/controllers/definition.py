@@ -21,7 +21,7 @@ parse_params = logic.parse_params
 log = logging.getLogger(__name__)
 abort = base.abort
 
-LIMIT = 25
+LIMIT = 10
 
 
 def setup_template_variables(context, data_dict):
@@ -44,6 +44,7 @@ class DefinitionController(base.BaseController):
 
     def search(self):
 
+        limit = LIMIT
         context = {'model': model, 'session': model.Session,
                    'user': toolkit.c.user, 'auth_user_obj': toolkit.c.userobj,
                    'for_view': True}
@@ -58,6 +59,8 @@ class DefinitionController(base.BaseController):
         page = toolkit.h.get_page_number(toolkit.request.params)
         toolkit.c.q = toolkit.request.params.get('q', '')
         sort_by = toolkit.request.params.get('sort', None)
+        params_nopage = [(k, v) for k, v in toolkit.request.params.items()
+                         if k != 'page']
 
         # TODO handle URL Params with Facets
         search_dict = {}
@@ -72,8 +75,10 @@ class DefinitionController(base.BaseController):
         except toolkit.NotAuthorized:
             enabled = True
 
+        start = (page-1) * limit
         search_result = definitions_model.Definition.search(
-            search_dict=search_dict, q=toolkit.c.q, enabled=enabled)
+            search_dict=search_dict, q=toolkit.c.q, enabled=enabled,
+            sort=sort_by, limit=limit, start=start)
 
         results = search_result['results']
 
@@ -81,10 +86,10 @@ class DefinitionController(base.BaseController):
         toolkit.c.search_facets = search_result['search_facets']
         toolkit.c.search_facets_limits = {}
         for facet in toolkit.c.search_facets.keys():
-            limit = int(toolkit.request.params.get('_%s_limit' % facet,
-                                                   toolkit.config.get(
-                                                       'search.facets.default',
-                                                       30)))
+            # limit = int(toolkit.request.params.get('_%s_limit' % facet,
+            #                                        toolkit.config.get(
+            #                                            'search.facets.default',
+            #                                            3)))
             toolkit.c.search_facets_limits[facet] = limit
 
         # Set Page
@@ -93,7 +98,7 @@ class DefinitionController(base.BaseController):
                 collection=results,
                 page=page,
                 item_count=len(results),
-                items_per_page=LIMIT
+                items_per_page=limit
             )
             toolkit.c.page.items = results
         else:
@@ -103,6 +108,14 @@ class DefinitionController(base.BaseController):
                 alpha_attribute='label',
                 other_text=toolkit._('Other'),
             )
+
+        def search_url(params):
+            controller = 'ckanext.definitions.controllers.definition:DefinitionController'
+            action = 'bulk_process' if toolkit.c.action == 'bulk_process' else 'search'
+            url = toolkit.h.url_for(controller=controller, action=action)
+            params = [(k, v.encode('utf-8') if isinstance(v, string_types)
+            else str(v)) for k, v in params]
+            return url + u'?' + urlencode(params)
 
         def pager_url(q=None, page=None):
             params = list(params_nopage)
@@ -281,7 +294,7 @@ class DefinitionController(base.BaseController):
                 limit = int(toolkit.request.params.get('_%s_limit' % facet,
                                                        toolkit.config.get(
                                                            'search.facets.default',
-                                                           30)))
+                                                           3)))
                 toolkit.c.search_facets_limits[facet] = limit
             toolkit.c.page.items = query['results']
 
@@ -401,7 +414,6 @@ class DefinitionController(base.BaseController):
             'definition/snippets/definition_form.html', extra_vars=extra_vars)
         return toolkit.render('definition/edit.html')
 
-
     def _save_edit(self, definition_id, context):
         try:
             data_dict = clean_dict(dict_fns.unflatten(
@@ -421,7 +433,6 @@ class DefinitionController(base.BaseController):
             errors = e.error_dict
             error_summary = e.error_summary
             return self.edit(definition_id, data_dict, errors, error_summary)
-
 
     def delete(self, definition_id):
         if 'cancel' in toolkit.request.params:
