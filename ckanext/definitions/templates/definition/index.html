@@ -3,85 +3,88 @@
 {% block subtitle %}{{ _('Definitions') }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active"><a href="">{{ _('Definitions') }}</a></li>
+    <li class="active"><a href="">{{ _('Definitions') }}</a></li>
 {% endblock %}
 
 {% block primary_content %}
-  <article class="module">
-    <div class="module-content">
-      {% block page_primary_action %}
-          <div class="page_primary_action">
-            {% if h.check_access('definition_create') %}
-              {% link_for _('Add Definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='new', class_='btn btn-primary', icon='plus-square' %}
-            {% endif %}
+    <article class="module">
+        <div class="module-content">
+            {% block page_primary_action %}
+                <div class="page_primary_action">
+                    {% if h.check_access('definition_create') %}
+                        {% link_for _('Add Definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='new', class_='btn btn-primary', icon='plus-square' %}
+                    {% endif %}
 
-            {% if h.check_access('data_officer_read') %}
-              {% link_for _('Data Officers'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='index', class_='btn btn-primary pull-right', icon='fa fa-info-circle', named_route='data_officer_index' %}
-            {% endif %}
-          </div>
-      {% endblock %}
+                    {% if h.check_access('data_officer_read') %}
+                        {% link_for _('Data Officers'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='index', class_='btn btn-primary pull-right', icon='fa fa-info-circle', named_route='data_officer_index' %}
+                    {% endif %}
+                </div>
+            {% endblock %}
 
-      {% block form %}
-        {% set facets = {
-          'fields': c.fields_grouped,
-          'search': c.search_facets,
-          'titles': c.facet_titles,
-          'translated_fields': c.translated_fields,
-          'remove_field': c.remove_field }
-        %}
-        {% set sorting = [
-          (_('Label Ascending'), 'label asc'),
-          (_('Label Descending'), 'label desc')]
-        %}
-          {% snippet 'snippets/search_form.html', form_id='definition-search-form', type='definition', query=c.q, sorting=sorting, sorting_selected=c.sort_by_selected, count=c.page.item_count, facets=facets, show_empty=request.params, error=c.query_error, fields=c.fields, placeholder=_('Search definitions...') %}
-      {% endblock %}
+            {% block form %}
+                {% set facets = {
+                'fields': c.fields_grouped,
+                'search': c.search_facets,
+                'titles': c.facet_titles,
+                'translated_fields': c.translated_fields,
+                'remove_field': c.remove_field } %}
+                {% set sorting = [
+                (_('Label Ascending'), 'asc'),
+                (_('Label Descending'), 'desc')] %}
+                {% snippet 'snippets/search_form.html', form_id='definition-search-form', type='definition', query=c.q, sorting=sorting, sorting_selected=c.sort_by_selected, count=c.page.item_count, facets=facets, show_empty=request.params, error=c.query_error, fields=c.fields, placeholder=_('Search definitions...') %}
+            {% endblock %}
 
-      {% block definitions_search_results_list %}
-        {% if h.check_access('definition_create') %}
-          {{ h.snippet('snippets/definition_list.html', definitions=page.collection, show_enabled=True) }}
-        {% else %}
-          {{ h.snippet('snippets/definition_list.html', definitions=page.collection, show_enabled=False) }}
-        {% endif %}
-      {% endblock %}
+            {% block definitions_search_results_list %}
+                {% if h.check_access('definition_create') %}
+                    {{ h.snippet('snippets/definition_list.html', definitions=page.collection, show_enabled=True) }}
+                {% else %}
+                    {{ h.snippet('snippets/definition_list.html', definitions=page.collection, show_enabled=False) }}
+                {% endif %}
+            {% endblock %}
 
-        {% block page_pagination %}
-            {{ c.page.pager(q=c.q or '') }}
-          {% endblock %}
-    </div>
-  </article>
+            {% block page_pagination %}
+                {{ c.page.pager(q=c.q or '') }}
+            {% endblock %}
+        </div>
+    </article>
 
 {% endblock %}
 
 {% block secondary_content %}
-  {% block info_module %}
-    <section class="module module-narrow module-shallow">
-      <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('What are definitions?') }}</h2>
-      <div class="module-content">
-        <p>
-          {% trans %}
-          Helping Text Explaining what are Definitions and how to use them.
-          {% endtrans %}
-        </p>
-      </div>
-    </section>
-  {% endblock %}
+    {% block info_module %}
+        <section class="module module-narrow module-shallow">
+            <h2 class="module-heading"><i
+                    class="fa fa-info-circle"></i> {{ _('What are definitions?') }}
+            </h2>
+            <div class="module-content">
+                <p>
+                    {% trans %}
+                        Helping Text Explaining what are Definitions and how to
+                        use them.
+                    {% endtrans %}
+                </p>
+            </div>
+        </section>
+    {% endblock %}
 
-  {% block definition_facets %}
-    {% set alternative_url= '/definition'%}
+    {% block definition_facets %}
+        {% set alternative_url= '/definition' %}
 
-    <div class="filters">
-      <div>
-        {% for facet in c.facet_titles %}
-          {% if facet == 'creator_id' %}
-            {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.catalogthehague_owner_facet_list_help, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
-          {% else %}
-            {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
-          {%- endif %}
+        <div class="filters">
+            <div>
+                {% for facet in c.facet_titles %}
+                    {% if facet == 'creator_id' %}
+                        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.catalogthehague_owner_facet_list_help, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+                    {% else %}
+                        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+                    {%- endif %}
 
-        {% endfor %}
-      </div>
-      <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
-    </div>
-  {% endblock %}
+                {% endfor %}
+            </div>
+            <a class="close no-text hide-filters"><i
+                    class="fa fa-times-circle"></i><span
+                    class="text">close</span></a>
+        </div>
+    {% endblock %}
 
 {% endblock %}

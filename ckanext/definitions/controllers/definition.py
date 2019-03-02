@@ -21,7 +21,7 @@ parse_params = logic.parse_params
 log = logging.getLogger(__name__)
 abort = base.abort
 
-LIMIT = 10
+LIMIT = 20
 
 
 def setup_template_variables(context, data_dict):
@@ -69,45 +69,43 @@ class DefinitionController(base.BaseController):
                 search_dict[key] = toolkit.request.params.get(key, '')
         log.info('search_dict  FROM REQUEST = {0}'.format(search_dict))
 
-        # # TODO Call search Action function instead of model directly
         try:
             enabled = not toolkit.check_access('definition_update', context)
         except toolkit.NotAuthorized:
             enabled = True
 
-        start = (page-1) * limit
-        search_result = definitions_model.Definition.search(
-            search_dict=search_dict, q=toolkit.c.q, enabled=enabled,
-            sort=sort_by, limit=limit, start=start)
 
+        # # TODO Call search Action function instead of model directly
+
+        search_result = definitions_model.Definition.search(
+            search_dict=search_dict, q=toolkit.c.q, enabled=enabled)
+
+        # total results
         results = search_result['results']
+
+        # Filtered Results to Show in Page
+        start = (page-1) * limit
+
+        query = search_result['query']
+        if sort_by == 'desc':
+            query = query.order_by(definitions_model.Definition.label.desc())
+        else:
+            query = query.order_by(definitions_model.Definition.label.asc())
+        query = query.limit(limit)
+        query = query.offset(start)
+
+        page_collection = query.all()
 
         # Set Facets Content
         toolkit.c.search_facets = search_result['search_facets']
         toolkit.c.search_facets_limits = {}
         for facet in toolkit.c.search_facets.keys():
-            # limit = int(toolkit.request.params.get('_%s_limit' % facet,
-            #                                        toolkit.config.get(
-            #                                            'search.facets.default',
-            #                                            3)))
-            toolkit.c.search_facets_limits[facet] = limit
+            facet_limit = int(toolkit.request.params.get('_%s_limit' % facet,
+                                                   toolkit.config.get(
+                                                       'search.facets.default',
+                                                       3)))
+            toolkit.c.search_facets_limits[facet] = facet_limit
 
-        # Set Page
-        if toolkit.c.q:
-            toolkit.c.page = h.Page(
-                collection=results,
-                page=page,
-                item_count=len(results),
-                items_per_page=limit
-            )
-            toolkit.c.page.items = results
-        else:
-            toolkit.c.page = AlphaPage(
-                collection=results,
-                page=toolkit.request.params.get('page', 'A'),
-                alpha_attribute='label',
-                other_text=toolkit._('Other'),
-            )
 
         def search_url(params):
             controller = 'ckanext.definitions.controllers.definition:DefinitionController'
@@ -123,7 +121,7 @@ class DefinitionController(base.BaseController):
             return search_url(params)
 
         toolkit.c.page = h.Page(
-            collection=search_result['results'],
+            collection=page_collection,
             page=page,
             url=pager_url,
             item_count=search_result['count'],

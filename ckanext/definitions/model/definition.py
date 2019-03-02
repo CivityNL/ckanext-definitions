@@ -97,9 +97,6 @@ class Definition(domain_object.DomainObject):
                     func.lower(Definition.description).contains(q))
             )
 
-
-
-
         # TODO remove this from the model
         # Build Facets
         facets = ['creator_id', 'enabled', 'label']
@@ -116,18 +113,9 @@ class Definition(domain_object.DomainObject):
                         {'count': row_count, 'display_name': str(row_value),
                          'name': str(row_value)})
 
-        # Sorting
-        if sort == 'desc':
-            query = query.order_by(Definition.label.desc())
-        else:
-            query = query.order_by(Definition.label.asc())
-
-        # Offset Start
-        query = query.offset(start)
-
 
         return {'search_facets': search_facets, 'count': query.count(),
-                'results': query.all()}
+                'results': query.all(), 'query': query}
 
     @classmethod
     def all(cls, include_disabled):
