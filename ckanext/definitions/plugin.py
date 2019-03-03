@@ -73,7 +73,8 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # ITemplateHelpers
     def get_helpers(self):
         return {'is_data_officer': h.is_data_officer,
-                'definition_list_choices': h.definition_list_choices}
+                'definition_list_choices': h.definition_list_choices,
+                'definition_enabled_facet_show': h.definition_enabled_facet_show}
 
 
     #IRoutes

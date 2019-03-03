@@ -37,3 +37,12 @@ def definition_list_choices():
         choices.append(choice)
 
     return choices
+
+
+def definition_enabled_facet_show(facet_item):
+    print 'definition_enabled_facet_show'
+    print facet_item
+
+    if facet_item['name'] == 'True':
+        return 'Ja'
+    return 'Nee'
