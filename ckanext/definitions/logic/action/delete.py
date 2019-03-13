@@ -7,7 +7,7 @@ import logging
 import ckan.lib.jobs as jobs
 import ckan.logic
 import ckan.model as model
-from ckanext.definitions.constants import DELETE_DEFINITION_EMAIL
+from ckanext.definitions.constants import EMAIL_DELETE_DEFINITION_MULTI,EMAIL_DELETE_DEFINITION_SINGLE
 from ckan.common import _
 from ckan.plugins import toolkit
 
@@ -79,11 +79,29 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
     pkg_list = toolkit.get_action('search_packages_by_definition')(context,
                                                                    data_dict_2)
 
+    # Aggregate Owner/Mandated emails for the same person
+    # create a String that is a list of "Link naar vermelding --> http://civity.nl"
+    # Example:
+    # """
+    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
+    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
+    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
+    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
+    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
+    # """
+
+    # gathers the emails to send, aggregating per email_receiver
+    emails_per_receiver = dict()
     for package in pkg_list:
         _data_dict = {'package_id': package['id'],
                       'definition_id': definition_id}
 
         toolkit.get_action('package_definition_delete')(context, _data_dict)
+
+        url_for_dataset = toolkit.url_for(controller='package',
+                                          action='read',
+                                          id=package['name'],
+                                          _external=True)
 
         # Email Notification for Mandated or Owner
         if package['state'] == 'active':
@@ -95,15 +113,31 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
                 receiver_email = _get_receiver_email(
                     package['owner'])
 
-            url_for_dataset = toolkit.url_for(controller='package',
-                                              action='read',
-                                              id=package['name'],
-                                              _external=True)
-            subject = DELETE_DEFINITION_EMAIL['subject']
-            message = DELETE_DEFINITION_EMAIL['message'].format(
-                definition_obj.label, package['title'], url_for_dataset)
 
-            toolkit.h.workflow_send_email(receiver_email, subject, message)
+            string_to_append = 'Link naar {0} --> {1}<br>'.format(
+                package['title'], url_for_dataset)
+
+            if receiver_email in emails_per_receiver:
+                emails_per_receiver[receiver_email].append(string_to_append)
+
+            else:
+                emails_per_receiver[receiver_email] = [string_to_append]
+
+    for receiver_email in emails_per_receiver:
+        if len(emails_per_receiver[receiver_email]) > 1:
+            list_of_datasets_string = ''
+            for dataset_link_string in emails_per_receiver[receiver_email]:
+                list_of_datasets_string = list_of_datasets_string + dataset_link_string
+
+            subject = EMAIL_DELETE_DEFINITION_MULTI['subject']
+            message = EMAIL_DELETE_DEFINITION_MULTI['message'].format(
+                definition_obj.label, list_of_datasets_string)
+        else:
+            subject = EMAIL_DELETE_DEFINITION_SINGLE['subject']
+            message = EMAIL_DELETE_DEFINITION_SINGLE['message'].format(
+                definition_obj.label, package['title'], url_for_dataset)
+        # Send the email
+        toolkit.h.workflow_send_email(receiver_email, subject, message)
 
 
 ##############################################################
