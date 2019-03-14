@@ -114,7 +114,7 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
                     package['owner'])
 
 
-            string_to_append = 'Link naar {0} --> {1}<br>'.format(
+            string_to_append = '{0} --> {1}<br>'.format(
                 package['title'], url_for_dataset)
 
             if receiver_email in emails_per_receiver:
