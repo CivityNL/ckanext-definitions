@@ -286,11 +286,11 @@ msgstr "Relevantie"
 
 #: ckanext/definitions/templates/definition/index.html:34
 msgid "Label Ascending"
-msgstr "Toon oplopend"
+msgstr "Begrip oplopend"
 
 #: ckanext/definitions/templates/definition/index.html:35
 msgid "Label Descending"
-msgstr "Toon aflopend"
+msgstr "Begrip aflopend"
 
 #: ckanext/definitions/templates/definition/index.html:36
 #: ckanext/definitions/templates/definition/read.html:42
