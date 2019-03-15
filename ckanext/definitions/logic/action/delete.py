@@ -80,15 +80,7 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
                                                                    data_dict_2)
 
     # Aggregate Owner/Mandated emails for the same person
-    # create a String that is a list of "Link naar vermelding --> http://civity.nl"
-    # Example:
-    # """
-    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
-    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
-    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
-    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
-    # Link naar vermelding TITLE --> LINK http://civity.nl<br>
-    # """
+    # create a String that is a list of "[title] --> [link]"
 
     # gathers the emails to send, aggregating per email_receiver
     emails_per_receiver = dict()
