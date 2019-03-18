@@ -131,7 +131,7 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
         else:
             subject = EMAIL_DELETE_DEFINITION_SINGLE['subject']
             message = EMAIL_DELETE_DEFINITION_SINGLE['message'].format(
-                definition_obj.label, emails_per_receiver[receiver_email])
+                definition_obj.label, emails_per_receiver[receiver_email][0])
         # Send the email
         toolkit.h.workflow_send_email(receiver_email, subject, message)
 
