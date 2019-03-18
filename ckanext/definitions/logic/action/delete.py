@@ -89,7 +89,7 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
         _data_dict = {'package_id': package['id'],
                       'definition_id': definition_id}
 
-        toolkit.get_action('package_definition_delete')(context, _data_dict)
+        toolkit.get_action('package_definition_delete')(context.copy(), _data_dict)
 
         url_for_dataset = toolkit.url_for(controller='package',
                                           action='read',
