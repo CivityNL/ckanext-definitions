@@ -79,6 +79,7 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
     pkg_list = toolkit.get_action('search_packages_by_definition')(context,
                                                                    data_dict_2)
 
+
     # Aggregate Owner/Mandated emails for the same person
     # create a String that is a list of "[title] --> [link]"
 
@@ -125,9 +126,10 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
             message = EMAIL_DELETE_DEFINITION_MULTI['message'].format(
                 definition_obj.label, list_of_datasets_string)
         else:
+            package_title = package['title']
             subject = EMAIL_DELETE_DEFINITION_SINGLE['subject']
             message = EMAIL_DELETE_DEFINITION_SINGLE['message'].format(
-                definition_obj.label, package['title'], url_for_dataset)
+                definition_obj.label, package_title, url_for_dataset)
         # Send the email
         toolkit.h.workflow_send_email(receiver_email, subject, message)
 
