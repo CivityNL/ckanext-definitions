@@ -18,8 +18,8 @@ EMAIL_SIGNATURE = '<br><br><br>' \
 EMAIL_DELETE_DEFINITION_SINGLE = {"subject": "Gelinkte definitie verwijderd",
                                   "message": "Beste collega,<br><br>"
                                              "De definitie '{0}' die gelinkt was aan "
-                                             "de vermelding '{1}', waarvan u de eigenaar of gemandateerde bent, is gedeactiveerd c.q. verwijderd.<br>"
-                                             "Link naar vermelding --> {2}" + EMAIL_SIGNATURE
+                                             "de vermelding waarvan u de eigenaar of gemandateerde bent, is gedeactiveerd c.q. verwijderd.<br>"
+                                             "{1}" + EMAIL_SIGNATURE
                                   }
 
 EMAIL_DELETE_DEFINITION_MULTI = {"subject": "Gelinkte definitie verwijderd",

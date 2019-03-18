@@ -86,6 +86,9 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
     # gathers the emails to send, aggregating per email_receiver
     emails_per_receiver = dict()
     for package in pkg_list:
+        log.info('TITLE = {0}'.format(package['title']))
+
+    for package in pkg_list:
         _data_dict = {'package_id': package['id'],
                       'definition_id': definition_id}
 
@@ -126,10 +129,9 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
             message = EMAIL_DELETE_DEFINITION_MULTI['message'].format(
                 definition_obj.label, list_of_datasets_string)
         else:
-            package_title = package['title']
             subject = EMAIL_DELETE_DEFINITION_SINGLE['subject']
             message = EMAIL_DELETE_DEFINITION_SINGLE['message'].format(
-                definition_obj.label, package_title, url_for_dataset)
+                definition_obj.label, list_of_datasets_string)
         # Send the email
         toolkit.h.workflow_send_email(receiver_email, subject, message)
 
