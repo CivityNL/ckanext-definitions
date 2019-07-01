@@ -2,5 +2,10 @@
 
 {% block content_primary_nav %}
     {{ super() }}
-    {{ h.build_nav_icon('dataset_definition_read', _('Definitions'), package_id=pkg.name) }}
+    {% if pkg.definition == "" %}
+        {% set definition_list = [] %}
+    {% else %}
+        {% set definition_list = pkg.definition.split(' ') %}
+    {% endif %}
+    {{ h.build_nav_icon('dataset_definition_read', _('Definitions ({0})'.format(definition_list|length)), package_id=pkg.name) }}
 {% endblock %}
