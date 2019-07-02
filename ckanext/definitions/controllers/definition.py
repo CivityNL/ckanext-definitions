@@ -54,7 +54,6 @@ class DefinitionController(base.BaseController):
         facets['creator_id'] = toolkit._('Creator')
         facets['enabled'] = toolkit._('Enabled')
         facets['label'] = toolkit._('Label')
-        toolkit.c.facet_titles = facets
 
         page = toolkit.h.get_page_number(toolkit.request.params)
         toolkit.c.q = toolkit.request.params.get('q', '')
@@ -62,12 +61,25 @@ class DefinitionController(base.BaseController):
         params_nopage = [(k, v) for k, v in toolkit.request.params.items()
                          if k != 'page']
 
+        def remove_field(key, value=None, replace=None):
+            alternative_url = '/definition'
+            controller = 'ckanext.definitions.controllers.definition:DefinitionController'
+            return toolkit.h.remove_url_param(key, value=value,
+                                              replace=replace,
+                                              controller=controller,
+                                              action='search',
+                                              alternative_url=alternative_url)
+
+        toolkit.c.remove_field = remove_field
+
+        toolkit.c.facet_titles = facets
+
+
         # TODO handle URL Params with Facets
         search_dict = {}
         for key in facets:
             if key in toolkit.request.params:
                 search_dict[key] = toolkit.request.params.get(key, '')
-        log.info('search_dict  FROM REQUEST = {0}'.format(search_dict))
 
         try:
             enabled = not toolkit.check_access('definition_update', context)
@@ -119,6 +131,21 @@ class DefinitionController(base.BaseController):
             params = list(params_nopage)
             params.append(('page', page))
             return search_url(params)
+
+        toolkit.c.fields = []
+        # c.fields_grouped will contain a dict of params containing
+        # a list of values eg {'tags':['tag1', 'tag2']}
+        toolkit.c.fields_grouped = {}
+        fq = ''
+        for (param, value) in toolkit.request.params.items():
+            if param not in ['q', 'page', 'sort'] \
+                    and len(value) and not param.startswith('_'):
+                toolkit.c.fields.append((param, value))
+                fq += ' %s:"%s"' % (param, value)
+                if param not in toolkit.c.fields_grouped:
+                    toolkit.c.fields_grouped[param] = [value]
+                else:
+                    toolkit.c.fields_grouped[param].append(value)
 
         toolkit.c.page = h.Page(
             collection=page_collection,
