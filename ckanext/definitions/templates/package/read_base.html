@@ -2,7 +2,7 @@
 
 {% block content_primary_nav %}
     {{ super() }}
-    {% if pkg.definition == "" %}
+    {% if not pkg.definition %}
         {% set definition_list = [] %}
     {% else %}
         {% set definition_list = pkg.definition.split(' ') %}
