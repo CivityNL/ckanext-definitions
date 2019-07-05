@@ -7,5 +7,5 @@
     {% else %}
         {% set definition_list = pkg.definition.split(' ') %}
     {% endif %}
-    {{ h.build_nav_icon('dataset_definition_edit', _('Definitions ({0})'.format(definition_list|length)), package_id=pkg.name) }}
+    {{ h.build_nav_icon('dataset_definition_edit', _('Definitions') + ' ({0})'.format(definition_list|length), package_id=pkg.name) }}
 {% endblock %}

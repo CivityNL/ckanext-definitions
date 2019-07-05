@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-definitions 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-02-24 15:41-0500\n"
+"POT-Creation-Date: 2019-07-05 08:13-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,83 +38,79 @@ msgstr ""
 msgid "Unauthorized to delete data officer %s"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:53
+#: ckanext/definitions/controllers/definition.py:54
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:40
 msgid "Creator"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:54
+#: ckanext/definitions/controllers/definition.py:55
 #: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:35
 msgid "Enabled"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:55
+#: ckanext/definitions/controllers/definition.py:56
 #: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:9
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:14
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:7
 msgid "Label"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:104
-msgid "Other"
-msgstr ""
-
-#: ckanext/definitions/controllers/definition.py:149
-#: ckanext/definitions/controllers/definition.py:344
-#: ckanext/definitions/controllers/definition.py:378
-#: ckanext/definitions/controllers/definition.py:417
-#: ckanext/definitions/controllers/definition.py:452
+#: ckanext/definitions/controllers/definition.py:187
+#: ckanext/definitions/controllers/definition.py:382
+#: ckanext/definitions/controllers/definition.py:416
+#: ckanext/definitions/controllers/definition.py:454
+#: ckanext/definitions/controllers/definition.py:488
 msgid "Definition not found"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:235
+#: ckanext/definitions/controllers/definition.py:273
 #: ckanext/definitions/templates/header.html:7
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:236
+#: ckanext/definitions/controllers/definition.py:274
 #: ckanext/definitions/templates/header.html:8
 msgid "Groups"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:237
+#: ckanext/definitions/controllers/definition.py:275
 msgid "Tags"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:238
+#: ckanext/definitions/controllers/definition.py:276
 msgid "Formats"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:239
+#: ckanext/definitions/controllers/definition.py:277
 msgid "Licenses"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:309
+#: ckanext/definitions/controllers/definition.py:347
 msgid "Unauthorized to create a definition"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:346
-#: ckanext/definitions/controllers/definition.py:419
+#: ckanext/definitions/controllers/definition.py:384
+#: ckanext/definitions/controllers/definition.py:456
 msgid "Integrity Error"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:365
+#: ckanext/definitions/controllers/definition.py:403
 msgid "Unauthorized to edit a definition"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:388
+#: ckanext/definitions/controllers/definition.py:426
 #, python-format
 msgid "User %r not authorized to edit %s"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:438
-#: ckanext/definitions/controllers/definition.py:450
+#: ckanext/definitions/controllers/definition.py:474
+#: ckanext/definitions/controllers/definition.py:486
 #, python-format
 msgid "Unauthorized to delete definition %s"
 msgstr ""
 
-#: ckanext/definitions/controllers/definition.py:445
+#: ckanext/definitions/controllers/definition.py:481
 msgid "Definition has been deleted."
 msgstr ""
 
@@ -168,8 +164,8 @@ msgstr ""
 #: ckanext/definitions/templates/package/definitions_edit.html:3
 #: ckanext/definitions/templates/package/definitions_read.html:3
 #: ckanext/definitions/templates/package/definitions_read.html:7
-#: ckanext/definitions/templates/package/edit_base.html:5
-#: ckanext/definitions/templates/package/read_base.html:5
+#: ckanext/definitions/templates/package/edit_base.html:10
+#: ckanext/definitions/templates/package/read_base.html:10
 msgid "Definitions"
 msgstr ""
 
@@ -257,47 +253,32 @@ msgid "View definition"
 msgstr ""
 
 #: ckanext/definitions/templates/definition/edit_base.html:25
-#: ckanext/definitions/templates/definition/index.html:61
+#: ckanext/definitions/templates/definition/index.html:57
 #: ckanext/definitions/templates/definition/read_base.html:26
 msgid "What are definitions?"
 msgstr ""
 
 #: ckanext/definitions/templates/definition/edit_base.html:28
-#: ckanext/definitions/templates/definition/index.html:64
+#: ckanext/definitions/templates/definition/index.html:61
 #: ckanext/definitions/templates/definition/read_base.html:29
 msgid " Helping Text Explaining what are Definitions and how to use them. "
 msgstr ""
 
 #: ckanext/definitions/templates/definition/index.html:15
-#: ckanext/definitions/templates/package/definitions_edit.html:12
-#: ckanext/definitions/templates/package/definitions_edit.html:33
+#: ckanext/definitions/templates/package/definitions_edit.html:8
+#: ckanext/definitions/templates/package/definitions_edit.html:29
 msgid "Add Definition"
 msgstr ""
 
-#: ckanext/definitions/templates/definition/index.html:33
-#: ckanext/definitions/templates/definition/read.html:39
-msgid "Relevance"
-msgstr ""
-
-#: ckanext/definitions/templates/definition/index.html:34
+#: ckanext/definitions/templates/definition/index.html:32
 msgid "Label Ascending"
 msgstr ""
 
-#: ckanext/definitions/templates/definition/index.html:35
+#: ckanext/definitions/templates/definition/index.html:33
 msgid "Label Descending"
 msgstr ""
 
-#: ckanext/definitions/templates/definition/index.html:36
-#: ckanext/definitions/templates/definition/read.html:42
-msgid "Last Modified"
-msgstr ""
-
-#: ckanext/definitions/templates/definition/index.html:37
-#: ckanext/definitions/templates/definition/read.html:43
-msgid "Popular"
-msgstr ""
-
-#: ckanext/definitions/templates/definition/index.html:39
+#: ckanext/definitions/templates/definition/index.html:34
 msgid "Search definitions..."
 msgstr ""
 
@@ -310,6 +291,10 @@ msgstr ""
 msgid "Datasets Associated"
 msgstr ""
 
+#: ckanext/definitions/templates/definition/read.html:39
+msgid "Relevance"
+msgstr ""
+
 #: ckanext/definitions/templates/definition/read.html:40
 msgid "Name Ascending"
 msgstr ""
@@ -318,12 +303,20 @@ msgstr ""
 msgid "Name Descending"
 msgstr ""
 
+#: ckanext/definitions/templates/definition/read.html:42
+msgid "Last Modified"
+msgstr ""
+
+#: ckanext/definitions/templates/definition/read.html:43
+msgid "Popular"
+msgstr ""
+
 #: ckanext/definitions/templates/definition/read.html:44
 msgid "Search datasets..."
 msgstr ""
 
 #: ckanext/definitions/templates/definition/read_base.html:5
-#: ckanext/definitions/templates/package/definitions_edit.html:23
+#: ckanext/definitions/templates/package/definitions_edit.html:19
 msgid "Definition"
 msgstr ""
 
