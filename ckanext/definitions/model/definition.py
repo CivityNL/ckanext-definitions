@@ -110,7 +110,7 @@ class Definition(domain_object.DomainObject):
                                                                     attribute)).group_by(
                     attribute).all():
                     search_facets[key]['items'].append(
-                        {'count': row_count, 'display_name': str(row_value),
+                        {'count': row_count, 'display_name': unicode(row_value, "utf-8"),
                          'name': str(row_value)})
 
 
