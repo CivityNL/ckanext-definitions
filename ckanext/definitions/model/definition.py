@@ -66,8 +66,7 @@ class Definition(domain_object.DomainObject):
         return definition
 
     @classmethod
-    def search(cls, search_dict, q, enabled=True, sort='asc', limit=20,
-               start=0):
+    def search(cls, search_dict, q, enabled=True, sort='asc', limit=20, start=0):
         '''Return all definitions which match the criteria.
 
         :param search_dict: dictionary with key's and values to search.
@@ -110,10 +109,11 @@ class Definition(domain_object.DomainObject):
                                                                 func.count(
                                                                     attribute)).group_by(
                     attribute).all():
+                    log.info('row_value = {0} || type = {1}'.format(row_value, type(row_value)))
                     search_facets[key]['items'].append(
-                        {'count': row_count,
-                         'display_name': row_value.encode('utf-8'),
+                        {'count': row_count, 'display_name': str(row_value),
                          'name': str(row_value)})
+
 
         return {'search_facets': search_facets, 'count': query.count(),
                 'results': query.all(), 'query': query}
