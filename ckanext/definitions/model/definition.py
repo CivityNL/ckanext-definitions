@@ -113,13 +113,13 @@ class Definition(domain_object.DomainObject):
 
                     log.info('type = {0}'.format(type(row_value)))
                     if isinstance(row_value, bool):
-                        display_name = str(row_value)
+                        name = str(row_value)
                     else:
-                        display_name = row_value.encode('utf-8')
+                        name = row_value.encode('utf-8')
 
                     search_facets[key]['items'].append(
-                        {'count': row_count, 'display_name': display_name,
-                         'name': str(row_value)})
+                        {'count': row_count, 'display_name': name,
+                         'name': name})
 
         return {'search_facets': search_facets, 'count': query.count(),
                 'results': query.all(), 'query': query}
