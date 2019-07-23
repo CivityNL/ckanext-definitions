@@ -77,8 +77,6 @@
                         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.catalogthehague_owner_facet_list_help, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
                     {% elif facet == 'enabled' %}
                         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.definition_enabled_facet_show, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
-                    {% else %}
-                        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
                     {%- endif %}
 
                 {% endfor %}

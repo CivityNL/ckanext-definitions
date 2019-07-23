@@ -114,6 +114,8 @@ class Definition(domain_object.DomainObject):
                     log.info('type = {0}'.format(type(row_value)))
                     if isinstance(row_value, bool):
                         name = str(row_value)
+                    elif isinstance(row_value, str):
+                        name = row_value
                     else:
                         name = row_value.encode('utf-8')
 
