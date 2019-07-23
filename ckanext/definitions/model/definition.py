@@ -111,17 +111,12 @@ class Definition(domain_object.DomainObject):
                                                                     attribute)).group_by(
                     attribute).all():
 
-                    log.info('type = {0}'.format(type(row_value)))
-                    if isinstance(row_value, bool):
-                        name = str(row_value)
-                    elif isinstance(row_value, str):
-                        name = row_value
-                    else:
-                        name = row_value.encode('utf-8')
+                    if isinstance(row_value, (bool, int, float)):
+                        row_value = str(row_value)
 
                     search_facets[key]['items'].append(
-                        {'count': row_count, 'display_name': name,
-                         'name': name})
+                        {'count': row_count, 'display_name': row_value,
+                         'name': row_value})
 
         return {'search_facets': search_facets, 'count': query.count(),
                 'results': query.all(), 'query': query}
