@@ -111,7 +111,7 @@ class Definition(domain_object.DomainObject):
                     attribute).all():
 
                     log.info('type = {0}'.format(type(row_value)))
-                    if type(row_value) == 'bool':
+                    if isinstance(row_value, bool):
                         log.info('row_value = {0} || type = {1}'.format(
                             str(row_value), type(row_value)))
                     else:
