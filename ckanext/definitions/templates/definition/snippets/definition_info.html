@@ -16,11 +16,6 @@
           </tr>
 
           <tr>
-            <th scope="row" class="definition-label">{{ _("Description") }}</th>
-            <td class="definition-details" property="dc:description">{{ definition_dict.description }}</td>
-          </tr>
-
-          <tr>
             <th scope="row" class="definition-label">{{ _('URL') }}</th>
             {% if h.is_url(definition_dict.url) %}
               <td class="definition-details" property="foaf:homepage">{{ h.link_to(definition_dict.url, definition_dict.url, rel='foaf:homepage', target='_blank') }}</td>
