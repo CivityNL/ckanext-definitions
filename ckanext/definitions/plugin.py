@@ -74,8 +74,10 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_helpers(self):
         return {'is_data_officer': h.is_data_officer,
                 'definition_list_choices': h.definition_list_choices,
-                'definition_enabled_facet_show': h.definition_enabled_facet_show}
-
+                'definition_enabled_facet_show': h.definition_enabled_facet_show,
+                'definition_maker_facet_list_help': h.maker_facet_list_help,
+                'definition_owner_facet_list_help': h.owner_facet_list_help
+                }
 
     #IRoutes
     def before_map(self, map):

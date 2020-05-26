@@ -33,7 +33,9 @@
 
           <tr>
             <th scope="row" class="definition-label">{{ _("Creator") }}</th>
-            <td class="definition-details" property="dc:creator">{{ h.workflow_get_fullname_from_username(definition_dict.creator_id) }}</td>
+              <td class="definition-details" property="dc:creator">{{
+                  h.catalog_get_fullname_from_username(definition_dict.creator_id) }}
+              </td>
           </tr>
 
           <tr>

@@ -80,6 +80,11 @@ To install ckanext-definitions:
      sudo service apache2 reload
 
 
+----------------------
+Dependencies required
+----------------------
+It is mandatory to use this extension alongside `ckanext-catalog <https://gitlab.onetrail.net/Civity/CKAN/ckanext-catalog>`_ to make use of the universal catalog features and functionality, like catalog email notifications.
+
 ---------------
 Config Settings
 ---------------

@@ -1,5 +1,6 @@
 from ckan.plugins import toolkit
 import logging
+import ckan.model as model
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +21,6 @@ def is_data_officer(context, data_dict={}):
             return True
 
     return False
-
 
 
 def definition_list_choices():
@@ -46,3 +46,27 @@ def definition_enabled_facet_show(facet_item):
     if facet_item['name'] == 'True':
         return 'Ja'
     return 'Nee'
+
+
+def maker_facet_list_help(facet_item):
+    try:
+        maker = toolkit.get_action('user_show')({}, {'id': facet_item['name']})
+        if maker['fullname'] is not None:
+            return maker['fullname']
+    except toolkit.ObjectNotFound:
+        return facet_item['name']
+
+
+def owner_facet_list_help(facet_item):
+    try:
+        user = toolkit.get_action('user_show')({}, {'id': facet_item['name']})
+        if user['fullname'] is not None:
+            return user['fullname']
+    except toolkit.ObjectNotFound:
+        pass
+    try:
+        organization = toolkit.get_action('organization_show')({}, {'id': facet_item['name']})
+        if organization['display_name'] is not None:
+            return organization['display_name']
+    except toolkit.ObjectNotFound:
+        return facet_item['name']

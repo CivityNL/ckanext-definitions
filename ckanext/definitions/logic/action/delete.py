@@ -7,7 +7,7 @@ import logging
 import ckan.lib.jobs as jobs
 import ckan.logic
 import ckan.model as model
-from ckanext.definitions.constants import EMAIL_DELETE_DEFINITION_MULTI,EMAIL_DELETE_DEFINITION_SINGLE
+
 from ckan.common import _
 from ckan.plugins import toolkit
 
@@ -79,61 +79,14 @@ def _delete_all_package_definitions_for_definition(context, data_dict):
     pkg_list = toolkit.get_action('search_packages_by_definition')(context,
                                                                    data_dict_2)
 
-
-    # Aggregate Owner/Mandated emails for the same person
-    # create a String that is a list of "[title] --> [link]"
-
-    # gathers the emails to send, aggregating per email_receiver
-    emails_per_receiver = dict()
-    for package in pkg_list:
-        log.info('TITLE = {0}'.format(package['title']))
-
     for package in pkg_list:
         _data_dict = {'package_id': package['id'],
                       'definition_id': definition_id}
 
         toolkit.get_action('package_definition_delete')(context.copy(), _data_dict)
 
-        url_for_dataset = toolkit.url_for(controller='package',
-                                          action='read',
-                                          id=package['name'],
-                                          _external=True)
-
-        # Email Notification for Mandated or Owner
-        if package['state'] == 'active':
-            try:
-                receiver_email = _get_receiver_email(
-                    package['mandated'])
-            except (KeyError, AttributeError):
-                # Send email to Owner
-                receiver_email = _get_receiver_email(
-                    package['owner'])
-
-
-            string_to_append = '{0} --> {1}<br>'.format(
-                package['title'], url_for_dataset)
-
-            if receiver_email in emails_per_receiver:
-                emails_per_receiver[receiver_email].append(string_to_append)
-
-            else:
-                emails_per_receiver[receiver_email] = [string_to_append]
-
-    for receiver_email in emails_per_receiver:
-        if len(emails_per_receiver[receiver_email]) > 1:
-            list_of_datasets_string = ''
-            for dataset_link_string in emails_per_receiver[receiver_email]:
-                list_of_datasets_string = list_of_datasets_string + dataset_link_string
-
-            subject = EMAIL_DELETE_DEFINITION_MULTI['subject']
-            message = EMAIL_DELETE_DEFINITION_MULTI['message'].format(
-                definition_obj.label, list_of_datasets_string)
-        else:
-            subject = EMAIL_DELETE_DEFINITION_SINGLE['subject']
-            message = EMAIL_DELETE_DEFINITION_SINGLE['message'].format(
-                definition_obj.label, emails_per_receiver[receiver_email][0])
-        # Send the email
-        toolkit.h.workflow_send_email(receiver_email, subject, message)
+    # Email Notification for Mandated or Owner
+    toolkit.h.catalog_send_email_notifications_after_delete(pkg_list, definition_obj.label)
 
 
 ##############################################################
@@ -222,10 +175,3 @@ def package_definition_delete(context, data_dict):
     return pkg_dict
 
 
-def _get_receiver_email(user_id):
-    group_mailbox = toolkit.h.catalogthehague_get_group_mailbox_for_user(
-        user_id)
-    if group_mailbox:
-        return group_mailbox
-    else:
-        return model.User.get(user_id).email

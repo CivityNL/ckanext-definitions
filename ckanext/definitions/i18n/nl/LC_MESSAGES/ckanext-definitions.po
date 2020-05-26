@@ -487,9 +487,6 @@ msgstr "bijv. een beschrijvend label"
 msgid "eg. Some useful notes about the data"
 msgstr "bijv. nuttige info over de data"
 
-msgid "http://denhaag.nl/definition-1"
-msgstr "http://denhaag.nl/definition-1"
-
 msgid "Back"
 msgstr "Terug"
 
