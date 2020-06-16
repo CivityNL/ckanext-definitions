@@ -73,6 +73,7 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # ITemplateHelpers
     def get_helpers(self):
         return {'is_data_officer': h.is_data_officer,
+                'package_definition_count': h.package_definition_count,
                 'definition_list_choices': h.definition_list_choices,
                 'definition_enabled_facet_show': h.definition_enabled_facet_show,
                 'definition_maker_facet_list_help': h.maker_facet_list_help,

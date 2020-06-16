@@ -1,6 +1,6 @@
-from ckan.plugins import toolkit
 import logging
-import ckan.model as model
+from ckan import model
+from ckan.plugins import toolkit
 
 log = logging.getLogger(__name__)
 
@@ -70,3 +70,13 @@ def owner_facet_list_help(facet_item):
             return organization['display_name']
     except toolkit.ObjectNotFound:
         return facet_item['name']
+
+def package_definition_count(pkg_id):
+
+    if not pkg_id:
+        raise toolkit.ValidationError(_('Package Id not provided.'))
+
+    context = {'model': model, 'user': toolkit.c.user or toolkit.c.author}
+    package_definitions = toolkit.get_action('search_definitions_by_package')(context, {'package_id': pkg_id})
+    return len(package_definitions)
+

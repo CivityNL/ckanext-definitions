@@ -2,10 +2,6 @@
 
 {% block content_primary_nav %}
     {{ super() }}
-{% if pkg.definition in [None, '[]'] %}
-        {% set definition_list = [] %}
-    {% else %}
-        {% set definition_list = pkg.definition.split(' ') %}
-    {% endif %}
-    {{ h.build_nav_icon('dataset_definition_read', _('Definitions') + ' ({0})'.format(definition_list|length), package_id=pkg.name) }}
+    {% set definition_count = h.package_definition_count(pkg.name) %}
+    {{ h.build_nav_icon('dataset_definition_read', _('Definitions') + ' ({0})'.format(definition_count), package_id=pkg.name) }}
 {% endblock %}
