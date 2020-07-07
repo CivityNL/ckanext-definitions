@@ -41,8 +41,8 @@ msgstr "Geen rechten om data officer %s te verwijderen."
 
 #: ckanext/definitions/controllers/definition.py:54
 #: ckanext/definitions/templates/definition/snippets/definition_info.html:40
-msgid "Creator"
-msgstr "Maker"
+msgid "Creators"
+msgstr "Makers"
 
 #: ckanext/definitions/controllers/definition.py:55
 #: ckanext/definitions/templates/definition/snippets/definition_basic_fields.html:26
@@ -56,6 +56,9 @@ msgstr "Actief"
 #: ckanext/definitions/templates/package/snippets/definition_list_manage.html:7
 msgid "Label"
 msgstr "Begrip"
+
+msgid "Labels"
+msgstr "Begrippen"
 
 #: ckanext/definitions/controllers/definition.py:187
 #: ckanext/definitions/controllers/definition.py:382

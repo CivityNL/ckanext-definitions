@@ -51,9 +51,9 @@ class DefinitionController(base.BaseController):
 
         # Set Facets Structure
         facets = OrderedDict()
-        facets['creator_id'] = toolkit._('Creator')
+        facets['creator_id'] = toolkit._('Creators')
         facets['enabled'] = toolkit._('Enabled')
-        facets['label'] = toolkit._('Label')
+        facets['label'] = toolkit._('Labels')
 
         page = toolkit.h.get_page_number(toolkit.request.params)
         toolkit.c.q = toolkit.request.params.get('q', '')
