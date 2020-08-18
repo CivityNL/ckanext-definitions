@@ -31,13 +31,14 @@ def create_table(table=None):
 class Definition(domain_object.DomainObject):
 
     def __init__(self, label, description='', url='', enabled=True,
-                 creator_id=None):
+                 creator_id=None, definition_id=None):
         self.label = label
         self.description = description
         self.url = url
         self.enabled = enabled
         self.creator_id = creator_id
         self.display_name = label + ' - ' + description
+        self.id = definition_id
 
     # not stateful so same as purge
     def delete(self):
@@ -186,6 +187,7 @@ def define_definition_table():
     meta.mapper(Definition, definition_table)
 
 
-def create_definition(label, description, url, enabled=True, creator_id=None):
+def create_definition(label, description, url, enabled=True, creator_id=None,
+                      definition_id=None):
     return Definition(label=label, description=description, url=url,
-                      enabled=enabled, creator_id=creator_id)
+                      enabled=enabled, creator_id=creator_id, id=definition_id)
