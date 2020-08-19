@@ -1,7 +1,11 @@
 {% ckan_extends %}
 
 {% block header_site_search_label %}
-    {% if type=='definition' -%}
+    {% if type=='organization' -%}
+        {{ _('Search Organizations') }}
+    {% elif type=='group' -%}
+        {{ _('Search Groups') }}
+    {% elif type=='definition' -%}
         {{ _('Search Definitions') }}
     {%- else %}
         {{ _('Search Datasets') }}
