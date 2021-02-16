@@ -74,9 +74,7 @@
             <div>
                 {% for facet in c.facet_titles %}
                     {% if facet == 'creator_id' %}
-                {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet,
-                label_function=h.definition_maker_facet_list_help, alternative_url=alternative_url,
-                extras={'extras_definition':c.definiton_dict.id}) }}
+                        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.definition_user_facet_list_help, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
                     {% elif facet == 'enabled' %}
                         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.definition_enabled_facet_show, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
                     {% else %}

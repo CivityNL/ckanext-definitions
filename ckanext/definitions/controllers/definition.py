@@ -284,7 +284,7 @@ class DefinitionController(base.BaseController):
 
             # Facet titles
             for plugin in plugins.PluginImplementations(plugins.IFacets):
-                facets = plugin.group_facets(facets, None, None)
+                facets = plugin.dataset_facets(facets, None)
 
             toolkit.c.facet_titles = facets
 

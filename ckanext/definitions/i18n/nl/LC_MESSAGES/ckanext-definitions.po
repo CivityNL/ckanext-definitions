@@ -215,10 +215,11 @@ msgid "What are Data Officers?"
 msgstr "Wat zijn Data Officers?"
 
 #: ckanext/definitions/templates/data_officer/index.html:35
-msgid " Helping Text Explaining what are Data Officers and how to set them. "
+msgid "Data Officers are responsible for creating and managing"
+" Definitions. Data Officers can only be assigned by system administrators."
 msgstr ""
-"Helptekst om uit te leggen wat Data Officers zijn en hoe je ze kunt "
-"creëren."
+"Data Officers zijn verantwoordelijk voor het aanmaken en beheren van Definities. "
+"Data Officers kunnen alleen door systeembeheerders worden toegewezen."
 
 #: ckanext/definitions/templates/data_officer/snippets/data_officer_list.html:2
 msgid "Data Officers List"

@@ -2,6 +2,7 @@ import ckanext.definitions.model.definition as definition_model
 from ckanext.definitions.logic.action.delete import \
     _delete_all_package_definitions_for_definition
 import ckan.lib.dictization as dictization
+import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 import datetime
 import sys
@@ -21,6 +22,16 @@ def definition_update(context, data_dict):
     session = context['session']
     # model = context['model']
     result = None
+
+    errors = {}
+    mandatory_fields = ['id', 'label', 'description']
+    for key in mandatory_fields:
+        if (key not in data_dict) or not data_dict[key]:
+            errors[key] = [toolkit._('Missing value')]
+
+    if errors:
+        session.rollback()
+        raise toolkit.ValidationError(errors)
 
     try:
         definition_id = data_dict['id']

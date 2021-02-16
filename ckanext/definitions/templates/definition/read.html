@@ -55,23 +55,22 @@
 
 {% block organization_facets %}
     {% set alternative_url= '/definition/' ~ definition_id %}
-
-    <div class="filters">
-        <div>
-            {% for facet in c.facet_titles %}
-                {% if facet == 'owner' %}
-            {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet,
-            alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id},
-            label_function=h.definition_owner_facet_list_help ) }}
-                {% elif facet == 'has_personal_data' %}
-                    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.definition_enabled_facet_show) }}
-                {% else %}
-                    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
-                {%- endif %}
-            {% endfor %}
-
-        </div>
-        <a class="close no-text hide-filters"><i
-                class="fa fa-times-circle"></i><span class="text">close</span></a>
-    </div>
+<div class="filters">
+  <div>
+    {% for facet in c.facet_titles %}
+      {% if (facet == 'creator_user_id') %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_user_facet_list_help ) }}
+      {% elif (facet == 'private') %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_private_facet_list_help ) }}
+      {% elif (facet == 'subtheme') %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_theme_facet_list_help ) }}
+      {% elif (facet == 'vermelding_type') %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_vermelding_type_facet_list_help ) }}
+      {% else %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+      {%- endif %}
+    {% endfor %}
+  </div>
+  <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
+</div>
 {% endblock %}
