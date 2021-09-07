@@ -17,13 +17,11 @@ def definition_create(context, data_dict):
     :return: the definition added to the DB
     '''
     model = context['model']
-    user = context['user']
+    user_id = getattr(context['auth_user_obj'], 'id')
 
     definitions_id = data_dict.get('id', None)
     label = data_dict.get('label', '')
     description = data_dict.get('description', '')
-    url = data_dict.get('url', '')
-    enabled = data_dict.get('enabled', True)
 
     # Authorization Check
     toolkit.check_access('definition_create', context, data_dict)
@@ -51,7 +49,7 @@ def definition_create(context, data_dict):
         description=data_dict['description'],
         url=data_dict['url'],
         enabled=data_dict['enabled'],
-        creator_id=user
+        creator_id=user_id
     )
     model.Session.add(definition)
     model.Session.commit()
