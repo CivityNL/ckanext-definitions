@@ -66,6 +66,10 @@
         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_theme_facet_list_help ) }}
       {% elif (facet == 'vermelding_type') %}
         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_vermelding_type_facet_list_help ) }}
+      {% elif (facet == 'type_data') %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_type_data_facet_list_help ) }}
+      {% elif (facet == 'dataset_status') %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_dataset_status_facet_list_help ) }}
       {% else %}
         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
       {%- endif %}
