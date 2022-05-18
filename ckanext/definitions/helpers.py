@@ -51,7 +51,7 @@ def definition_enabled_facet_show(facet_item):
 def user_facet_list_help(facet_item):
     try:
         user = toolkit.get_action('user_show')({}, {'id': facet_item['name']})
-    except toolkit.ObjectNotFound:
+    except Exception as ex:
         user = None
 
     if user and 'display_name' in user and user['display_name']:
