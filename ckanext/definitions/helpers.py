@@ -50,16 +50,18 @@ def definition_enabled_facet_show(facet_item):
 
 def user_facet_list_help(facet_item):
     try:
-        user = toolkit.get_action('user_show')({}, {'id': facet_item['name']})
+        user = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': facet_item['name']})
     except Exception as ex:
         user = None
 
-    if user and 'display_name' in user and user['display_name']:
-        result = user['display_name']
-    elif user and 'name' in user and user['name']:
-        result = user['name']
-    else:
-        result = facet_item['name']
+    result = facet_item['name']
+
+    if user:
+        if user.get('display_name', False):
+            result = user['display_name']
+        elif user.get('name', False):
+            result = user['name']
+
     return result
 
 
@@ -79,11 +81,9 @@ def owner_facet_list_help(facet_item):
 
 
 def package_definition_count(pkg_id):
-
     if not pkg_id:
         raise toolkit.ValidationError(toolkit._('Package Id not provided.'))
 
     context = {'model': model, 'user': toolkit.c.user or toolkit.c.author}
     package_definitions = toolkit.get_action('search_definitions_by_package')(context, {'package_id': pkg_id})
     return len(package_definitions)
-

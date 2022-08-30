@@ -107,10 +107,7 @@ class Definition(domain_object.DomainObject):
             if key in vars(Definition):
                 search_facets[key] = {'items': [], 'title': key}
                 attribute = getattr(Definition, key)
-                for row_value, row_count in query.with_entities(attribute,
-                                                                func.count(
-                                                                    attribute)).group_by(
-                    attribute).all():
+                for row_value, row_count in query.with_entities(attribute, func.count(attribute)).group_by(attribute).all():
 
                     if isinstance(row_value, (bool, int, float)):
                         row_value = str(row_value)
