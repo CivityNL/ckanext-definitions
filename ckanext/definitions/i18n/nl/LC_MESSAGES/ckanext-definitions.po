@@ -513,7 +513,7 @@ msgid "Search only for definition titles"
 msgstr "Doorzoek alleen titels van definities"
 
 msgid "Discipline"
-msgstr "Vakgebied"
+msgstr "Vakdiscipline"
 
 msgid "Expertise"
 msgstr "Expertise"
