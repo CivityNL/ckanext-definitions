@@ -505,3 +505,15 @@ msgstr "Activiteitenstroom"
 
 msgid "Other"
 msgstr "Anders"
+
+msgid "Search all definition metadata"
+msgstr "Doorzoek alle metadata van definities"
+
+msgid "Search only for definition titles"
+msgstr "Doorzoek alleen titels van definities"
+
+msgid "Discipline"
+msgstr "Vakgebied"
+
+msgid "Expertise"
+msgstr "Expertise"

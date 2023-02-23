@@ -33,7 +33,7 @@ ckanext-definitions
 =============
 
 
-Needs Shceming.
+Needs Scheming.
 Needs User Extra.
 Need to add field "definition" to your dataset schema
 
@@ -43,6 +43,30 @@ Need to add field "definition" to your dataset schema
 .. Put a description of your extension here:
    What does it do? What features does it have?
    Consider including some screenshots or embedding a video!
+
+-----------------
+Config Properties
+-----------------
+Display custom metadata filter::
+
+   ckanext.definitions.search_title_only_filter = {False | True}
+Display additional definition metadata::
+
+   ckanext.definitions.show_additional_metadata = {False | True}
+----------------------
+Internal Notes - TODOs
+----------------------
+
+This extension does not implement scheming capabilities, thus setting up
+the definition object metadata is a bit more manual.
+
+Additional fields are hardcodedly introduced ('discipline', 'expertise')
+and included in theDB table structure.
+
+Boolean config property::
+
+   ckanext.definitions.show_additional_metadata = {False | True}
+currently serves for displaying the above mentioned fields.
 
 
 ------------

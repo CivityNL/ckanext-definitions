@@ -31,7 +31,7 @@
                 {% set sorting = [
                 (_('Label Ascending'), 'asc'),
                 (_('Label Descending'), 'desc')] %}
-                {% snippet 'snippets/search_form.html', form_id='definition-search-form', type='definition', query=c.q, sorting=sorting, sorting_selected=c.sort_by_selected, count=c.page.item_count, facets=facets, show_empty=request.params, error=c.query_error, fields=c.fields, placeholder=_('Search definitions...') %}
+                {% snippet 'snippets/search_form.html', form_id='definition-search-form', type='definition', query=c.q, search_title_only=c.search_title_only ,sorting=sorting, sorting_selected=c.sort_by_selected, count=c.page.item_count, facets=facets, show_empty=request.params, error=c.query_error, fields=c.fields, placeholder=_('Search definitions...') %}
             {% endblock %}
 
             {% block definitions_search_results_list %}

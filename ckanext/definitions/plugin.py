@@ -77,7 +77,9 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'definition_list_choices': h.definition_list_choices,
                 'definition_enabled_facet_show': h.definition_enabled_facet_show,
                 'definition_user_facet_list_help': h.user_facet_list_help,
-                'definition_owner_facet_list_help': h.owner_facet_list_help
+                'definition_owner_facet_list_help': h.owner_facet_list_help,
+                'definition_search_title_only_filter': h.search_title_only_filter,
+                'definition_show_additional_metadata': h.show_additional_metadata
                 }
 
     #IRoutes

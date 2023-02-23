@@ -1,8 +1,11 @@
 {% extends "package/edit_base.html" %}
 
+{% set search_title_only_filter = h.definition_search_title_only_filter() %}
 {% block subtitle %}{{ _('Definitions') }} - {{ super() }}{% endblock %}
 
 {% block primary_content_inner %}
+{% resource "definitions/js/definitions_autocomplete.js" %}
+{% resource "definitions/css/definitions_autocomplete.css" %}
     <div style="width: 100%; float: right; text-align: left;">
         <h3>
             {% block page_heading %}{{ _('Add Definition') }}{% endblock %}
@@ -14,13 +17,18 @@
                     <div class="control-group control-medium"
                          style="display: inline-block; float: none; width: 70%;">
                         <div class="controls">
+                            {% if search_title_only_filter %}
+                            <div id="autocomplete_div">
+                                <input type="checkbox" id="autocomplete_checkbox" /> <span id="autocomplete_label">{{ _('Search only for definition titles') }}</span>
+                            </div>
+                            {% endif %}
                             <input id="definition_id" type="text"
                                    name="definition_id"
                                    placeholder="{{ _('Definition') }}"
                                    value="" class="control-medium"
-                                   data-module="autocomplete"
+                                   data-module="definitions_autocomplete"
                                    data-module-source="/api/action/definition_autocomplete?q=?"
-                                   data-module-label="display_name"
+                                   data-module-label="label"
                                    data-module-key="id">
                         </div>
                     </div>

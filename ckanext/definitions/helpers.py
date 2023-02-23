@@ -40,8 +40,7 @@ def definition_list_choices():
 
 
 def definition_enabled_facet_show(facet_item):
-    print 'definition_enabled_facet_show'
-    print facet_item
+    log.debug('definition_enabled facet: {item}'.format(item=facet_item))
 
     if facet_item['name'] == 'True':
         return 'Ja'
@@ -87,3 +86,10 @@ def package_definition_count(pkg_id):
     context = {'model': model, 'user': toolkit.c.user or toolkit.c.author}
     package_definitions = toolkit.get_action('search_definitions_by_package')(context, {'package_id': pkg_id})
     return len(package_definitions)
+
+
+def search_title_only_filter():
+    return toolkit.asbool(toolkit.config.get('ckanext.definitions.search_title_only_filter', False))
+
+def show_additional_metadata():
+    return toolkit.asbool(toolkit.config.get('ckanext.definitions.show_additional_metadata', False))

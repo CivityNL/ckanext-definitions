@@ -1,0 +1,13 @@
+#autocomplete_div {
+  display: flex;
+  padding: 4px;
+}
+#autocomplete_checkbox {
+  height: 12px;
+  width: 12px !important;
+  margin-top: -3px;
+}
+#autocomplete_label{
+  width: 100%;
+  padding-left: 10px;
+}

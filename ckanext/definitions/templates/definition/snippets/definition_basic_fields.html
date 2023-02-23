@@ -17,12 +17,21 @@
     {{ form.markdown('description', id='field-description', label=_('Description'), is_required=true, value=data.description, error=errors.description) }}
 {% endblock %}
 
+{% if h.definition_show_additional_metadata() %}
+    {% block definition_basic_fields_discipline %}
+        {{ form.input('discipline', id='field-discipline', label=_('Discipline'),  value=data.discipline, error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-medium"}, is_required=False) }}
+    {% endblock %}
+
+    {% block definition_basic_fields_expertise %}
+        {{ form.input('expertise', id='field-expertise', label=_('Expertise'),  value=data.expertise, error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-medium"}, is_required=False) }}
+    {% endblock %}
+{% endif %}
+
 {% block package_metadata_fields_url %}
     {{ form.input('url', id='field-url', label=_('URL'), value=data.url, error=errors.url, classes=['control-medium']) }}
 {% endblock %}
 
 {% block definition_basic_fields_enabled %}
-    {# TODO  change options labels to use translations #}
     {{ form.select('enabled', id='field-enabled', label=_('Enabled'), options=[{'text': _('Yes'), 'value': True},{'text': _('No'), 'value': False}], selected=data.enabled, error=errors['enabled'], classes=['control-medium'], attrs={"class": "form-control"}, is_required=False) }}
 {% endblock %}
 

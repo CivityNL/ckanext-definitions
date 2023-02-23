@@ -45,6 +45,9 @@ def definition_update(context, data_dict):
         definition.enabled = data_dict['enabled']
         definition.modified_date = datetime.datetime.utcnow()
 
+        definition.discipline = data_dict.get('discipline', None)
+        definition.expertise = data_dict.get('expertise', None)
+
         if definition.enabled == 'False':
             log.info('Deleting all Package_Definitions from definition -> {0}'.format(definition_id))
             _delete_all_package_definitions_for_definition(context, data_dict)

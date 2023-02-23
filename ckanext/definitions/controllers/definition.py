@@ -11,8 +11,8 @@ from urllib import urlencode
 import ckan.lib.search as search
 import ckan.lib.helpers as h
 import ckan.plugins as plugins
-from ckan.lib.alphabet_paginate import AlphaPage
 import ckanext.definitions.model.definition as definitions_model
+import ckanext.definitions.helpers as definition_helpers
 
 tuplize_dict = logic.tuplize_dict
 clean_dict = logic.clean_dict
@@ -55,9 +55,18 @@ class DefinitionController(base.BaseController):
         facets['enabled'] = toolkit._('Enabled')
         facets['label'] = toolkit._('Labels')
 
+        # Load facets from additional definition metadata, if
+        show_additional_metadata = definition_helpers.show_additional_metadata()
+        if show_additional_metadata:
+            for metadata in definitions_model.ADDITIONAL_FIELDS:
+                facets[metadata] = toolkit._(metadata.capitalize())
+
         page = toolkit.h.get_page_number(toolkit.request.params)
         toolkit.c.q = toolkit.request.params.get('q', '')
         sort_by = toolkit.request.params.get('sort', None)
+        # store value for holding checkbox state on reload
+        toolkit.c.search_title_only = toolkit.request.params.get('search_title_only', "false")
+
         params_nopage = [(k, v) for k, v in toolkit.request.params.items()
                          if k != 'page']
 
@@ -90,7 +99,7 @@ class DefinitionController(base.BaseController):
         # # TODO Call search Action function instead of model directly
 
         search_result = definitions_model.Definition.search(
-            search_dict=search_dict, q=toolkit.c.q, enabled=enabled)
+            search_dict=search_dict, q=toolkit.c.q, search_title_only=toolkit.c.search_title_only, enabled=enabled)
 
         # total results
         results = search_result['results']
@@ -138,7 +147,7 @@ class DefinitionController(base.BaseController):
         toolkit.c.fields_grouped = {}
         fq = ''
         for (param, value) in toolkit.request.params.items():
-            if param not in ['q', 'page', 'sort'] \
+            if param not in ['q', 'page', 'sort', 'search_title_only'] \
                     and len(value) and not param.startswith('_'):
                 toolkit.c.fields.append((param, value))
                 fq += ' %s:"%s"' % (param, value)
@@ -256,7 +265,7 @@ class DefinitionController(base.BaseController):
             toolkit.c.fields_grouped = {}
             search_extras = {}
             for (param, value) in toolkit.request.params.items():
-                if param not in ['q', 'page', 'sort'] \
+                if param not in ['q', 'page', 'sort', 'search_title_only'] \
                         and len(value) and not param.startswith('_'):
                     if not param.startswith('ext_'):
                         toolkit.c.fields.append((param, value))

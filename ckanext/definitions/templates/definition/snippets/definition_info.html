@@ -15,7 +15,18 @@
             <td class="definition-details" property="dc:label">{{ definition_dict.label }}</td>
           </tr>
 
-          <tr>
+          {% if h.definition_show_additional_metadata() %}
+              <tr>
+                <th scope="row" class="definition-discipline">{{ _("Discipline") }}</th>
+                <td class="definition-details" property="dc:discipline">{{ definition_dict.discipline }}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="definition-expertise">{{ _("Expertise") }}</th>
+                <td class="definition-details" property="dc:expertise">{{ definition_dict.expertise }}</td>
+              </tr>
+              <tr>
+          {% endif %}
             <th scope="row" class="definition-label">{{ _('URL') }}</th>
             {% if h.is_url(definition_dict.url) %}
               <td class="definition-details" property="foaf:homepage">{{ h.link_to(definition_dict.url, definition_dict.url, rel='foaf:homepage', target='_blank') }}</td>

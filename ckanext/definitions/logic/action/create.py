@@ -49,7 +49,11 @@ def definition_create(context, data_dict):
         description=data_dict['description'],
         url=data_dict['url'],
         enabled=data_dict['enabled'],
-        creator_id=user_id
+        creator_id=user_id,
+
+        #additional metadata from customers
+        discipline=data_dict.get('discipline', None),
+        expertise=data_dict.get('expertise', None)
     )
     model.Session.add(definition)
     model.Session.commit()

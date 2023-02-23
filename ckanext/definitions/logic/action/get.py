@@ -9,6 +9,8 @@ import ckan.model.misc as misc
 import ckan
 import ast
 from six import string_types
+from sqlalchemy import or_
+
 
 log = logging.getLogger(__name__)
 _table_dictize = ckan.lib.dictization.table_dictize
@@ -86,17 +88,27 @@ def _definition_search(context, data_dict):
     user = context['user']
 
     term = data_dict.get('query') or data_dict.get('q') or []
+    include_all = bool(data_dict.get('include_all', False))
     offset = data_dict.get('offset')
     limit = data_dict.get('limit')
 
     # TODO: should we check for user authentication first?
     q = model.Session.query(definitions_model.Definition)
-
     if not len(term):
         return [], 0
 
     escaped_term = misc.escape_sql_like_special_characters(term, escape='\\')
-    q = q.filter(definitions_model.Definition.label.ilike('%' + escaped_term + '%'))
+    if include_all:
+        q = q.filter(
+            or_(
+                definitions_model.Definition.label.ilike('%' + escaped_term + '%'),
+                definitions_model.Definition.description.ilike('%' + escaped_term + '%'),
+                definitions_model.Definition.discipline.ilike('%' + escaped_term + '%'),
+                definitions_model.Definition.expertise.ilike('%' + escaped_term + '%'),
+            )
+        )
+    else:
+        q = q.filter(definitions_model.Definition.label.ilike('%' + escaped_term + '%'))
 
     try:
         toolkit.check_access('definition_update', context)
