@@ -12,6 +12,8 @@ import ckanext.definitions.logic.auth.create as auth_create
 import ckanext.definitions.logic.auth.update as auth_update
 import ckanext.definitions.logic.auth.delete as auth_delete
 from ckan.lib.plugins import DefaultTranslation
+import ckanext.definitions.views as views
+import ckanext.definitions.command as cli
 
 
 class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
@@ -21,7 +23,8 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.ITemplateHelpers)
-    plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IBlueprint)
+    plugins.implements(plugins.IClick)
 
     # IConfigurable
     def configure(self, config):
@@ -82,54 +85,11 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'definition_show_additional_metadata': h.show_additional_metadata
                 }
 
-    #IRoutes
-    def before_map(self, map):
-
-        # Definitions
-        map.connect('definition_search', '/definition',
-                    controller='ckanext.definitions.controllers.definition:DefinitionController',
-                    action='search')
-        map.connect('definition_new', '/definition/new',
-                    controller='ckanext.definitions.controllers.definition:DefinitionController',
-                    action='new')
-        map.connect('definition_edit', '/definition/edit/{definition_id}',
-                    controller='ckanext.definitions.controllers.definition:DefinitionController',
-                    action='edit')
-        map.connect('definition_delete', '/definition/delete/{definition_id}',
-                    controller='ckanext.definitions.controllers.definition:DefinitionController',
-                    action='delete')
-        map.connect('definition_read', '/definition/{definition_id}',
-                    controller='ckanext.definitions.controllers.definition:DefinitionController',
-                    action='read')
-
-        # Data Officer
-        map.connect('data_officer_index', '/data_officer',
-                    controller='ckanext.definitions.controllers.data_officer:DataOfficerController',
-                    action='index')
-        map.connect('data_officer_new', '/data_officer/new',
-                    controller='ckanext.definitions.controllers.data_officer:DataOfficerController',
-                    action='new')
-        map.connect('data_officer_edit', '/data_officer/edit',
-                    controller='ckanext.definitions.controllers.data_officer:DataOfficerController',
-                    action='edit')
-        map.connect('data_officer_delete', '/data_officer/delete/{user_id}',
-                    controller='ckanext.definitions.controllers.data_officer:DataOfficerController',
-                    action='delete')
+    #IBluePrint
+    def get_blueprint(self):
+        return views.get_blueprints()
 
 
-        # Package Definitions
-        map.connect('dataset_definition_read', '/dataset/definitions/:package_id',
-                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                    action='read')
-        map.connect('dataset_definition_edit', '/dataset/definitions/:package_id/edit',
-                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                    action='edit')
-        map.connect('dataset_definition_new', '/dataset/definitions/:package_id/new',
-                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                    action='new')
-        map.connect('dataset_definition_delete', '/dataset/definitions/{package_id}/delete/{definition_id}',
-                    controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                    action='delete')
-
-
-        return map
+    #IClick
+    def get_commands(self):
+        return cli.get_commands()
