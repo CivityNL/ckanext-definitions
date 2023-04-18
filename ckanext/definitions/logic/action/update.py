@@ -1,15 +1,12 @@
 import ckanext.definitions.model.definition as definition_model
-from ckanext.definitions.logic.action.delete import \
-    _delete_all_package_definitions_for_definition
+from ckanext.definitions.logic.action.delete import _delete_all_package_definitions_for_definition
 import ckan.lib.dictization as dictization
 import ckan.plugins.toolkit as toolkit
-import ckan.logic as logic
 import datetime
 import sys
 import logging
 
 log = logging.getLogger(__name__)
-NotFound = logic.NotFound
 
 
 def definition_update(context, data_dict):

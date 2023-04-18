@@ -1,10 +1,6 @@
-import ckan.logic as logic
 import logging
-import ckan.plugins.toolkit as toolkit
 from ckanext.definitions.logic.auth.create import definition_create
 log = logging.getLogger(__name__)
-
-NotFound = logic.NotFound
 
 
 def definition_delete(context, data_dict):

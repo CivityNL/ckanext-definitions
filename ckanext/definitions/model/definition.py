@@ -1,6 +1,5 @@
 import ckan.model.types as _types
-from ckan.model import package as _package, package_extra as _package_extra, \
-    meta, domain_object
+from ckan.model import package as _package, package_extra as _package_extra, meta, domain_object
 import ckan.model as model
 import logging
 import datetime

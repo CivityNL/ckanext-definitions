@@ -1,7 +1,6 @@
 import ast
 
 from ckan.plugins import toolkit
-
 import ckanext.definitions.model.definition as definition_model
 import ckan.lib.dictization as dictization
 import logging

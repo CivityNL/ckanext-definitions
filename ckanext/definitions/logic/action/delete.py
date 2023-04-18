@@ -3,27 +3,10 @@
 '''API functions for deleting data from CKAN.'''
 import ast
 import logging
-
-import ckan.lib.jobs as jobs
-import ckan.logic
-import ckan.model as model
-
-from ckan.common import _
 from ckan.plugins import toolkit
-
 import ckanext.definitions.model.definition as definitions_model
 
-log = logging.getLogger('ckan.logic')
-
-validate = ckan.lib.navl.dictization_functions.validate
-
-# Define some shortcuts
-# Ensure they are module-private so that they don't get loaded as available
-# actions in the action API.
-ValidationError = ckan.logic.ValidationError
-NotFound = ckan.logic.NotFound
-_get_or_bust = ckan.logic.get_or_bust
-_get_action = ckan.logic.get_action
+log = logging.getLogger(__name__)
 
 
 def definition_delete(context, data_dict):
@@ -38,8 +21,8 @@ def definition_delete(context, data_dict):
     '''
 
     model = context['model']
-    if not data_dict.has_key('id') or not data_dict['id']:
-        raise ValidationError({'id': _('id not in data')})
+    if not data_dict.get('id', None):
+        raise toolkit.ValidationError({'id': toolkit._('id not in data')})
 
     toolkit.check_access('definition_delete', context, data_dict)
 
@@ -48,7 +31,7 @@ def definition_delete(context, data_dict):
     # check if definition exists
     definition_obj = definitions_model.Definition.get(definition_id)
     if definition_obj is None:
-        raise NotFound(_('Could not find definition "%s"') % definition_id)
+        raise toolkit.ObjectNotFound(toolkit._('Could not find definition "%s"') % definition_id)
 
     _delete_all_package_definitions_for_definition(context, data_dict)
 
@@ -62,16 +45,15 @@ def definition_delete(context, data_dict):
 
 # NOT AN PUBLIC ACTION
 def _delete_all_package_definitions_for_definition(context, data_dict):
-    if not data_dict.has_key('id') or not data_dict['id']:
-        raise ValidationError({'id': _('id not in data')})
-
-    definition_id = data_dict['id']
+    definition_id = data_dict.get('id', None)
+    if not definition_id:
+        raise toolkit.ValidationError({'id': toolkit._('id not in data')})
 
     # check if definition exists
     definition_obj = definitions_model.Definition.get(definition_id)
     if definition_obj is None:
         raise toolkit.ObjectNotFound(
-            _('Could not find definition "%s"') % definition_id)
+            toolkit._('Could not find definition "%s"') % definition_id)
 
     # Delete all package_definitions associated
     context['ignore_auth'] = True

@@ -1,9 +1,8 @@
-import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
 import logging
 
-NotFound = logic.NotFound
 log = logging.getLogger(__name__)
+
 
 @toolkit.auth_allow_anonymous_access
 def definition_read(context, data_dict):

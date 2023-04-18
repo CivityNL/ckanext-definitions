@@ -4,7 +4,7 @@ import ckan.model as model
 import logging
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.navl.dictization_functions as dict_fns
-from ckan.common import OrderedDict
+from collections import OrderedDict
 import ckan.logic as logic
 from six import string_types
 from urllib import urlencode

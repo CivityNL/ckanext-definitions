@@ -1,19 +1,15 @@
 import ckanext.definitions.model.definition as definitions_model
 import ckanext.definitions.model_dictize as model_dictize
-import ckan.lib.dictization.model_dictize as ckan_model_dictize
 import ckan.plugins.toolkit as toolkit
-import ckan.logic as logic
 import logging
 import ckan.lib.dictization as dictization
 import ckan.model.misc as misc
-import ckan
 import ast
-from six import string_types
-from sqlalchemy import or_
+from sqlalchemy.sql.expression import true, or_
 
 
 log = logging.getLogger(__name__)
-_table_dictize = ckan.lib.dictization.table_dictize
+_table_dictize = dictization.table_dictize
 
 
 @toolkit.side_effect_free
@@ -113,9 +109,9 @@ def _definition_search(context, data_dict):
     try:
         toolkit.check_access('definition_update', context)
         if 'include_disabled' not in data_dict or not data_dict['include_disabled']:
-            q = q.filter(definitions_model.Definition.enabled == True)
+            q = q.filter(definitions_model.Definition.enabled == true())
     except toolkit.NotAuthorized:
-        q = q.filter(definitions_model.Definition.enabled==True)
+        q = q.filter(definitions_model.Definition.enabled == true())
 
     count = q.count()
     q = q.offset(offset)
@@ -200,7 +196,7 @@ def search_packages_by_definition(context, data_dict):
 
     if packages:
         if all_fields:
-                result = [toolkit.get_action('package_show')(context, {'id': package}) for package in packages]
+            result = [toolkit.get_action('package_show')(context, {'id': package}) for package in packages]
         else:
             result = [package.name for package in packages]
     else:
