@@ -28,53 +28,78 @@
     :target: https://pypi.python.org/pypi/ckanext-definitions/
     :alt: License
 
-=============
+===================
 ckanext-definitions
-=============
+===================
 
+With this plugin user is able to populate a new metadata object 'Definitions' and relate it to one or more datasets.
 
-Needs Scheming.
-Needs User Extra.
-Need to add field "definition" to your dataset schema
+Enabling this plugin with reveal an additional header tab, from where the user can view, create or modify definitions.
 
+To assign a definition to a dataset, user has to access the edit mode on the dataset of interest, and on the newly revealed tab 'Definitions', search and assign definitions to the dataset.
 
+To view the existing relations between datasets and definition, user has two options:
 
-
-.. Put a description of your extension here:
-   What does it do? What features does it have?
-   Consider including some screenshots or embedding a video!
-
------------------
-Config Properties
------------------
-Display custom metadata filter::
-
-   ckanext.definitions.search_title_only_filter = {False | True}
-Display additional definition metadata::
-
-   ckanext.definitions.show_additional_metadata = {False | True}
-----------------------
-Internal Notes - TODOs
-----------------------
-
-This extension does not implement scheming capabilities, thus setting up
-the definition object metadata is a bit more manual.
-
-Additional fields are hardcodedly introduced ('discipline', 'expertise')
-and included in theDB table structure.
-
-Boolean config property::
-
-   ckanext.definitions.show_additional_metadata = {False | True}
-currently serves for displaying the above mentioned fields.
-
+#. By accessing one definition and getting a list of related datasets
+#. By accessing one dataset, navigating to the 'Definitions' tab to retrieve a list of related definitions
 
 ------------
 Requirements
 ------------
 
-For example, you might want to mention here which versions of CKAN this
-extension works with.
+For the plugin to function properly, additional plugins are requires :
+
+* ckanext-scheming
+* ckanext-user_extra
+
+Need to add field "definition" to your dataset schema
+
+-----------------
+Config Properties
+-----------------
+
+Enable the plugin by including it in the configuration options::
+
+   ckan.plugins = ... definitions ...
+
+
+Display custom metadata filter::
+
+   ckanext.definitions.search_title_only_filter = {False | True}
+
+
+Display additional definition metadata::
+
+   ckanext.definitions.show_additional_metadata = {False | True}
+
+
+--------------------------
+Definition object metadata
+--------------------------
+::
+
+   'label': title of the definition
+   'description':  description of the definition
+   'url':  (optional) any available reference of the definition
+   'enabled': set state of definition
+   'discipline': (optional extra) discipline description
+   'expertise': (optional extra) expertise description
+
+
+Boolean config property::
+
+   ckanext.definitions.show_additional_metadata = {False | True}
+
+
+currently serves for displaying the optional extra fields.
+
+
+--------------
+Internal Notes
+--------------
+
+This plugin does not implement scheming capabilities, thus setting up
+the definition object metadata is currently hardcoded.
 
 
 ------------
@@ -147,57 +172,3 @@ coverage installed in your virtualenv (``pip install coverage``) then run::
     nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.definitions --cover-inclusive --cover-erase --cover-tests
 
 
----------------------------------
-Registering ckanext-definitions on PyPI
----------------------------------
-
-ckanext-definitions should be availabe on PyPI as
-https://pypi.python.org/pypi/ckanext-definitions. If that link doesn't work, then
-you can register the project on PyPI for the first time by following these
-steps:
-
-1. Create a source distribution of the project::
-
-     python setup.py sdist
-
-2. Register the project::
-
-     python setup.py register
-
-3. Upload the source distribution to PyPI::
-
-     python setup.py sdist upload
-
-4. Tag the first release of the project on GitHub with the version number from
-   the ``setup.py`` file. For example if the version number in ``setup.py`` is
-   0.0.1 then do::
-
-       git tag 0.0.1
-       git push --tags
-
-
-----------------------------------------
-Releasing a New Version of ckanext-definitions
-----------------------------------------
-
-ckanext-definitions is availabe on PyPI as https://pypi.python.org/pypi/ckanext-definitions.
-To publish a new version to PyPI follow these steps:
-
-1. Update the version number in the ``setup.py`` file.
-   See `PEP 440 <http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers>`_
-   for how to choose version numbers.
-
-2. Create a source distribution of the new version::
-
-     python setup.py sdist
-
-3. Upload the source distribution to PyPI::
-
-     python setup.py sdist upload
-
-4. Tag the new release of the project on GitHub with the version number from
-   the ``setup.py`` file. For example if the version number in ``setup.py`` is
-   0.0.2 then do::
-
-       git tag 0.0.2
-       git push --tags
