@@ -32,6 +32,8 @@
 ckanext-definitions
 ===================
 
+Testing Sonarqube
+
 With this plugin user is able to populate a new metadata object 'Definitions' and relate it to one or more datasets.
 
 Enabling this plugin with reveal an additional header tab, from where the user can view, create or modify definitions.
