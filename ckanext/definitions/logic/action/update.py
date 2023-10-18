@@ -53,6 +53,6 @@ def definition_update(context, data_dict):
         session.commit()
         result = dictization.table_dictize(definition, context)
     except:
-        print sys.exc_info()[0]
+        print(sys.exc_info()[0])
 
     return result

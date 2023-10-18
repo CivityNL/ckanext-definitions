@@ -7,7 +7,7 @@ import ckan.lib.navl.dictization_functions as dict_fns
 from collections import OrderedDict
 import ckan.logic as logic
 from six import string_types
-from urllib import urlencode
+from urllib.parse import urlencode
 import ckan.lib.search as search
 import ckan.lib.helpers as h
 import ckan.plugins as plugins
