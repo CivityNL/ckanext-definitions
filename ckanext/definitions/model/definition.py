@@ -14,6 +14,7 @@ definition_table = None
 DEFAULT_FACETS = ['creator_id', 'enabled', 'label']
 ADDITIONAL_FIELDS = ['discipline', 'expertise']
 
+
 def setup():
     if definition_table is None:
         define_definition_table()
@@ -121,7 +122,7 @@ class Definition(domain_object.DomainObject):
         if enabled:
             query = query.filter(Definition.enabled == enabled)
 
-        for key, value in search_dict.iteritems():
+        for key, value in search_dict.items():
             if key in vars(Definition):
                 attribute = getattr(Definition, key)
                 query = query.filter(attribute == value)
