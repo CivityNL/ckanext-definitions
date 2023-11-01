@@ -14,54 +14,55 @@ log = logging.getLogger(__name__)
 abort = base.abort
 
 
-class PackageDefinitionController(base.BaseController):
+def read(package_id):
+    """Render this package's definition page."""
 
-    def read(self, package_id):
-        """Render this package's definition page."""
+    extra_vars = _load_package_and_definitions(package_id)
+    return toolkit.render('package/definitions_read.html',
+                          extra_vars=extra_vars)
 
-        extra_vars = _load_package_and_definitions(package_id)
-        return toolkit.render('package/definitions_read.html',
-                              extra_vars=extra_vars)
 
-    def edit(self, package_id):
-        """Render this package's definition page."""
+def edit(package_id):
+    """Render this package's definition page."""
 
-        extra_vars = _load_package_and_definitions(package_id)
-        return toolkit.render('package/definitions_edit.html',
-                              extra_vars=extra_vars)
+    extra_vars = _load_package_and_definitions(package_id)
+    return toolkit.render('package/definitions_edit.html',
+                          extra_vars=extra_vars)
 
-    def new(self, package_id):
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user}
-        definition_id = toolkit.request.params.get('definition_id', None)
 
-        try:
-            toolkit.check_access('package_update', context, {'id': package_id})
-        except toolkit.NotAuthorized:
-            abort(403, toolkit._(
-                'Unauthorized to add definition to dataset %s') % '')
+def new(package_id):
+    context = {'model': model, 'session': model.Session,
+               'user': toolkit.c.user}
+    definition_id = toolkit.request.params.get('definition_id', None)
 
-        data_dict = {'package_id': package_id, 'definition_id': definition_id}
-        toolkit.get_action('package_definition_create')(context, data_dict)
+    try:
+        toolkit.check_access('package_update', context, {'id': package_id})
+    except toolkit.NotAuthorized:
+        abort(403, toolkit._(
+            'Unauthorized to add definition to dataset %s') % '')
 
-        return toolkit.redirect_to('dataset_definition_edit',
-                                   package_id=package_id)
+    data_dict = {'package_id': package_id, 'definition_id': definition_id}
+    toolkit.get_action('package_definition_create')(context, data_dict)
 
-    def delete(self, package_id, definition_id):
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user}
+    return toolkit.redirect_to('dataset_definition_edit',
+                               package_id=package_id)
 
-        try:
-            toolkit.check_access('package_update', context, {'id': package_id})
-        except toolkit.NotAuthorized:
-            abort(403, toolkit._(
-                'Unauthorized to delete definition from dataset %s') % '')
 
-        data_dict = {'package_id': package_id, 'definition_id': definition_id}
-        toolkit.get_action('package_definition_delete')(context, data_dict)
+def delete(package_id, definition_id):
+    context = {'model': model, 'session': model.Session,
+               'user': toolkit.c.user}
 
-        return toolkit.redirect_to('dataset_definition_edit',
-                                   package_id=package_id)
+    try:
+        toolkit.check_access('package_update', context, {'id': package_id})
+    except toolkit.NotAuthorized:
+        abort(403, toolkit._(
+            'Unauthorized to delete definition from dataset %s') % '')
+
+    data_dict = {'package_id': package_id, 'definition_id': definition_id}
+    toolkit.get_action('package_definition_delete')(context, data_dict)
+
+    return toolkit.redirect_to('dataset_definition_edit',
+                               package_id=package_id)
 
 
 def _load_package_and_definitions(package_id):

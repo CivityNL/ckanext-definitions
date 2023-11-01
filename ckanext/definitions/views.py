@@ -1,7 +1,7 @@
 from flask import Blueprint
-from ckanext.definitions.controllers.definition import DefinitionController
-from ckanext.definitions.controllers.data_officer import DataOfficerController
-from ckanext.definitions.controllers.package_definition import PackageDefinitionController
+import ckanext.definitions.controllers.definition as DefinitionController
+import ckanext.definitions.controllers.data_officer as DataOfficerController
+import ckanext.definitions.controllers.package_definition as PackageDefinitionController
 
 definition = Blueprint('definition', __name__, url_prefix='/definition')
 definition.add_url_rule('/', view_func=DefinitionController.search)
