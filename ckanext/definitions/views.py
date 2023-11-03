@@ -11,10 +11,10 @@ definition.add_url_rule('/delete/<definition_id>', view_func=DefinitionControlle
 definition.add_url_rule('/<definition_id>', view_func=DefinitionController.read)
 
 data_officer = Blueprint('data_officer', __name__, url_prefix='/data_officer')
-data_officer.add_url_rule('/', view_func=DataOfficerController.index)
-data_officer.add_url_rule('/new', view_func=DataOfficerController.new)
-data_officer.add_url_rule('/edit', view_func=DataOfficerController.edit)
-data_officer.add_url_rule('/delete/<user_id>', view_func=DataOfficerController.delete)
+data_officer.add_url_rule('/', view_func=DataOfficerController.index, methods=['GET'])
+data_officer.add_url_rule('/new', view_func=DataOfficerController.new, methods=['GET', 'POST'])
+data_officer.add_url_rule('/edit', view_func=DataOfficerController.edit, methods=['GET', 'POST'])
+data_officer.add_url_rule('/delete/<user_id>', view_func=DataOfficerController.delete, methods=['GET', 'POST'])
 
 dataset_definition = Blueprint('dataset_definition', __name__, url_prefix='/dataset/definitions')
 dataset_definition.add_url_rule('/<package_id>', view_func=PackageDefinitionController.read)

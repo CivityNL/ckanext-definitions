@@ -62,13 +62,12 @@ def search():
             facets[metadata] = _(metadata.capitalize())
 
     page = toolkit.h.get_page_number(toolkit.request.params)
-    toolkit.c.q = toolkit.request.params.get('q', '')
+    q = toolkit.request.params.get('q', '')
     sort_by = toolkit.request.params.get('sort', None)
     # store value for holding checkbox state on reload
-    toolkit.c.search_title_only = toolkit.request.params.get('search_title_only', "false")
+    search_title_only = toolkit.request.params.get('search_title_only', "false")
 
-    params_nopage = [(k, v) for k, v in toolkit.request.params.items()
-                     if k != 'page']
+    params_nopage = [(k, v) for k, v in toolkit.request.params.items() if k != 'page']
 
     def remove_field(key, value=None, replace=None):
         alternative_url = '/definition'
@@ -79,10 +78,7 @@ def search():
                                           action='search',
                                           alternative_url=alternative_url)
 
-    toolkit.c.remove_field = remove_field
-
-    toolkit.c.facet_titles = facets
-
+    facet_titles = facets
 
     # TODO handle URL Params with Facets
     search_dict = {}
@@ -98,7 +94,7 @@ def search():
     # # TODO Call search Action function instead of model directly
 
     search_result = definitions_model.Definition.search(
-        search_dict=search_dict, q=toolkit.c.q, search_title_only=toolkit.c.search_title_only, enabled=enabled)
+        search_dict=search_dict, q=q, search_title_only=search_title_only, enabled=enabled)
 
     # total results
     results = search_result['results']
@@ -117,14 +113,14 @@ def search():
     page_collection = query.all()
 
     # Set Facets Content
-    toolkit.c.search_facets = search_result['search_facets']
-    toolkit.c.search_facets_limits = {}
-    for facet in toolkit.c.search_facets.keys():
+    search_facets = search_result['search_facets']
+    search_facets_limits = {}
+    for facet in search_facets.keys():
         facet_limit = int(toolkit.request.params.get('_%s_limit' % facet,
                                                toolkit.config.get(
                                                    'search.facets.default',
                                                    3)))
-        toolkit.c.search_facets_limits[facet] = facet_limit
+        search_facets_limits[facet] = facet_limit
 
 
     def search_url(params):
@@ -139,22 +135,20 @@ def search():
         params.append(('page', page))
         return search_url(params)
 
-    toolkit.c.fields = []
-    # c.fields_grouped will contain a dict of params containing
-    # a list of values eg {'tags':['tag1', 'tag2']}
-    toolkit.c.fields_grouped = {}
+    fields = []
+    fields_grouped = {}
     fq = ''
     for (param, value) in toolkit.request.params.items():
         if param not in ['q', 'page', 'sort', 'search_title_only'] \
                 and len(value) and not param.startswith('_'):
-            toolkit.c.fields.append((param, value))
+            fields.append((param, value))
             fq += ' %s:"%s"' % (param, value)
-            if param not in toolkit.c.fields_grouped:
-                toolkit.c.fields_grouped[param] = [value]
+            if param not in fields_grouped:
+                fields_grouped[param] = [value]
             else:
-                toolkit.c.fields_grouped[param].append(value)
+                fields_grouped[param].append(value)
 
-    toolkit.c.page = h.Page(
+    page = h.Page(
         collection=page_collection,
         page=page,
         url=pager_url,
@@ -163,16 +157,20 @@ def search():
     )
 
     # Set Items
-    toolkit.c.page.items = results
-    # Set Sort By
-    toolkit.c.sort_by_selected = sort_by
+    page.items = results
 
     extra_vars = {
-        'page': toolkit.c.page,
-        'q': toolkit.c.q,
-        'results': results
+        'facet_titles': facet_titles,
+        'fields': fields,
+        'fields_grouped': fields_grouped,
+        'page': page,
+        'q': q,
+        'remove_field': remove_field,
+        'search_facets': search_facets,
+        'search_facets_limits': search_facets_limits,
+        'search_title_only': search_title_only,
+        'sort_by_selected': sort_by
     }
-    # log.info('toolkit.c.fields = {0}'.format(toolkit.c.fields))
 
     return toolkit.render('definition/index.html', extra_vars=extra_vars)
 
@@ -182,15 +180,12 @@ def read(definition_id, limit=20):
     context = {'model': model, 'session': model.Session,
                'user': toolkit.c.user,
                'for_view': True}
-    data_dict = {'id': definition_id}
 
     # unicode format (decoded from utf8)
     toolkit.c.q = toolkit.request.params.get('q', '')
 
     try:
-        toolkit.c.definition_dict = toolkit.get_action('definition_show')(
-            context, data_dict)
-        toolkit.c.definition = definition_id
+        definition_dict = toolkit.get_action('definition_show')(context, {'id': definition_id})
     except (toolkit.ObjectNotFound, toolkit.NotAuthorized, KeyError):
         abort(404, _('Definition not found'))
 
@@ -377,6 +372,7 @@ def new(data=None, errors=None, error_summary=None):
 
 
 def _save_new(context):
+    data_dict = None
     try:
         data_dict = clean_dict(dict_fns.unflatten(
             tuplize_dict(parse_params(toolkit.request.params))))
@@ -474,27 +470,21 @@ def _save_edit(definition_id, context):
 
 def delete(definition_id):
     if 'cancel' in toolkit.request.params:
-        toolkit.h.redirect_to('definition_edit',
-                              definition_id=definition_id)
+        toolkit.h.redirect_to('definition.edit', definition_id=definition_id)
 
-    context = {'model': model, 'session': model.Session,
-               'user': toolkit.c.user}
+    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
 
     try:
-        toolkit.check_access('definition_delete', context,
-                             {'id': definition_id})
+        toolkit.check_access('definition_delete', context, {'id': definition_id})
     except toolkit.NotAuthorized:
         abort(403, _('Unauthorized to delete definition %s') % '')
 
     try:
         if toolkit.request.method == 'POST':
-            toolkit.get_action('definition_delete')(context,
-                                                    {'id': definition_id})
-            toolkit.h.flash_notice(
-                _('Definition has been deleted.'))
-            toolkit.h.redirect_to('definition_search')
-        toolkit.c.definition_dict = toolkit.get_action('definition_show')(
-            context, {'id': definition_id})
+            toolkit.get_action('definition_delete')(context, {'id': definition_id})
+            toolkit.h.flash_notice(_('Definition has been deleted.'))
+            toolkit.h.redirect_to('definition.search')
+        definition_dict = toolkit.get_action('definition_show')(context, {'id': definition_id})
     except toolkit.NotAuthorized:
         abort(403, _('Unauthorized to delete definition %s') % '')
     except toolkit.ObjectNotFound:
@@ -503,5 +493,6 @@ def delete(definition_id):
         toolkit.h.flash_error(e.error_dict['message'])
         toolkit.h.redirect_to(
             controller='ckanext.definitions.controllers.definition:DefinitionController',
-            action='read', id=definition_id)
+            action='read', id=definition_id
+        )
     return toolkit.render_template('definition/confirm_delete.html')

@@ -86,19 +86,20 @@ def data_officer_delete(context, data_dict):
     :return: the definition added to the DB
     '''
 
-    user_id = data_dict['user_id']
-    user_extras = \
-        toolkit.get_action('user_extra_show')(context, {"user_id": user_id})[
-            'extras']
+    # check for valid input
+    user_id = toolkit.get_or_bust(data_dict, 'user_id')
 
-    for extra_dict in user_extras:
-        if extra_dict['key'] == 'Data Officer':
-            _data_dict = {"user_id": user_id,
-                          "extras": [{"key": "Data Officer", "new_value": ""}]}
-            result = toolkit.get_action('user_extra_update')(context,
-                                                             _data_dict)
-            return "User removed Successfuly from the Data Officers List."
-    return "User is not a Data Officer"
+    user_dict = toolkit.get_action("user_show")(context, {"id": user_id, "include_plugin_extras": True})
+
+    user_plugin_extras = user_dict.get('plugin_extras', {}) or {}
+    definition_plugin_extras = user_plugin_extras.get('definition', {})
+
+    if 'data_officer' in definition_plugin_extras and not definition_plugin_extras.get('data_officer'):
+        raise toolkit.NotFound('Data Officer "{id}" was not found.'.format(id=user_id))
+    else:
+        definition_plugin_extras['data_officer'] = False
+        user_plugin_extras['definition'] = definition_plugin_extras
+        toolkit.get_action('user_patch')(context, {"id": user_id, 'plugin_extras': user_plugin_extras})
 
 
 def package_definition_delete(context, data_dict):

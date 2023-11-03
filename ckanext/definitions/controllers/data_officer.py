@@ -15,8 +15,12 @@ log = logging.getLogger(__name__)
 abort = base.abort
 
 
+def _get_context():
+    return {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+
+
 def index():
-    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+    context = _get_context()
 
     try:
         toolkit.check_access('data_officer_read', context)
@@ -29,7 +33,7 @@ def index():
 
 
 def edit():
-    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+    context = _get_context()
 
     try:
         toolkit.check_access('data_officer_manage', context)
@@ -42,28 +46,34 @@ def edit():
 
 
 def new():
-    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+    print("new")
+    context = _get_context()
+    user_id = toolkit.get_or_bust(toolkit.request.values, 'user_id')
+    print("user_id = {}".format(user_id))
+
     try:
         toolkit.check_access('data_officer_create', context)
     except toolkit.NotAuthorized:
-        abort(403, _('Unauthorized to create data officer %s') % '')
+        abort(403, _('Unauthorized to create data officers'))
 
     try:
-        user_id = toolkit.get_converter('convert_user_name_or_id_to_id')(
-            toolkit.request.params.get('user_id', None), context)
+        user_id = toolkit.get_converter('convert_user_name_or_id_to_id')(user_id, context)
+        print("user_id = {}".format(user_id))
     except toolkit.Invalid:
-        toolkit.redirect_to('data_officer_edit')
+        print("toolkit.Invalid")
+        toolkit.redirect_to('data_officer.edit')
     except toolkit.ObjectNotFound:
-        toolkit.redirect_to('data_officer_edit')
+        print("toolkit.ObjectNotFound")
+        toolkit.redirect_to('data_officer.edit')
 
     data_dict = {'user_id': user_id}
     toolkit.get_action('data_officer_create')(context, data_dict)
 
-    return toolkit.redirect_to('data_officer_edit')
+    return toolkit.redirect_to('data_officer.edit')
 
 
 def delete(user_id):
-    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+    context = _get_context()
 
     try:
         toolkit.check_access('data_officer_delete', context)
@@ -72,4 +82,4 @@ def delete(user_id):
 
     data_dict = {'user_id': user_id}
     toolkit.get_action('data_officer_delete')(context, data_dict)
-    return toolkit.redirect_to('data_officer_edit')
+    return toolkit.redirect_to('data_officer.edit')

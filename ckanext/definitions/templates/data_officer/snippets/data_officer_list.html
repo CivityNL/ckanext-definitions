@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <th scope="col">{{ _('Name') }}</th>
-        {% if h.check_access('data_officer_manage') and c.action=='edit'%}
+        {% if h.check_access('data_officer_manage') and action=='edit'%}
           <th scope="col">{{ _('Username') }}</th>
           <th scope="col"></th>
         {% endif %}
@@ -17,11 +17,11 @@
           <tr>
               <td class="dataset-details" property="dc:enabled">{{ data_officer.display_name }}</td>
 
-              {% if h.check_access('data_officer_manage') and c.action=='edit' %}
+              {% if h.check_access('data_officer_manage') and action=='edit' %}
                 <td class="dataset-details" property="dc:enabled">{{ data_officer.name }}</td>
                 <td class="dataset-details" property="dc:enabled" style="text-align: center;">
                   <a class="fa fa-times fa-2x" style="color: red;"
-                     href="{% url_for controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='delete', user_id=data_officer.id %}"
+                     href="{% url_for 'data_officer.delete', user_id=data_officer.id %}"
                      data-module="confirm-action" data-module-content="{{ _('Are you sure you want to remove this user from the Data Officers?') }}">
                   </a>
                 </td>
