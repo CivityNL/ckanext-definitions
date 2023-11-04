@@ -3,25 +3,35 @@ from ckan.model import package as _package, package_extra as _package_extra, met
 import ckan.model as model
 import logging
 import datetime
-from sqlalchemy import types, Column, Table, func, or_, and_
+from sqlalchemy import types, Column, Table, func, or_, and_, ForeignKey, UniqueConstraint, PrimaryKeyConstraint, orm
 from ckan.model.meta import engine, Session
 from sqlalchemy.engine.reflection import Inspector
 import ckanext.definitions.helpers as definition_helpers
 
 log = logging.getLogger(__name__)
+
 definition_table = None
+definition_package_table = None
 
 DEFAULT_FACETS = ['creator_id', 'enabled', 'label']
 ADDITIONAL_FIELDS = ['discipline', 'expertise']
 
 
 def setup():
+
     if definition_table is None:
         define_definition_table()
         log.debug('Definition table defined in memory')
-        # TODO check if table exists
         create_table(definition_table)
         log.debug('Definition table Created')
+    if definition_package_table is None:
+        define_definition_package_table()
+        log.debug('DefinitionPackage table defined in memory')
+        create_table(definition_package_table)
+        log.debug('DefinitionPackage table Created')
+    meta.mapper(Definition, definition_table, properties={
+        "packages_all": orm.relation(model.Package, secondary=definition_package_table)
+    })
 
 
 def create_table(table=None):
@@ -41,6 +51,7 @@ def create_table(table=None):
             for column_name in ADDITIONAL_FIELDS:
                 if column_name not in column_names:
                     add_additional_column(column_name)
+
 
 def add_additional_column(column_name):
     log.debug('Populating definition table with new columns. This may take a while...')
@@ -98,6 +109,16 @@ class Definition(domain_object.DomainObject):
         definition = query.first()
 
         return definition
+
+    @classmethod
+    def get_py_package(cls, package_id, autoflush=True, include_disabled=False):
+        query = meta.Session.query(Definition).\
+            filter(Definition.packages_all.any(id=package_id))
+        if not include_disabled:
+            query = query.filter(Definition.enabled == True)
+        query = query.autoflush(autoflush)
+        definitions = query.all()
+        return definitions
 
     @classmethod
     def search(cls, search_dict, q, search_title_only, enabled=True, sort='asc', limit=20,
@@ -183,24 +204,7 @@ class Definition(domain_object.DomainObject):
 
     @property
     def packages(self):
-        '''Return a list of all packages that have this definition, sorted by name.
-
-        :rtype: list of ckan.model.package.Package objects
-
-        '''
-        definition_id = self.id
-
-        q = meta.Session.query(_package.Package)
-        q = q.join(_package_extra.PackageExtra)
-        q = q.filter(model.PackageExtra.key == 'definition')
-        q = q.filter(model.PackageExtra.value.contains(definition_id))
-        q = q.filter_by(state='active')
-        q = q.order_by(_package.Package.name)
-        q = q.with_entities(_package.Package.id)
-
-        packages = q.all()
-
-        return packages
+        return [package for package in self.packages_all if package.state != 'deleted']
 
     def __repr__(self):
         return '<Definition %s>' % self.label
@@ -226,7 +230,16 @@ def define_definition_table():
         Column('modified_date', types.DateTime,
                default=datetime.datetime.utcnow),
     )
-    meta.mapper(Definition, definition_table)
+
+
+def define_definition_package_table():
+    global definition_package_table
+    definition_package_table = Table(
+        'definition_package',
+        meta.metadata,
+        Column('definition_id', ForeignKey('definition.id'), nullable=False, primary_key=True),
+        Column('package_id', ForeignKey('package.id'), nullable=False, primary_key=True),
+    )
 
 
 def create_definition(label, description, url, enabled=True, creator_id=None,
@@ -241,6 +254,7 @@ def create_definition(label, description, url, enabled=True, creator_id=None,
         discipline=discipline,
         expertise=expertise
     )
+
 
 def get_facets():
     facets = DEFAULT_FACETS

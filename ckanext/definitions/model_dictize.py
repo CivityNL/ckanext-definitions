@@ -29,4 +29,3 @@ def definition_list_dictize(definition_list, context):
         result_list.append(dictized)
 
     return result_list
-

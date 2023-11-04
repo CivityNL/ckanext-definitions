@@ -8,7 +8,7 @@ from collections import OrderedDict
 import ckan.logic as logic
 from six import string_types
 from urllib.parse import urlencode
-import ckan.lib.search as search
+from ckan.lib.search import SearchError
 import ckan.lib.helpers as h
 import ckan.plugins as plugins
 import ckanext.definitions.model.definition as definitions_model
@@ -176,88 +176,64 @@ def search():
 
 
 def read(definition_id, limit=20):
-
     context = {'model': model, 'session': model.Session,
                'user': toolkit.c.user,
                'for_view': True}
-
-    # unicode format (decoded from utf8)
-    toolkit.c.q = toolkit.request.params.get('q', '')
 
     try:
         definition_dict = toolkit.get_action('definition_show')(context, {'id': definition_id})
     except (toolkit.ObjectNotFound, toolkit.NotAuthorized, KeyError):
         abort(404, _('Definition not found'))
 
-    _read(id, limit)
-    extra_vars = {'definition_id': definition_id}
+    extra_vars = _read(definition_dict, limit)
+    extra_vars['definition_id'] = definition_id
     return toolkit.render('definition/read.html', extra_vars=extra_vars)
 
 
-def _read(id, limit):
+def _read(definition_dict, limit):
     context = {'model': model, 'session': model.Session,
                'user': toolkit.c.user,
                'for_view': True, 'extras_as_string': True}
 
-    q = toolkit.c.q = toolkit.request.params.get('q', '')
-    # Search within group
-    fq = 'extras_definition:"%s"' % toolkit.c.definition_dict.get('id')
+    definition_id = definition_dict.get("id")
 
-    toolkit.c.description_formatted = \
-        toolkit.h.render_markdown(
-            toolkit.c.definition_dict.get('description'))
+    q = toolkit.request.params.get('q', '')
+    # Search within group
+    fq = 'extras_definition:"%s"' % definition_id
+
+    description_formatted = toolkit.h.render_markdown(definition_dict.get('description'))
 
     context['return_query'] = True
 
     page = h.get_page_number(toolkit.request.params)
 
     # most search operations should reset the page counter:
-    params_nopage = [(k, v) for k, v in toolkit.request.params.items()
-                     if k != 'page']
+    params_no_page = [(k, v) for k, v in toolkit.request.params.items() if k != 'page']
     sort_by = toolkit.request.params.get('sort', None)
 
     def search_url(params):
-        controller = 'ckanext.definitions.controllers.definition:DefinitionController'
-        action = 'bulk_process' if toolkit.c.action == 'bulk_process' else 'read'
-        url = toolkit.h.url_for(controller=controller, action=action,
-                                id=id)
+        url = toolkit.h.url_for('definition.read', definition_id=definition_id)
         params = [(k, v.encode('utf-8') if isinstance(v, string_types) else str(v)) for k, v in params]
         return url + u'?' + urlencode(params)
 
     def drill_down_url(**by):
-        return toolkit.h.add_url_param(alternative_url=None,
-                                       controller='ckanext.definitions.controllers.definition:DefinitionController',
-                                       action='read',
-                                       extras=dict(
-                                           id=c.definition_dict.get('id')),
-                                       new_params=by)
-
-    toolkit.c.drill_down_url = drill_down_url
+        alternative_url = toolkit.h.url_for('definition.read', definition_id=definition_id)
+        return toolkit.h.add_url_param(alternative_url=alternative_url, new_params=by)
 
     def remove_field(key, value=None, replace=None):
-        alternative_url = '/definition/' + toolkit.c.definition_dict.get(
-            'id')
-        controller = 'ckanext.definitions.controllers.definition:DefinitionController'
-        return toolkit.h.remove_url_param(key, value=value,
-                                          replace=replace,
-                                          controller=controller,
-                                          action='read',
-                                          alternative_url=alternative_url,
-                                          extras=dict(
-                                              definition_id=toolkit.c.definition_dict.get(
-                                                  'id')))
-
-    toolkit.c.remove_field = remove_field
+        alternative_url = toolkit.h.url_for('definition.read', definition_id=definition_id)
+        return toolkit.h.remove_url_param(key, value=value, replace=replace, alternative_url=alternative_url)
 
     def pager_url(q=None, page=None):
-        params = list(params_nopage)
+        params = list(params_no_page)
         params.append(('page', page))
         return search_url(params)
 
+    fields = []
+    fields_grouped = {}
+    search_extras = {}
+    query_error = False
     try:
-        toolkit.c.fields = []
-        toolkit.c.fields_grouped = {}
-        search_extras = {}
         for (param, value) in toolkit.request.params.items():
             if param not in ['q', 'page', 'sort', 'search_title_only'] \
                     and len(value) and not param.startswith('_'):
@@ -289,24 +265,22 @@ def _read(id, limit):
         for plugin in plugins.PluginImplementations(plugins.IFacets):
             facets = plugin.dataset_facets(facets, None)
 
-        toolkit.c.facet_titles = facets
-
-        data_dict = {
+        package_search_dict = {
             'q': q,
             'fq': fq,
             'include_private': True,
-            'facet.field': facets.keys(),
+            'facet.field': [field for field in facets],
             'rows': limit,
             'sort': sort_by,
             'start': (page - 1) * limit,
             'extras': search_extras
         }
 
-        context_ = dict((k, v) for (k, v) in context.items()
-                        if k != 'schema')
-        query = toolkit.get_action('package_search')(context_, data_dict)
+        context_ = dict((k, v) for (k, v) in context.items() if k != 'schema')
 
-        toolkit.c.page = h.Page(
+        query = toolkit.get_action('package_search')(context_, package_search_dict)
+
+        page = h.Page(
             collection=query['results'],
             page=page,
             url=pager_url,
@@ -314,34 +288,45 @@ def _read(id, limit):
             items_per_page=limit
         )
 
-        toolkit.c.definition_dict['package_count'] = query['count']
+        definition_dict['package_count'] = query['count']
 
-        toolkit.c.search_facets = query['search_facets']
-        toolkit.c.search_facets_limits = {}
-        for facet in toolkit.c.search_facets.keys():
+        search_facets = query['search_facets']
+        search_facets_limits = {}
+        for facet in search_facets.keys():
             limit = int(toolkit.request.params.get('_%s_limit' % facet,
                                                    toolkit.config.get(
                                                        'search.facets.default',
                                                        3)))
-            toolkit.c.search_facets_limits[facet] = limit
-        toolkit.c.page.items = query['results']
+            search_facets_limits[facet] = limit
+        page.items = query['results']
 
-        toolkit.c.sort_by_selected = sort_by
-
-    except search.SearchError as se:
+    except SearchError as se:
         log.error('Group search error: %r', se.args)
-        toolkit.c.query_error = True
-        toolkit.c.page = h.Page(collection=[])
+        query_error = True
+        page = h.Page(collection=[])
 
-    # log.info('toolkit.c.fields = {0}'.format(toolkit.c.fields))
-    setup_template_variables(context, {'id': id})
+    # setup_template_variables(context, {'id': id})
+
+    return {
+        'description_formatted': description_formatted,
+        'drill_down_url': drill_down_url,
+        'remove_field': remove_field,
+        'fields': fields,
+        'fields_grouped': fields_grouped,
+        'facet_titles': facets,
+        'page': page,
+        'definition_dict': definition_dict,
+        'search_facets': search_facets,
+        'search_facets_limits': search_facets_limits,
+        'sort_by_selected': sort_by,
+        'query_error': query_error
+    }
 
 
 def new(data=None, errors=None, error_summary=None):
-
     context = {'model': model, 'session': model.Session,
                'user': toolkit.c.user,
-               'save': 'save' in toolkit.request.params,
+               'save': 'save' in toolkit.request.values,
                'parent': toolkit.request.params.get('parent', None)}
 
     # Authorization Check
@@ -353,21 +338,10 @@ def new(data=None, errors=None, error_summary=None):
     if context['save'] and not data and toolkit.request.method == 'POST':
         return _save_new(context)
 
-    data = data or {}
-    errors = errors or {}
-    error_summary = error_summary or {}
-    extra_vars = {'data': data, 'errors': errors,
-                  'error_summary': error_summary, 'action': 'new'}
+    extra_vars = {'data': data or {}, 'errors': errors or {}, 'error_summary': error_summary or {}, 'action': 'new',
+                  'form_snippet': 'definition/snippets/definition_form.html'}
+    extra_vars['form_vars'] = dict(extra_vars)
 
-    # setup_template_variables equivalent
-    toolkit.c.data = data
-    toolkit.c.errors = errors
-    toolkit.c.error_summary = error_summary
-    toolkit.c.action = 'new'
-
-    toolkit.c.form = toolkit.render(
-        'definition/snippets/definition_form.html',
-        extra_vars=extra_vars)
     return toolkit.render('definition/new.html', extra_vars=extra_vars)
 
 
@@ -375,14 +349,14 @@ def _save_new(context):
     data_dict = None
     try:
         data_dict = clean_dict(dict_fns.unflatten(
-            tuplize_dict(parse_params(toolkit.request.params))))
+            tuplize_dict(parse_params(toolkit.request.values))))
         context['message'] = data_dict.get('log_message', '')
         data_dict['users'] = [
             {'name': toolkit.c.user, 'capacity': 'admin'}]
         toolkit.get_action('definition_create')(context, data_dict)
 
         # Redirect to the appropriate _read route for the definition
-        toolkit.h.redirect_to('/definition')
+        return toolkit.h.redirect_to('/definition')
         # toolkit.h.redirect_to('/definition', id=definition['id'])
     except (toolkit.ObjectNotFound, toolkit.NotAuthorized) as e:
         toolkit.abort(404, _('Definition not found'))
@@ -397,9 +371,9 @@ def _save_new(context):
 def edit(definition_id, data=None, errors=None, error_summary=None):
     context = {'model': model, 'session': model.Session,
                'user': toolkit.c.user,
-               'save': 'save' in toolkit.request.params,
+               'save': 'save' in toolkit.request.values,
                'for_edit': True,
-               'parent': toolkit.request.params.get('parent', None)
+               'parent': toolkit.request.values.get('parent', None)
                }
     data_dict = {'id': definition_id, 'include_datasets': False}
 
@@ -422,42 +396,23 @@ def edit(definition_id, data=None, errors=None, error_summary=None):
     except (toolkit.ObjectNotFound, toolkit.NotAuthorized):
         abort(404, _('Definition not found'))
 
-    definition = context.get("definition")
-    toolkit.c.definition = definition
-    toolkit.c.definition_dict = toolkit.get_action('definition_show')(
-        context, data_dict)
+    definition_dict = toolkit.get_action('definition_show')(context, data_dict)
 
-    try:
-        toolkit.check_access('definition_update', context)
-    except toolkit.NotAuthorized:
-        abort(403, _('User %r not authorized to edit %s') % (
-            toolkit.c.user, definition_id))
-
-    errors = errors or {}
-    extra_vars = {'data': data, 'errors': errors,
-                  'error_summary': error_summary}
-
-    # setup_template_variables equivalent
-    toolkit.c.data = data
-    toolkit.c.errors = errors
-    toolkit.c.error_summary = error_summary
-
-    toolkit.c.form = toolkit.render(
-        'definition/snippets/definition_form.html', extra_vars=extra_vars)
-    return toolkit.render('definition/edit.html')
+    extra_vars = {'definition_dict': definition_dict, 'data': data or {}, 'errors': errors or {}, 'error_summary': error_summary or {},
+                  'form_snippet': 'definition/snippets/definition_form.html'}
+    extra_vars['form_vars'] = dict(extra_vars)
+    return toolkit.render('definition/edit.html', extra_vars=extra_vars)
 
 
 def _save_edit(definition_id, context):
     try:
         data_dict = clean_dict(dict_fns.unflatten(
-            tuplize_dict(parse_params(toolkit.request.params))))
+            tuplize_dict(parse_params(toolkit.request.values))))
         context['message'] = data_dict.get('log_message', '')
         data_dict['id'] = definition_id
         context['allow_partial_update'] = True
-        definition = toolkit.get_action('definition_update')(context,
-                                                             data_dict)
-
-        h.redirect_to('definition_read', definition_id=definition_id)
+        toolkit.get_action('definition_update')(context, data_dict)
+        return h.redirect_to('definition_read', definition_id=definition_id)
     except (toolkit.ObjectNotFound, toolkit.NotAuthorized) as e:
         abort(404, toolkit._('Definition not found'))
     except dict_fns.DataError:

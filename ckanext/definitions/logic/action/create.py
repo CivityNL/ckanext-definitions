@@ -47,7 +47,7 @@ def definition_create(context, data_dict):
         label=data_dict['label'],
         description=data_dict['description'],
         url=data_dict['url'],
-        enabled=data_dict['enabled'],
+        enabled=toolkit.asbool(data_dict['enabled']),
         creator_id=user_id,
 
         #additional metadata from customers
@@ -91,47 +91,24 @@ def data_officer_create(context, data_dict):
 
 def package_definition_create(context, data_dict):
     # check for valid input
+    model = context['model']
+
     try:
-        package_id, definition_id = toolkit.get_or_bust(data_dict,
-                                                        ['package_id',
-                                                         'definition_id'])
+        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
     except toolkit.ValidationError:
         return {'success': False, 'msg': 'Input was not right'}
 
-    # check if package exists
-    try:
-        pkg_dict = toolkit.get_action("package_show")(
-            data_dict={"id": package_id, "internal_call": True})
-    except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'Package Not Found'}
+    package = model.Package.get(package_id)
+    if package is None:
+        raise toolkit.ObjectNotFound("package")
+    definition = definition_model.Definition.get(definition_id)
+    if definition is None:
+        raise toolkit.ObjectNotFound("definition")
 
-    # check if definition exists
-    try:
-        toolkit.get_action("definition_show")(data_dict={"id": definition_id})
-    except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'Definition Not Found'}
+    if package in definition.packages_all:
+        raise toolkit.ValidationError("dfsgsdgfsdfg")
 
-    #  Check if 'definition' field is already in package
-    try:
-        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
-        if definitions:
-            definitions = ast.literal_eval(definitions)
-        else:
-            definitions = list()
-    except toolkit.ValidationError:
-        definitions = list()
-    except SyntaxError:
-        definitions = list()
+    definition.packages_all.append(package)
+    model.Session.commit()
 
-    #  Add the new definition in case it does not exist there yet
-    if definition_id not in definitions:
-        definitions.append(definition_id)
-
-        pkg_dict['definition'] = unicode(definitions)
-
-        # TODO Replace with patch?
-        pkg_dict = toolkit.get_action("package_update")(context,
-                                                        data_dict=pkg_dict)
-        return pkg_dict
-
-    return pkg_dict
+    return package.as_dict()

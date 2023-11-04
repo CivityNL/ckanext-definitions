@@ -46,10 +46,8 @@ def edit():
 
 
 def new():
-    print("new")
     context = _get_context()
     user_id = toolkit.get_or_bust(toolkit.request.values, 'user_id')
-    print("user_id = {}".format(user_id))
 
     try:
         toolkit.check_access('data_officer_create', context)
@@ -58,12 +56,9 @@ def new():
 
     try:
         user_id = toolkit.get_converter('convert_user_name_or_id_to_id')(user_id, context)
-        print("user_id = {}".format(user_id))
     except toolkit.Invalid:
-        print("toolkit.Invalid")
         toolkit.redirect_to('data_officer.edit')
     except toolkit.ObjectNotFound:
-        print("toolkit.ObjectNotFound")
         toolkit.redirect_to('data_officer.edit')
 
     data_dict = {'user_id': user_id}

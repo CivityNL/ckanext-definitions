@@ -218,30 +218,12 @@ def search_definitions_by_package(context, data_dict):
     :rtype: list of dictionaries
 
     '''
-
     package_id = data_dict.get('package_id')
     pkg_dict = toolkit.get_action('package_show')(context, {'id': package_id})
 
-    try:
-        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
-    except toolkit.ValidationError:
-        return []
-
-    if definitions:
-        definitions = ast.literal_eval(definitions)
-    else:
-        definitions = list()
-
-    result = []
-
-    for definition in definitions:
-        log.info('definition = {0}'.format(definition))
-        try:
-            result.append(toolkit.get_action('definition_show')(context, {'id': definition}))
-        except toolkit.ObjectNotFound:
-            pass
+    definitions = definitions_model.Definition.get_py_package(pkg_dict.get("id"))
+    result = definition_dictize.definition_list_dictize(definitions, context)
     ordered_result = sorted(result, key=lambda k: k['label'])
-
     return ordered_result
 
 
@@ -259,7 +241,6 @@ def data_officer_list(context, data_dict):
     :param include_all_user_info:
     :return: List of all data officers
     '''
-    print("data_officer_list")
     all_fields = toolkit.asbool(data_dict.get('all_fields', True))
 
     user_list_context = {
@@ -278,8 +259,6 @@ def data_officer_list(context, data_dict):
         )
     )
 
-    print("query = [{}]".format(query))
-
     users_list = []
 
     if all_fields:
@@ -290,5 +269,4 @@ def data_officer_list(context, data_dict):
         for user in query.all():
             users_list.append(user[0])
 
-    print("users_list = [{}]".format(users_list))
     return users_list

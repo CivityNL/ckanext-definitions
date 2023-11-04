@@ -33,7 +33,7 @@ def definition_delete(context, data_dict):
     if definition_obj is None:
         raise toolkit.ObjectNotFound(toolkit._('Could not find definition "%s"') % definition_id)
 
-    _delete_all_package_definitions_for_definition(context, data_dict)
+    # _delete_all_package_definitions_for_definition(context, data_dict)
 
     # Delete the actual Definition
     definition_obj.delete()
@@ -111,50 +111,25 @@ def package_definition_delete(context, data_dict):
     '''
 
     # check for valid input
+    model = context['model']
+
     try:
-        package_id, definition_id = toolkit.get_or_bust(data_dict,
-                                                        ['package_id',
-                                                         'definition_id'])
+        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
     except toolkit.ValidationError:
         return {'success': False, 'msg': 'Input was not right'}
 
     # check if package exists
-    try:
-        pkg_dict = toolkit.get_action("package_show")(
-            data_dict={"id": package_id, "internal_call": True})
-    except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'Package Not Found'}
+    package = model.Package.get(package_id)
+    if package is None:
+        raise toolkit.ObjectNotFound("package")
+    definition = definitions_model.Definition.get(definition_id)
+    if definition is None:
+        raise toolkit.ObjectNotFound("definition")
 
-    # check if definition exists
-    # Should we check this?
-    try:
-        toolkit.get_action("definition_show")(data_dict={"id": definition_id})
-    except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'Definition Not Found'}
+    if package not in definition.packages_all:
+        raise toolkit.ValidationError("dfsgsdgfsdfg")
 
-    #  Check if 'definition' field is already in package
-    try:
-        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
-        if definitions:
-            definitions = ast.literal_eval(definitions)
-        else:
-            return {'success': False, 'msg': 'Definition Not Found'}
-    except toolkit.ValidationError:
-        return {'success': False, 'msg': 'Definition Not Found'}
-    except SyntaxError:
-        return {'success': False, 'msg': 'Definition Not Found'}
+    definition.packages_all.remove(package)
+    model.Session.commit()
 
-    #  Remove the definition if it is found
-    if definition_id in definitions:
-        definitions.remove(definition_id)
-
-        pkg_dict['definition'] = unicode(definitions)
-
-        # TODO Replace with patch?
-        pkg_dict = toolkit.get_action("package_update")(context,
-                                                        data_dict=pkg_dict)
-        return pkg_dict
-
-    return pkg_dict
-
-
+    return package.as_dict()

@@ -31,9 +31,8 @@ def edit(package_id):
 
 
 def new(package_id):
-    context = {'model': model, 'session': model.Session,
-               'user': toolkit.c.user}
-    definition_id = toolkit.request.params.get('definition_id', None)
+    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
+    definition_id = toolkit.request.values.get('definition_id', None)
 
     try:
         toolkit.check_access('package_update', context, {'id': package_id})
@@ -44,13 +43,12 @@ def new(package_id):
     data_dict = {'package_id': package_id, 'definition_id': definition_id}
     toolkit.get_action('package_definition_create')(context, data_dict)
 
-    return toolkit.redirect_to('dataset_definition_edit',
+    return toolkit.redirect_to('package_definition.edit',
                                package_id=package_id)
 
 
 def delete(package_id, definition_id):
-    context = {'model': model, 'session': model.Session,
-               'user': toolkit.c.user}
+    context = {'model': model, 'session': model.Session, 'user': toolkit.c.user}
 
     try:
         toolkit.check_access('package_update', context, {'id': package_id})
@@ -61,8 +59,7 @@ def delete(package_id, definition_id):
     data_dict = {'package_id': package_id, 'definition_id': definition_id}
     toolkit.get_action('package_definition_delete')(context, data_dict)
 
-    return toolkit.redirect_to('dataset_definition_edit',
-                               package_id=package_id)
+    return toolkit.redirect_to('package_definition.edit', package_id=package_id)
 
 
 def _load_package_and_definitions(package_id):
@@ -71,14 +68,11 @@ def _load_package_and_definitions(package_id):
                'auth_user_obj': toolkit.c.userobj}
     data_dict = {'id': package_id}
 
+    extra_vars = {}
+
     try:
-        toolkit.c.pkg_dict = toolkit.get_action('package_show')(context, data_dict)
-        toolkit.c.pkg = context['package']
-
-        pkg_definitions = toolkit.get_action('search_definitions_by_package')(context, {'package_id': package_id})
-
-        extra_vars = {'pkg_definitions': pkg_definitions}
-
+        extra_vars['pkg_dict'] = toolkit.get_action('package_show')(context, data_dict)
+        extra_vars['pkg_definitions'] = toolkit.get_action('search_definitions_by_package')(context, {'package_id': package_id})
     except toolkit.ObjectNotFound:
         abort(404, toolkit._('Dataset not found'))
     except toolkit.NotAuthorized:
