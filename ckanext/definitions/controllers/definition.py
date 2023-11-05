@@ -199,7 +199,7 @@ def _read(definition_dict, limit):
 
     q = toolkit.request.params.get('q', '')
     # Search within group
-    fq = 'extras_definition:"%s"' % definition_id
+    fq = 'definitions:"%s"' % definition_id
 
     description_formatted = toolkit.h.render_markdown(definition_dict.get('description'))
 

@@ -14,17 +14,24 @@ import ckanext.definitions.logic.auth.delete as auth_delete
 from ckan.lib.plugins import DefaultTranslation
 import ckanext.definitions.views as views
 import ckanext.definitions.command as cli
+from ckanext.definitions.model.definition import Definition
 
 
 class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
-    plugins.implements(plugins.ITranslation)
-    plugins.implements(plugins.IConfigurable)
-    plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
-    plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IClick)
+    plugins.implements(plugins.IConfigurable)
+    plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IPackageController, inherit=True)
+    plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.ITranslation)
+
+    # IPackageController
+    def before_index(self, pkg_dict):
+        pkg_dict['definitions'] = [d.id for d in Definition.get_py_package(pkg_dict.get("id"))]
+        return pkg_dict
 
     # IConfigurable
     def configure(self, config):
