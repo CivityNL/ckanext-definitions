@@ -100,13 +100,13 @@ def package_definition_create(context, data_dict):
 
     package = model.Package.get(package_id)
     if package is None:
-        raise toolkit.ObjectNotFound("package")
+        raise toolkit.ObjectNotFound(toolkit._('Package not found'))
     definition = definition_model.Definition.get(definition_id)
     if definition is None:
-        raise toolkit.ObjectNotFound("definition")
+        raise toolkit.ObjectNotFound(toolkit._('Definition not found'))
 
     if package in definition.packages_all:
-        raise toolkit.ValidationError("dfsgsdgfsdfg")
+        raise toolkit.ValidationError(toolkit._("Package is already linked to this definition"))
 
     definition.packages_all.append(package)
     model.Session.commit()

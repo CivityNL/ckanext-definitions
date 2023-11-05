@@ -121,13 +121,13 @@ def package_definition_delete(context, data_dict):
     # check if package exists
     package = model.Package.get(package_id)
     if package is None:
-        raise toolkit.ObjectNotFound("package")
+        raise toolkit.ObjectNotFound(toolkit._('Package not found'))
     definition = definitions_model.Definition.get(definition_id)
     if definition is None:
-        raise toolkit.ObjectNotFound("definition")
+        raise toolkit.ObjectNotFound(toolkit._('Definition not found'))
 
     if package not in definition.packages_all:
-        raise toolkit.ValidationError("dfsgsdgfsdfg")
+        raise toolkit.ValidationError(toolkit._("Package is not linked to this definition"))
 
     definition.packages_all.remove(package)
     model.Session.commit()
