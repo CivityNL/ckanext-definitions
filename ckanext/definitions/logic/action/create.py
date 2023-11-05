@@ -5,6 +5,8 @@ import ckanext.definitions.model.definition as definition_model
 import ckan.lib.dictization as dictization
 import logging
 
+from lib.search import index_for
+
 log = logging.getLogger(__name__)
 
 
@@ -110,5 +112,8 @@ def package_definition_create(context, data_dict):
 
     definition.packages_all.append(package)
     model.Session.commit()
+
+    package_index = index_for(model.Package)
+    package_index.update_dict(package)
 
     return package.as_dict()

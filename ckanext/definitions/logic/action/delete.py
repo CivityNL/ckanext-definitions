@@ -5,6 +5,7 @@ import ast
 import logging
 from ckan.plugins import toolkit
 import ckanext.definitions.model.definition as definitions_model
+from lib.search import index_for
 
 log = logging.getLogger(__name__)
 
@@ -131,5 +132,8 @@ def package_definition_delete(context, data_dict):
 
     definition.packages_all.remove(package)
     model.Session.commit()
+
+    package_index = index_for(model.Package)
+    package_index.update_dict(package)
 
     return package.as_dict()
