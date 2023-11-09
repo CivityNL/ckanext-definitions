@@ -21,7 +21,7 @@
     {% endblock %}
 
     {% block package_additional_info %}
-        {% snippet "definition/snippets/definition_info.html", definition_dict=c.definition_dict %}
+        {% snippet "definition/snippets/definition_info.html", definition_dict=definition_dict %}
     {% endblock %}
 
     {% block definition_search_form %}
@@ -30,48 +30,48 @@
         {% endblock %}
 
         {% set facets = {
-      'fields': c.fields_grouped,
-      'search': c.search_facets,
-      'titles': c.facet_titles,
-      'translated_fields': c.translated_fields,
-      'remove_field': c.remove_field } %}
+      'fields': fields_grouped,
+      'search': search_facets,
+      'titles': facet_titles,
+      'translated_fields': translated_fields,
+      'remove_field': remove_field } %}
         {% set sorting = [
       (_('Relevance'), 'score desc, metadata_modified desc'),
       (_('Name Ascending'), 'title_string asc'),
       (_('Name Descending'), 'title_string desc'),
       (_('Last Modified'), 'metadata_modified desc'),
       (_('Popular'), 'views_recent desc') if g.tracking_enabled else (false, false) ] %}
-        {% snippet 'snippets/search_form.html', form_id='definition-datasets-search-form', type='dataset', query=c.q, sorting=sorting, sorting_selected=c.sort_by_selected, count=c.page.item_count, facets=facets, placeholder=_('Search datasets...'), show_empty=request.params, fields=c.fields %}
+        {% snippet 'snippets/search_form.html', form_id='definition-datasets-search-form', type='dataset', query=q, sorting=sorting, sorting_selected=sort_by_selected, count=page.item_count, facets=facets, placeholder=_('Search datasets...'), show_empty=request.params, fields=fields %}
     {% endblock %}
     {% block packages_list %}
-        {% if c.page.items %}
-            {{ h.snippet('snippets/package_list.html', packages=c.page.items) }}
+        {% if page.items %}
+            {{ h.snippet('snippets/package_list.html', packages=page.items) }}
         {% endif %}
     {% endblock %}
     {% block page_pagination %}
-        {{ c.page.pager(q=c.q) }}
+        {{ page.pager(q=q) }}
     {% endblock %}
 {% endblock %}
 
 {% block organization_facets %}
-    {% set alternative_url= '/definition/' ~ definition_id %}
+    {% set alternative_url = h.url_for('definition.read', definition_id=definition_dict.id) %}
 <div class="filters">
   <div>
-    {% for facet in c.facet_titles %}
+    {% for facet in facet_titles %}
       {% if (facet == 'creator_user_id') %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_user_facet_list_help ) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id} ) }}
       {% elif (facet == 'private') %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_private_facet_list_help ) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id} ) }}
       {% elif (facet == 'subtheme') %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_theme_facet_list_help ) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id} ) }}
       {% elif (facet == 'vermelding_type') %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_vermelding_type_facet_list_help ) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id} ) }}
       {% elif (facet == 'type_data') %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_type_data_facet_list_help ) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id} ) }}
       {% elif (facet == 'dataset_status') %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}, label_function=h.catalog_dataset_status_facet_list_help ) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id} ) }}
       {% else %}
-        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':c.definiton_dict.id}) }}
+        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id}) }}
       {%- endif %}
     {% endfor %}
   </div>

@@ -1,8 +1,7 @@
 {% extends "data_officer/index.html" %}
 
 {% block breadcrumb_content %}
-  <li class="active"><a href="/data_officer">{{ _('Data Officers') }}</a></li>
-  <li></li>
+  <li>{% link_for _('Data Officers'), named_route='data_officer.index' %}</li>
   <li class="active"><a href="">{{ _('Manage') }}</a></li>
 {% endblock %}
 
@@ -12,13 +11,13 @@
       {% block page_primary_action %}
         {% if h.check_access('data_officer_read') %}
           <div class="page_primary_action">
-            {% link_for _('Back to Data Officer list'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='index', class_='btn pull-right', icon='arrow-left', named_route='data_officer_index' %}
+            {% link_for _('Back to Data Officer list'), named_route='data_officer.index', class_='btn pull-right', icon='arrow-left' %}
           </div>
         {% endif %}
       {% endblock %}
       <div>
 
-      {{ h.snippet('data_officer/snippets/data_officer_list.html', data_officer_list=data_officer_list) }}
+      {{ h.snippet('data_officer/snippets/data_officer_list.html', data_officer_list=data_officer_list, action='edit') }}
 
       {% block primary_content_inner %}
         <div style="width: 50%; float: right; text-align: center;">

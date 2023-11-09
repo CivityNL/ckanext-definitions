@@ -1,19 +1,17 @@
 {% extends 'definition/base.html' %}
 
-{% set definition = c.definition_dict %}
-{% set definition_dict = c.definition_dict %}
-
 {% block breadcrumb_content_selected %}{% endblock %}
 
 {% block breadcrumb_content %}
   {{ super() }}
-  {% if definition %}
-    <li class="active">{% link_for _('Edit'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='edit', definition_id=definition.id %}</li>
+  {% if definition_dict %}
+    <li>{% link_for definition_dict.label|truncate(35), named_route='definition.read', definition_id=definition_dict.id %}</li>
+    <li class="active">{% link_for _('Edit'), named_route='definition.edit', definition_id=definition_dict.id %}</li>
   {% endif %}
 {% endblock %}
 
 {% block content_action %}
-  {% link_for _('View definition'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', definition_id=definition.id, class_='btn', icon='eye' %}
+  {% link_for _('View definition'), named_route='definition.read', definition_id=definition_dict.id, class_='btn', icon='eye' %}
 {% endblock %}
 
 {% block content_primary_nav %}

@@ -7,5 +7,5 @@
 {% block subtitle %}{{ _('Definitions') }}{% endblock %}
 
 {% block breadcrumb_content %}
-    <li>{% link_for _('Definitions'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='search' %}</li>
+    <li>{% link_for _('Definitions'), named_route='definition.search' %}</li>
 {% endblock %}

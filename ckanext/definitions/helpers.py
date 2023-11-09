@@ -5,7 +5,7 @@ from ckan.plugins import toolkit
 log = logging.getLogger(__name__)
 
 
-def is_data_officer(context, data_dict={}):
+def is_data_officer(user_name_or_id):
     """
     :param: user_id - the User id or username
     :type: string
@@ -13,14 +13,15 @@ def is_data_officer(context, data_dict={}):
     :type: boolean
     """
     # TODO get or bust
-    user_id = toolkit.get_converter('convert_user_name_or_id_to_id')(data_dict['user_id'], context)
-    user_extras = toolkit.get_action('user_extra_show')(context, {"user_id": user_id})['extras']
 
-    for extra_dict in user_extras:
-        if extra_dict['key'] == 'Data Officer' and extra_dict['value'] == 'True':
-            return True
+    site_user = toolkit.get_action(u"get_site_user")({u"ignore_auth": True}, {})
+    context = {u"user": site_user[u"name"]}
+    user_dict = toolkit.get_action('user_show')(context, {"id": user_name_or_id, "include_plugin_extras": True})
 
-    return False
+    user_plugin_extras = user_dict.get('plugin_extras', {}) or {}
+    definition_plugin_extras = user_plugin_extras.get('definition', {})
+
+    return definition_plugin_extras.get("data_officer", False)
 
 
 def definition_list_choices():

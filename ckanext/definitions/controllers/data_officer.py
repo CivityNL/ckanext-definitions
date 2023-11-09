@@ -9,78 +9,72 @@ tuplize_dict = logic.tuplize_dict
 clean_dict = logic.clean_dict
 parse_params = logic.parse_params
 
+_ = toolkit._
+
 log = logging.getLogger(__name__)
 abort = base.abort
 
 
-class DataOfficerController(base.BaseController):
+def _get_context():
+    return {'model': model, 'session': model.Session, 'user': toolkit.c.user}
 
-    def index(self):
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user}
 
-        try:
-            toolkit.check_access('data_officer_read', context)
-        except toolkit.NotAuthorized:
-            abort(403, toolkit._('Unauthorized to see data officers %s') % '')
+def index():
+    context = _get_context()
 
-        data_officer_list = toolkit.get_action('data_officer_list')(context,
-                                                                    {})
+    try:
+        toolkit.check_access('data_officer_read', context)
+    except toolkit.NotAuthorized:
+        abort(403, _('Unauthorized to see data officers %s') % '')
 
-        extra_vars = {'data_officer_list': data_officer_list}
+    data_officer_list = toolkit.get_action('data_officer_list')(context, {})
+    extra_vars = {'data_officer_list': data_officer_list}
+    return toolkit.render('data_officer/index.html', extra_vars=extra_vars)
 
-        return toolkit.render('data_officer/index.html', extra_vars=extra_vars)
 
-    def edit(self):
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user}
+def edit():
+    context = _get_context()
 
-        try:
-            toolkit.check_access('data_officer_manage', context)
-        except toolkit.NotAuthorized:
-            abort(403,
-                  toolkit._('Unauthorized to manage data officer %s') % '')
+    try:
+        toolkit.check_access('data_officer_manage', context)
+    except toolkit.NotAuthorized:
+        abort(403, _('Unauthorized to manage data officer %s') % '')
 
-        data_officer_list = toolkit.get_action('data_officer_list')(context,
-                                                                    {})
+    data_officer_list = toolkit.get_action('data_officer_list')(context, {})
+    extra_vars = {'data_officer_list': data_officer_list}
+    return toolkit.render('data_officer/edit.html', extra_vars=extra_vars)
 
-        extra_vars = {'data_officer_list': data_officer_list}
 
-        return toolkit.render('data_officer/edit.html', extra_vars=extra_vars)
+def new():
+    context = _get_context()
+    user_id = toolkit.get_or_bust(toolkit.request.values, 'user_id')
 
-    def new(self):
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user}
-        try:
-            toolkit.check_access('data_officer_create', context)
-        except toolkit.NotAuthorized:
-            abort(403,
-                  toolkit._('Unauthorized to create data officer %s') % '')
+    try:
+        toolkit.check_access('data_officer_create', context)
+    except toolkit.NotAuthorized:
+        abort(403, _('Unauthorized to create data officers'))
 
-        try:
-            user_id = toolkit.get_converter('convert_user_name_or_id_to_id')(
-                toolkit.request.params.get('user_id', None), context)
-        except toolkit.Invalid:
-            toolkit.redirect_to('data_officer_edit')
-        except toolkit.ObjectNotFound:
-            toolkit.redirect_to('data_officer_edit')
+    try:
+        user_id = toolkit.get_converter('convert_user_name_or_id_to_id')(user_id, context)
+    except toolkit.Invalid:
+        toolkit.redirect_to('data_officer.edit')
+    except toolkit.ObjectNotFound:
+        toolkit.redirect_to('data_officer.edit')
 
-        data_dict = {'user_id': user_id}
-        toolkit.get_action('data_officer_create')(context, data_dict)
+    data_dict = {'user_id': user_id}
+    toolkit.get_action('data_officer_create')(context, data_dict)
 
-        return toolkit.redirect_to('data_officer_edit')
+    return toolkit.redirect_to('data_officer.edit')
 
-    def delete(self, user_id):
-        context = {'model': model, 'session': model.Session,
-                   'user': toolkit.c.user}
 
-        try:
-            toolkit.check_access('data_officer_delete', context)
-        except toolkit.NotAuthorized:
-            abort(403,
-                  toolkit._('Unauthorized to delete data officer %s') % '')
+def delete(user_id):
+    context = _get_context()
 
-        data_dict = {'user_id': user_id}
-        toolkit.get_action('data_officer_delete')(context, data_dict)
+    try:
+        toolkit.check_access('data_officer_delete', context)
+    except toolkit.NotAuthorized:
+        abort(403, _('Unauthorized to delete data officer %s') % '')
 
-        return toolkit.redirect_to('data_officer_edit')
+    data_dict = {'user_id': user_id}
+    toolkit.get_action('data_officer_delete')(context, data_dict)
+    return toolkit.redirect_to('data_officer.edit')
