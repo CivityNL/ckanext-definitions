@@ -3,13 +3,26 @@ from ckan.model import package as _package, package_extra as _package_extra, met
 import ckan.model as model
 import logging
 import datetime
-from sqlalchemy import types, Column, Table, func, or_, and_
+from sqlalchemy import types, Column, Table, func, or_, and_, ForeignKey
 from ckan.model.meta import engine, Session
 from sqlalchemy.engine.reflection import Inspector
 import ckanext.definitions.helpers as definition_helpers
 
 log = logging.getLogger(__name__)
-definition_table = None
+
+
+definition_table = Table(
+    'definition', meta.metadata,
+    Column('id', types.UnicodeText, primary_key=True, default=_types.make_uuid),
+    Column('label', types.UnicodeText, nullable=False),
+    Column('description', types.UnicodeText),
+    Column('url', types.UnicodeText),
+    Column('enabled', types.Boolean, default=True),
+    Column('creator_id', types.UnicodeText, ForeignKey('user.id')),
+    Column('extras', _types.JsonDictType),
+)
+
+
 
 DEFAULT_FACETS = ['creator_id', 'enabled', 'label']
 ADDITIONAL_FIELDS = ['discipline', 'expertise']
