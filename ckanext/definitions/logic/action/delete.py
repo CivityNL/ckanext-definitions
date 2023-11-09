@@ -4,7 +4,7 @@
 import ast
 import logging
 from ckan.plugins import toolkit
-import ckanext.definitions.model.definition as definitions_model
+from ckanext.definitions.model.definition import Definition
 from lib.search import index_for
 
 log = logging.getLogger(__name__)
@@ -30,46 +30,22 @@ def definition_delete(context, data_dict):
     definition_id = data_dict['id']
 
     # check if definition exists
-    definition_obj = definitions_model.Definition.get(definition_id)
+    definition_obj = Definition.get(definition_id)
     if definition_obj is None:
         raise toolkit.ObjectNotFound(toolkit._('Could not find definition "%s"') % definition_id)
 
-    # _delete_all_package_definitions_for_definition(context, data_dict)
+    package_index = index_for(model.Package)
+    existing_packages = definition_obj.packages_all
 
     # Delete the actual Definition
     definition_obj.delete()
     model.repo.commit()
 
+    for existing_package in existing_packages:
+        package_index.update_dict(existing_package)
+
     return {'success': True,
             'msg': 'successfully deleted definition {0}'.format(definition_id)}
-
-
-# NOT AN PUBLIC ACTION
-def _delete_all_package_definitions_for_definition(context, data_dict):
-    definition_id = data_dict.get('id', None)
-    if not definition_id:
-        raise toolkit.ValidationError({'id': toolkit._('id not in data')})
-
-    # check if definition exists
-    definition_obj = definitions_model.Definition.get(definition_id)
-    if definition_obj is None:
-        raise toolkit.ObjectNotFound(
-            toolkit._('Could not find definition "%s"') % definition_id)
-
-    # Delete all package_definitions associated
-    context['ignore_auth'] = True
-    data_dict_2 = {'definition_id': definition_id, 'all_fields': True}
-    pkg_list = toolkit.get_action('search_packages_by_definition')(context,
-                                                                   data_dict_2)
-
-    for package in pkg_list:
-        _data_dict = {'package_id': package['id'],
-                      'definition_id': definition_id}
-
-        toolkit.get_action('package_definition_delete')(context.copy(), _data_dict)
-
-    # Email Notification for Mandated or Owner
-    toolkit.h.catalog_send_email_notifications_after_delete(pkg_list, definition_obj.label)
 
 
 ##############################################################
@@ -123,7 +99,7 @@ def package_definition_delete(context, data_dict):
     package = model.Package.get(package_id)
     if package is None:
         raise toolkit.ObjectNotFound(toolkit._('Package not found'))
-    definition = definitions_model.Definition.get(definition_id)
+    definition = Definition.get(definition_id)
     if definition is None:
         raise toolkit.ObjectNotFound(toolkit._('Definition not found'))
 
