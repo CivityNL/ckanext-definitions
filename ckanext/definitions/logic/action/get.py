@@ -221,7 +221,7 @@ def search_definitions_by_package(context, data_dict):
     package_id = data_dict.get('package_id')
     pkg_dict = toolkit.get_action('package_show')(context, {'id': package_id})
 
-    definitions = definitions_model.Definition.get_py_package(pkg_dict.get("id"))
+    definitions = definitions_model.Definition.get_by_package(pkg_dict.get("id"))
     result = definition_dictize.definition_list_dictize(definitions, context)
     ordered_result = sorted(result, key=lambda k: k['label'])
     return ordered_result

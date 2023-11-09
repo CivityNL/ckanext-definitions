@@ -123,7 +123,7 @@ class Definition(domain_object.DomainObject):
         return definition
 
     @classmethod
-    def get_py_package(cls, package_id, autoflush=True, include_disabled=False):
+    def get_by_package(cls, package_id, autoflush=True, include_disabled=False):
         query = meta.Session.query(Definition).\
             filter(Definition.packages_all.any(id=package_id))
         if not include_disabled:

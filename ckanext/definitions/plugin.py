@@ -30,7 +30,7 @@ class DefinitionsPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IPackageController
     def before_index(self, pkg_dict):
-        pkg_dict['definitions'] = [d.id for d in Definition.get_py_package(pkg_dict.get("id"))]
+        pkg_dict['definitions'] = [d.id for d in Definition.get_by_package(pkg_dict.get("id"))]
         return pkg_dict
 
     # IConfigurable
