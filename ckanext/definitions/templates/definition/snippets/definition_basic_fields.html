@@ -6,9 +6,7 @@
     {%- for choice in choices -%}
         {%- do options.append({'value': c.value}) -%}
     {%- endfor -%}
-    {% call form.text_with_datalist('label', id='field-label', label=_('Label'), options=options, selected=data.label, error=errors.label, classes=['control-medium'], is_required=true) %}{% endcall %}
-
-{#    {{ form.input('label', id='field-label', label=_('Label'), value=data.label, is_required=true, error=errors.label, classes=['control-full', 'control-large']) }}#}
+    {{ form.input('label', id='field-label', label=_('Label'), value=data.label, is_required=true, error=errors.label, classes=['control-full', 'control-large']) }}
 
 {% endblock %}
 

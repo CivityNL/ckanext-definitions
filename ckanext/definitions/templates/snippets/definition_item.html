@@ -5,7 +5,7 @@ definition - A definition to display.
 
 Example:
 
-  {% snippet 'snippets/definition_item.html', definition=c.definition %}
+  {% snippet 'snippets/definition_item.html', definition=definition %}
 
 #}
 {% set title = definition.label%}
@@ -20,7 +20,7 @@ Example:
         {% block heading %}
           <h3 class="dataset-heading">
             {% block heading_title %}
-              {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='ckanext.definitions.controllers.definition:DefinitionController', action='read', definition_id=definition.id)) }}
+              {{ h.link_to(h.truncate(title, truncate_title), h.url_for('definition.read', definition_id=definition.id)) }}
             {% endblock %}
             {% block enabled %}
               {% if show_enabled %}

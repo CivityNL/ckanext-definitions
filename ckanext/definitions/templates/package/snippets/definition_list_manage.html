@@ -22,11 +22,9 @@
                         property="dc:enabled">{{ definition.description }}</td>
 
                     {% if h.check_access('package_update', {'id':pkg.id }) %}
-                        <td class="dataset-details" property="dc:enabled"
-                            style="text-align: center;">
+                        <td class="dataset-details" property="dc:enabled" style="text-align: center;">
                             <a class="fa fa-times fa-2x" style="color: red;"
-                               href="{% url_for controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController',
-                                action='delete', package_id=pkg.name, definition_id=definition.id %}"
+                               href="{% url_for 'package_definition.delete', package_id=pkg.name, definition_id=definition.id %}"
                                data-module="confirm-action"
                                data-module-content="{{ _('Are you sure you want to remove this definition from the dataset?') }}">
                             </a>

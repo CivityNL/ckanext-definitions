@@ -9,16 +9,16 @@ It can then itself be extended to add/remove blocks of functionality. #}
     {% block errors %}{{ form.errors(c.error_summary) }}{% endblock %}
 
     {% block fields %}
-        {% snippet 'definition/snippets/definition_basic_fields.html', data=c.data, errors=c.errors %}
+        {% snippet 'definition/snippets/definition_basic_fields.html', data=data, errors=errors %}
     {% endblock %}
 
     {% block form_actions %}
         <div class="form-actions">
 
             {% block delete_button %}
-                {% if h.check_access('definition_delete', {'id': c.data.id}) and c.action != 'new' %}
+                {% if h.check_access('definition_delete', {'id': data.id}) and action != 'new' %}
                     <a class="btn btn-danger pull-left"
-                       href="{% url_for controller='ckanext.definitions.controllers.definition:DefinitionController', action='delete', definition_id=c.data.id %}"
+                       href="{% url_for 'definition.delete', definition_id=data.id %}"
                        data-module="confirm-action"
                        data-module-content="{{ _('Are you sure you want to delete this definition?') }}">
                         {% block delete_button_text %}
@@ -27,7 +27,7 @@ It can then itself be extended to add/remove blocks of functionality. #}
             {% endblock %}
 
             {% block cancel_button %}
-                {% link_for _('Cancel'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='search', class_='btn' %}
+                {% link_for _('Cancel'), named_route='definition.search', class_='btn' %}
             {% endblock %}
 
             {% block save_button %}

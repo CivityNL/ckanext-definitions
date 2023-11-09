@@ -1,11 +1,14 @@
 import ckanext.definitions.model.definition as definitions_model
-import ckanext.definitions.model_dictize as model_dictize
+import ckanext.definitions.model_dictize as definition_dictize
 import ckan.plugins.toolkit as toolkit
 import logging
 import ckan.lib.dictization as dictization
 import ckan.model.misc as misc
+from ckan.model import User
 import ast
-from sqlalchemy.sql.expression import true, or_
+from sqlalchemy import Boolean
+from sqlalchemy.sql.expression import true, or_, and_
+import ckan.lib.dictization.model_dictize as model_dictize
 
 
 log = logging.getLogger(__name__)
@@ -70,7 +73,7 @@ def definition_list(context, data_dict):
 
     if definitions:
         if all_fields:
-            result = model_dictize.definition_list_dictize(definitions, context)
+            result = definition_dictize.definition_list_dictize(definitions, context)
         else:
             result = [definition.id for definition in definitions]
     else:
@@ -215,30 +218,12 @@ def search_definitions_by_package(context, data_dict):
     :rtype: list of dictionaries
 
     '''
-
     package_id = data_dict.get('package_id')
     pkg_dict = toolkit.get_action('package_show')(context, {'id': package_id})
 
-    try:
-        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
-    except toolkit.ValidationError:
-        return []
-
-    if definitions:
-        definitions = ast.literal_eval(definitions)
-    else:
-        definitions = list()
-
-    result = []
-
-    for definition in definitions:
-        log.info('definition = {0}'.format(definition))
-        try:
-            result.append(toolkit.get_action('definition_show')(context, {'id': definition}))
-        except toolkit.ObjectNotFound:
-            pass
+    definitions = definitions_model.Definition.get_by_package(pkg_dict.get("id"))
+    result = definition_dictize.definition_list_dictize(definitions, context)
     ordered_result = sorted(result, key=lambda k: k['label'])
-
     return ordered_result
 
 
@@ -256,23 +241,32 @@ def data_officer_list(context, data_dict):
     :param include_all_user_info:
     :return: List of all data officers
     '''
-    result = []
-    user_list = toolkit.get_action('user_list')(context, {})
+    all_fields = toolkit.asbool(data_dict.get('all_fields', True))
 
-    for user in user_list:
-        user_extras = toolkit.get_action('user_extra_show')(context, {"user_id": user['id']})['extras']
-        for extra_dict in user_extras:
-            if extra_dict['key'] == 'Data Officer' and extra_dict['value'] == 'True':
-                if 'include_all_user_info' in data_dict and data_dict['include_all_user_info']:
-                    result.append(user)
-                else:
-                    user_dict = {
-                        "id":user['id'],
-                        "name": user['name'],
-                        "display_name": user['display_name']
-                    }
-                    result.append(user_dict)
-                break
+    user_list_context = {
+        u'return_query': True,
+        u'user': toolkit.g.user,
+        u'auth_user_obj': toolkit.g.userobj
+    }
+    query = toolkit.get_action('user_list')(user_list_context, {})
 
-    return result
+    query = query.filter(
+        and_(
+            User.plugin_extras is not None,
+            User.plugin_extras.has_key("definition"),
+            User.plugin_extras["definition"].has_key("data_officer"),
+            User.plugin_extras["definition"]["data_officer"].cast(Boolean) == true(),
+        )
+    )
 
+    users_list = []
+
+    if all_fields:
+        for user in query.all():
+            result_dict = model_dictize.user_dictize(user[0], context)
+            users_list.append(result_dict)
+    else:
+        for user in query.all():
+            users_list.append(user[0])
+
+    return users_list

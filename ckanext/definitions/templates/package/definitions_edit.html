@@ -1,21 +1,27 @@
 {% extends "package/edit_base.html" %}
 
+{% block styles %}
+  {{ super() }}
+  {% asset 'definitions/definitions-css' %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% asset 'definitions/definitions-js' %}
+{% endblock %}
+
 {% set search_title_only_filter = h.definition_search_title_only_filter() %}
 {% block subtitle %}{{ _('Definitions') }} - {{ super() }}{% endblock %}
 
 {% block primary_content_inner %}
-{% resource "definitions/js/definitions_autocomplete.js" %}
-{% resource "definitions/css/definitions_autocomplete.css" %}
     <div style="width: 100%; float: right; text-align: left;">
         <h3>
             {% block page_heading %}{{ _('Add Definition') }}{% endblock %}
         </h3>
         {% block form %}
-            <form class="dataset-form form-horizontal add-member-form"
-                  method='post' action="new">
+            <form class="dataset-form form-horizontal add-member-form" method='post' action="new">
                 <div class="row-fluid">
-                    <div class="control-group control-medium"
-                         style="display: inline-block; float: none; width: 70%;">
+                    <div class="control-group control-medium" style="display: inline-block; float: none; width: 70%;">
                         <div class="controls">
                             {% if search_title_only_filter %}
                             <div id="autocomplete_div">
@@ -26,15 +32,14 @@
                                    name="definition_id"
                                    placeholder="{{ _('Definition') }}"
                                    value="" class="control-medium"
-                                   data-module="definitions_autocomplete"
+                                   data-module="autocomplete"
                                    data-module-source="/api/action/definition_autocomplete?q=?"
                                    data-module-label="label"
                                    data-module-key="id">
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit"
-                        name="submit">{{ _('Add Definition') }}</button>
+                <button class="btn btn-primary" type="submit" name="submit">{{ _('Add Definition') }}</button>
             </form>
         {% endblock %}
     </div>
@@ -46,5 +51,5 @@
 
 
 {% block content_action %}
-    {% link_for _('View dataset'), controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController', action='read', package_id=pkg.name, class_='btn', icon='eye' %}
+    {% link_for _('View dataset'), named_route='package_definition.read', package_id=pkg.name, class_='btn', icon='eye' %}
 {% endblock %}

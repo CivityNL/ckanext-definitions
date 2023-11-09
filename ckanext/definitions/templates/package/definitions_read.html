@@ -15,6 +15,6 @@
 
 {% block content_action_manage %}
     {% if h.check_access('package_update', {'id':pkg.id }) %}
-        {% link_for _('Manage'), controller='ckanext.definitions.controllers.package_definition:PackageDefinitionController', action='edit', package_id=pkg.name, class_='btn', icon='wrench' %}
+        {% link_for _('Manage'), controller='package_definition.edit', package_id=pkg.name, class_='btn', icon='wrench' %}
     {% endif %}
 {% endblock %}
