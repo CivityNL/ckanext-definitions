@@ -169,7 +169,8 @@ def search():
         'search_facets': search_facets,
         'search_facets_limits': search_facets_limits,
         'search_title_only': search_title_only,
-        'sort_by_selected': sort_by
+        'sort_by_selected': sort_by,
+        'query_error': False
     }
 
     return toolkit.render('definition/index.html', extra_vars=extra_vars)
@@ -345,6 +346,36 @@ def new(data=None, errors=None, error_summary=None):
     return toolkit.render('definition/new.html', extra_vars=extra_vars)
 
 
+def activity(definition_id, offset=0):
+    context = {'model': model, 'session': model.Session,
+               'user': toolkit.c.user,
+               'for_view': True}
+
+    try:
+        definition_dict = toolkit.get_action('definition_show')(context, {'id': definition_id})
+        definition_id = definition_dict.get("id")
+    except (toolkit.ObjectNotFound, toolkit.NotAuthorized, KeyError):
+        abort(404, _('Definition not found'))
+
+    extra_vars = {
+        "definition_id": definition_id,
+        "definition_dict": definition_dict
+    }
+
+    try:
+        # Add the group's activity stream (already rendered to HTML) to the
+        # template context for the group/read.html
+        # template to retrieve later.
+        extra_vars["activity_stream"] = toolkit.get_action("definition_activity_list")(context, {'id': definition_id, 'offset': offset})
+
+    except toolkit.ValidationError as error:
+        base.abort(400, error.message)
+
+    print(extra_vars["activity_stream"])
+
+    return toolkit.render('definition/activity.html', extra_vars=extra_vars)
+
+
 def _save_new(context):
     data_dict = None
     try:
@@ -379,17 +410,16 @@ def edit(definition_id, data=None, errors=None, error_summary=None):
 
     # Authorization Check
     try:
-        toolkit.check_access('definition_update', context)
-    except toolkit.NotAuthorized:
-        abort(403, _('Unauthorized to edit a definition'))
+        toolkit.check_access('definition_update', context, data_dict)
+    except toolkit.NotAuthorized as error:
+        abort(403, error.message)
 
     if context['save'] and not data and toolkit.request.method == 'POST':
         return _save_edit(definition_id, context)
 
     try:
         data_dict['include_datasets'] = False
-        old_data = toolkit.get_action('definition_show')(context,
-                                                         data_dict)
+        old_data = toolkit.get_action('definition_show')(context, data_dict)
         toolkit.c.definitionlabel = old_data.get('label')
         toolkit.c.definitionid = old_data.get('id')
         data = data or old_data

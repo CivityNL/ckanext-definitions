@@ -1,11 +1,12 @@
 # encoding: utf-8
 
 '''API functions for deleting data from CKAN.'''
-import ast
 import logging
 from ckan.plugins import toolkit
-from ckanext.definitions.model.definition import Definition
-from lib.search import index_for
+from ckanext.definitions.model import Definition
+from ckanext.definitions.logic.action import reindex_package, reindex_packages, \
+    create_definition_package_relationship_activities
+from ckan.model import Activity
 
 log = logging.getLogger(__name__)
 
@@ -22,40 +23,28 @@ def definition_delete(context, data_dict):
     '''
 
     model = context['model']
-    if not data_dict.get('id', None):
-        raise toolkit.ValidationError({'id': toolkit._('id not in data')})
+    definition_id = toolkit.get_or_bust(data_dict, 'id')
 
     toolkit.check_access('definition_delete', context, data_dict)
-
-    definition_id = data_dict['id']
 
     # check if definition exists
     definition_obj = Definition.get(definition_id)
     if definition_obj is None:
         raise toolkit.ObjectNotFound(toolkit._('Could not find definition "%s"') % definition_id)
 
-    package_index = index_for(model.Package)
     existing_packages = definition_obj.packages_all
 
     # Delete the actual Definition
     definition_obj.delete()
     model.repo.commit()
 
-    for existing_package in existing_packages:
-        package_index.update_dict(existing_package)
+    reindex_packages([package.id for package in existing_packages])
 
     return {'success': True,
             'msg': 'successfully deleted definition {0}'.format(definition_id)}
 
 
-##############################################################
-##############################################################
-#  Data Officer
-##############################################################
-##############################################################
-
-
-def data_officer_delete(context, data_dict):
+def definition_data_officer_delete(context, data_dict):
     '''
     Removes the role Data Officer from a User
     :param context:
@@ -76,10 +65,10 @@ def data_officer_delete(context, data_dict):
     else:
         definition_plugin_extras['data_officer'] = False
         user_plugin_extras['definition'] = definition_plugin_extras
-        toolkit.get_action('user_patch')(context, {"id": user_id, 'plugin_extras': user_plugin_extras})
+        toolkit.get_action('user_patch')(dict(context, ignore_auth=True), {"id": user_id, 'plugin_extras': user_plugin_extras})
 
 
-def package_definition_delete(context, data_dict):
+def definition_package_relationship_delete(context, data_dict):
     '''
     Removes the role Definitions from the dataset
     :param context:
@@ -89,11 +78,10 @@ def package_definition_delete(context, data_dict):
 
     # check for valid input
     model = context['model']
+    session = context['session']
+    user = context['user']
 
-    try:
-        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
-    except toolkit.ValidationError:
-        return {'success': False, 'msg': 'Input was not right'}
+    package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
 
     # check if package exists
     package = model.Package.get(package_id)
@@ -103,13 +91,16 @@ def package_definition_delete(context, data_dict):
     if definition is None:
         raise toolkit.ObjectNotFound(toolkit._('Definition not found'))
 
-    if package not in definition.packages_all:
-        raise toolkit.ValidationError(toolkit._("Package is not linked to this definition"))
+    if not package.id in [p.id for p in definition.packages_all]:
+        raise toolkit.ValidationError(toolkit._("Package {} is not linked to definition {}".format(
+            package.id, definition.id
+        )))
 
     definition.packages_all.remove(package)
-    model.Session.commit()
+    session.add(definition)
+    session.flush()
+    create_definition_package_relationship_activities(session, definition, package, user, "removed")
+    session.commit()
+    pkg_dict = reindex_package(package.id)
 
-    package_index = index_for(model.Package)
-    package_index.update_dict(package)
-
-    return package.as_dict()
+    return pkg_dict

@@ -1,6 +1,7 @@
 import logging
 from ckan import model
 from ckan.plugins import toolkit
+from ckan.lib.search import query_for
 
 log = logging.getLogger(__name__)
 
@@ -13,6 +14,9 @@ def is_data_officer(user_name_or_id):
     :type: boolean
     """
     # TODO get or bust
+
+    if not user_name_or_id:
+        return False
 
     site_user = toolkit.get_action(u"get_site_user")({u"ignore_auth": True}, {})
     context = {u"user": site_user[u"name"]}
@@ -94,3 +98,26 @@ def search_title_only_filter():
 
 def show_additional_metadata():
     return toolkit.asbool(toolkit.config.get('ckanext.definitions.show_additional_metadata', False))
+
+
+def get_packages_for_definition(context, definition_):
+    # Ask SOLR for the list of packages for this definition
+    q = {
+        'facet': 'false',
+        'rows': 0,
+        'fq': '+definitions:"{0}"'.format(definition_.id),
+        'include_private': True
+    }
+
+    # package_search limits 'rows' anyway, so this is only if you
+    # want even fewer
+    try:
+        packages_limit = context['limits']['packages']
+    except KeyError:
+        del q['rows']  # leave it to package_search to limit it
+    else:
+        q['rows'] = packages_limit
+
+    search_context = dict((k, v) for (k, v) in context.items() if k != 'schema')
+    search_results = toolkit.get_action('package_search')(search_context, q)
+    return search_results['results']

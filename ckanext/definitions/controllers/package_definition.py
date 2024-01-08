@@ -4,7 +4,7 @@ import logging
 import ckan.plugins.toolkit as toolkit
 
 import ckan.logic as logic
-
+from ckanext.definitions.model import Definition
 
 tuplize_dict = logic.tuplize_dict
 clean_dict = logic.clean_dict
@@ -41,10 +41,9 @@ def new(package_id):
             'Unauthorized to add definition to dataset %s') % '')
 
     data_dict = {'package_id': package_id, 'definition_id': definition_id}
-    toolkit.get_action('package_definition_create')(context, data_dict)
+    toolkit.get_action('definition_package_relationship_create')(context, data_dict)
 
-    return toolkit.redirect_to('package_definition.edit',
-                               package_id=package_id)
+    return toolkit.redirect_to('package_definition.edit', package_id=package_id)
 
 
 def delete(package_id, definition_id):
@@ -52,12 +51,11 @@ def delete(package_id, definition_id):
 
     try:
         toolkit.check_access('package_update', context, {'id': package_id})
-    except toolkit.NotAuthorized:
-        abort(403, toolkit._(
-            'Unauthorized to delete definition from dataset %s') % '')
+    except (toolkit.NotAuthorized, toolkit.ObjectNotFound) as pkg_err:
+        abort(403, pkg_err.message)
 
     data_dict = {'package_id': package_id, 'definition_id': definition_id}
-    toolkit.get_action('package_definition_delete')(context, data_dict)
+    toolkit.get_action('definition_package_relationship_delete')(context, data_dict)
 
     return toolkit.redirect_to('package_definition.edit', package_id=package_id)
 
@@ -72,7 +70,6 @@ def _load_package_and_definitions(package_id):
 
     try:
         extra_vars['pkg_dict'] = toolkit.get_action('package_show')(context, data_dict)
-        extra_vars['pkg_definitions'] = toolkit.get_action('search_definitions_by_package')(context, {'package_id': package_id})
     except toolkit.ObjectNotFound:
         abort(404, toolkit._('Dataset not found'))
     except toolkit.NotAuthorized:

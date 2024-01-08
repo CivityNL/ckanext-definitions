@@ -8,13 +8,22 @@
   </h1>
 
   {% block package_definitions_list %}
-    {{ h.snippet('snippets/definition_list.html', definitions=pkg_definitions) }}
+    {{ h.snippet('snippets/definition_list.html', definitions=pkg_dict.definitions) }}
   {% endblock %}
 
 {% endblock %}
 
-{% block content_action_manage %}
+{% block content_action %}
     {% if h.check_access('package_update', {'id':pkg.id }) %}
-        {% link_for _('Manage'), controller='package_definition.edit', package_id=pkg.name, class_='btn', icon='wrench' %}
+        {% link_for _('Manage'), named_route='package_definition.edit', package_id=pkg.name, class_='btn btn-default', icon='wrench' %}
     {% endif %}
+{% endblock %}
+
+{% block secondary_help_content %}
+<section class="module module-narrow module-shallow">
+  <h2 class="module-heading"><i class="fa fa-bookmark"></i> {{ _('What are definitions?') }}</h2>
+  <div class="module-content">
+    <p>{{ _('A resource can be any file or link to a file containing useful data.') }}</p>
+  </div>
+</section>
 {% endblock %}

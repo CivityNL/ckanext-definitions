@@ -1,0 +1,8 @@
+{% extends "snippets/activities/_definition_base.html" %}
+
+{% block activity_text %}
+    {{ _('{actor} deleted the definition {definition}').format(
+      actor=ah.actor(activity),
+      definition=definition(activity)
+    )|safe }}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% macro definition(activity, is_object=True) %}
+<span class="definition">
+    {{ is_object }}
+    {{ activity.data }}
+    {% if is_object %}
+  {{ h.link_to(activity.data.definition.label if activity.data.definition else _('unknown'),
+               h.url_for('definition.read', definition_id=activity.object_id)) }}
+    {% else %}
+          {{ h.link_to(activity.data.definition.title[1] if activity.data.definition else _('unknown'),
+               h.url_for('definition.read', definition_id=activity.data.definition.title[0])) }}
+    {% endif %}
+</span>
+{% endmacro %}
+
+{% macro definition_dataset(activity) %}
+{% set dataset_type = activity.data.package.title[2] or 'dataset' %}
+<span class="dataset">
+  {{ h.link_to(activity.data.package.title[1] if activity.data.package else _('unknown'),
+      h.url_for(dataset_type ~ '.read', id=activity.data.package.title[0])) }}
+</span>
+{% endmacro %}
+
+<li class="item {{ activity.activity_type|replace(' ', '-')|lower }}">
+  <i class="fa icon fa-{% block activity_icon %}bookmark{% endblock %}"></i>
+  <p>
+      {% block activity_text %}{% endblock %}
+    <br />
+    <span class="date" title="{{ h.render_datetime(activity.timestamp, with_hours=True) }}">
+      {{ h.time_ago_from_timestamp(activity.timestamp) }}
+      {% block activity_actions %}{% endblock %}
+    </span>
+  </p>
+</li>

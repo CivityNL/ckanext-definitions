@@ -11,10 +11,10 @@
     <div class="module-content">
       {% block page_primary_action %}
           <div class="page_primary_action">
-            {% if h.check_access('data_officer_manage') %}
+            {% if h.check_access('definition_data_officer_manage') %}
               {% link_for _('Manage'), named_route='data_officer.edit', class_='btn btn-primary', icon='fa fa-wrench' %}
             {% endif %}
-            {% if h.check_access('definition_read') %}
+            {% if h.check_access('definition_search') %}
               {% link_for _('Back to Definitions list'), named_route='definition.search', class_='btn pull-right', icon='arrow-left'%}
             {% endif %}
           </div>

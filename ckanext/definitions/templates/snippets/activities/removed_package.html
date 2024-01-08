@@ -1,0 +1,11 @@
+{% extends "snippets/activities/_definition_base.html" %}
+
+{% block activity_icon %}sitemap{% endblock %}
+
+{% block activity_text %}
+    {{ _('{actor} removed the dataset {dataset} from the definition {definition}').format(
+      actor=ah.actor(activity),
+      definition=definition(activity, True),
+      dataset=definition_dataset(activity)
+    )|safe }}
+{% endblock %}

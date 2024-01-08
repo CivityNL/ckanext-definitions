@@ -1,0 +1,9 @@
+{% extends "snippets/activities/_definition_base.html" %}
+
+{% block activity_text %}
+    {{ _('{actor} removed the definition {definition} from the dataset {dataset}').format(
+      actor=ah.actor(activity),
+      definition=definition(activity, False),
+      dataset=ah.dataset(activity)
+    )|safe }}
+{% endblock %}

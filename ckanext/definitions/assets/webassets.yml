@@ -2,7 +2,6 @@ definitions-css:
   contents:
     - css/definitions_autocomplete.css
   output: definitions/%(version)s_definitions.css
-  filters: cssrewrite
 
 definitions-js:
   contents:

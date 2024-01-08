@@ -1,10 +1,9 @@
 import ckanext.definitions.model.definition as definition_model
-from ckanext.definitions.logic.action.delete import _delete_all_package_definitions_for_definition
 import ckan.lib.dictization as dictization
 import ckan.plugins.toolkit as toolkit
 import datetime
-import sys
 import logging
+from ckanext.definitions.logic.action import reindex_packages
 
 log = logging.getLogger(__name__)
 
@@ -17,7 +16,8 @@ def definition_update(context, data_dict):
     :return: the updated definition
     '''
     session = context['session']
-    # model = context['model']
+    model = context['model']
+    user = context['user']
     result = None
 
     errors = {}
@@ -30,24 +30,43 @@ def definition_update(context, data_dict):
         session.rollback()
         raise toolkit.ValidationError(errors)
 
-    try:
-        definition_id = data_dict['id']
-        definition = definition_model.Definition.get(definition_id=definition_id)
+    _disabled = False
 
-        definition.label = data_dict['label']
-        definition.description = data_dict['description']
-        definition.url = data_dict['url']
-        definition.display_name = definition.label + ' - ' + definition.description
-        definition.enabled = toolkit.asbool(data_dict['enabled'])
-        definition.modified_date = datetime.datetime.utcnow()
+    definition_id = data_dict['id']
+    definition = definition_model.Definition.get(definition_id=definition_id)
 
-        definition.discipline = data_dict.get('discipline', None)
-        definition.expertise = data_dict.get('expertise', None)
+    definition.label = data_dict['label']
+    definition.description = data_dict['description']
+    definition.url = data_dict['url']
 
-        # session.add(definition)
-        session.commit()
-        result = dictization.table_dictize(definition, context)
-    except:
-        print(sys.exc_info()[0])
+    _enabled = toolkit.asbool(data_dict['enabled'])
+    _disabled = not _enabled and definition.enabled
+    _existing_package_ids = []
+    if _disabled:
+        _existing_package_ids = [package.id for package in definition.packages_all]
+        definition.packages_all = []
+
+    definition.enabled = _enabled
+    definition.modified_date = datetime.datetime.utcnow()
+
+    definition.discipline = data_dict.get('discipline', None)
+    definition.expertise = data_dict.get('expertise', None)
+
+    session.add(definition)
+    session.flush()
+
+    user_obj = model.User.by_name(user)
+    if user_obj:
+        user_id = user_obj.id
+    else:
+        user_id = 'not logged in'
+    activity = definition.activity_stream_item('changed', user_id)
+    session.add(activity)
+    session.commit()
+
+    if _disabled:
+        reindex_packages(_existing_package_ids)
+
+    result = dictization.table_dictize(definition, context)
 
     return result

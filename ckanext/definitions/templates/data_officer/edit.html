@@ -9,7 +9,7 @@
   <article class="module">
     <div class="module-content">
       {% block page_primary_action %}
-        {% if h.check_access('data_officer_read') %}
+        {% if h.check_access('definition_data_officer_list') %}
           <div class="page_primary_action">
             {% link_for _('Back to Data Officer list'), named_route='data_officer.index', class_='btn pull-right', icon='arrow-left' %}
           </div>

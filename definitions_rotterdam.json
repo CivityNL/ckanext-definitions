@@ -1,0 +1,1562 @@
+[
+	{
+		"label" : "Bedrijfsvoeringsmodel",
+		"description" : "Geeft (grafisch) de geïdentificeerde bedrijfsprocessen van een organisatie(onderdeel) weer.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Beheermaatregel",
+		"description" : "De maatregel om de risico's te beperken of in te zetten als ze gebeuren.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "(Distributed) Denial of Service ((D)DOS)",
+		"description" : "Is een type aanval waarbij een bepaalde dienst\/website onbereikbaar wordt voor de reguliere gebruikers ervan.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "(Eind)gebruiker",
+		"description" : "De individuele medewerker die voor de uitvoering van zijn werk gebruik maakt van een informatiesysteem.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "(Spear)Phishing",
+		"description" : "Digitale activiteiten met als doel persoonlijke informatie van (één persoon of kleine groep) mensen te ontfutselen tbv oa creditcardfraude of identiteitsdiefstal.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Aanleiding",
+		"description" : "Geeft de reden aan voor het vastleggen van het proces.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Activiteit",
+		"description" : "Is een reeks handelingen die achtereenvolgend worden uitgevoerd door één persoon\/programma. Zie ook: processtap.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Actor",
+		"description" : "Is een persoon\/organisatie, actief betrokken bij de activiteiten van informatiebeheer.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Aggregatie",
+		"description" : "Is het samenvoegen van archiefbestanddelen tot een nieuw geheel.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Analoog",
+		"description" : "Aanduiding van een fysiek informatieobject.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Applicatie ",
+		"description" : "Een geautomatiseerd informatiesysteem cq computerprogramma.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Applicatiearchitectuur ",
+		"description" : "De structuur en samenhang van de (geautomatiseerde) informatiesystemen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Archief",
+		"description" : "Samenhangende informatieobjecten die ontvangen, opgemaakt, en beheerd worden in de processen van de organisatie.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefbescheiden",
+		"description" : "Informatieobjecten die ontvangen, opgemaakt, en onderhouden worden in de processen van de organisatie.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefbestanddeel",
+		"description" : "Het geheel aan archiefstukken bijeengebracht om in samenhang te raadplegen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefbewaarplaats ",
+		"description" : "Een vanuit de archiefwet aangewezen plaats voor blijvende bewaring.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefmanagement",
+		"description" : "Management van het archief.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefruimte",
+		"description" : "Is bestemd voor de bewaring van fysieke informatie die (nog) niet is overgebracht naar de archiefbewaarplaats  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefstuk",
+		"description" : "Kan bestaan uit één of meerdere Informatieobjecten die ontvangen, opgemaakt, en onderhouden worden in de processen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Archiefsysteem",
+		"description" : "Een informatiesysteem dat informatieobjecten opneemt, beheert en beschikbaar stelt door de tijd heen.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Aspectarchitectuur",
+		"description" : "Overzicht en samenhang van een specifiek onderwerp (privacy, gegevensmanagement) in een organisatie, gebaseerd op Gemma.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Attribuut",
+		"description" : "Een attribuut is een kenmerk van een object of entiteit.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Document",
+		"description" : "Zie: Informatieobject  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Automatiseringsplan",
+		"description" : "Hierin staan de noodzakelijke en geprioriteerde vernieuwingen\/wijzigingen van informatiesystemen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Bedrijfsfuncties",
+		"description" : "De volgens de Gemma opgenomen generieke taken van het concern.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Bedrijfsproces",
+		"description" : "Is een clustering van deelprocessen met een zelfde karakter. Deze worden binnen één en dezelfde organisatie uitgevoerd, die ook het product of dienst levert.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Digitaal depot",
+		"description" : "Het geheel van organisatie, beleid, processen en procedures, financieel beheer, personeel, databeheer, databeveiliging en aanwezige hard- en software, dat het duurzaam beheren van te bewaren digitale informatie mogelijk maakt.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Doorlooptijd",
+		"description" : "De tijd die het proces in beslag neemt om uitgevoerd te worden.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Beheersmaatregelen",
+		"description" : "Dit zijn maatregelen die op basis van de risicoclassificatie worden ingesteld om met de risico's om te gaan. Dit vastgelegd in het informatiebeheerbeleid. De toegepaste maatregelen per risicoklasse vormen tezamen het informatiebeheerregime. Dit regime omvat ook de maatregelen gericht op informatiebeheer buiten een gespecialiseerd systeem (DMS, zaaksystemen, e.d.) zowel voor digitale als fysieke informatie.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Betrokkene",
+		"description" : "Is een persoon\/organisatie, actief óf passief betrokken bij de activiteiten van informatiebeheer.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bewaartermijn",
+		"description" : "Termijn waarop de afgesloten zaak moet worden vernietigd of moet worden aangeboden voor langdurige of permanente archivering.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bronapplicatie",
+		"description" : "Eerste beheerapplicatie van een informatieobject.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Centre for Protection of the National Infrastructure (CPNI.NL)",
+		"description" : "Is het Nederlandse platform voor cybersecurity, ondergebracht bij TNO.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Classificatiesysteem",
+		"description" : "Zie: Classificatieschema  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Computer Emergency Response Team (CERT)",
+		"description" : "Is een team dat primair tot doel heeft om incidenten te voorkomen en, wanneer deze toch optreden, adequaat op te treden om de impact ervan te beperken.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Actieve uitkering",
+		"description" : "Een uitkering is actief vanaf de begindatum van de uitkering tot de einddatum van de uitkering.",
+		"url" : ""
+	},
+	{
+		"label" : "Digitaliseren",
+		"description" : "Het omzetten van analoge informatieobjecten naar digitale informatieobjecten.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Algemene nabestaandenwet (Anw)",
+		"description" : "De Algemene nabestaandenwet (Anw) is een basisuitkering van de overheid en geeft recht op een uitkering als de partner of een ouder overlijdt. Voor kinderen bestaat de wezenuitkering als beide ouders zijn overleden. Het uitkeringsbedrag is maximaal zeventig procent van het minimumloon. De Anw kent een inkomenstoets.",
+		"url" : ""
+	},
+	{
+		"label" : "Basisregistratie Personen (BRP)",
+		"description" : "De Basisregistratie Personen (BRP) bevat persoonsgegevens van inwoners van Nederland (ingezetenen) en van personen die Nederland hebben verlaten (niet ingezetenen). Personen die korter dan 4 maanden in Nederland wonen kunnen ook als niet-ingezetenen in de BRP staan. Bijvoorbeeld omdat ze tijdelijk werken of studeren in Nederland. De BRP is de opvolger van de Gemeentelijke Basisadministratie (GBA).",
+		"url" : ""
+	},
+	{
+		"label" : "Instrumentenhuis",
+		"description" : "Het Instrumentenhuis is een bundeling van specialistische dienstverlening in de vorm van instrumenten. Het zorgt voor een juist en passend aanbod aan instrumenten, beschikbaar voor de gehele doelgroep in de Participatiewet.",
+		"url" : ""
+	},
+	{
+		"label" : "Opsteller",
+		"description" : "Degene(n) die het proces beschrijft en\/of vastlegt.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Terugvordering",
+		"description" : "Op grond van de Participatiewet bestaat voor de gemeente de verplichting en de bevoegdheid om de bijstand terug te vorderen.",
+		"url" : ""
+	},
+	{
+		"label" : "Verhaal",
+		"description" : "Onder verhaal wordt verstaan het \"terughalen\" van een (deel van) de bijstandsuitkering bij een derde (artikel 60 PW). Deze derde is niet degene aan wie de uitkering wordt verstrekt",
+		"url" : ""
+	},
+	{
+		"label" : "Wajong",
+		"description" : "Wajong staat voor Wet arbeidsongeschiktheidsvoorziening jonggehandicapten. Vanaf 2015 staat de Wajong alleen nog open voor jongeren die ‘duurzaam geen mogelijkheden tot arbeidsparticipatie hebben’. Dat wil zeggen dat zij nooit in staat zullen zijn om enige arbeid te verrichten.",
+		"url" : ""
+	},
+	{
+		"label" : "Beheersinstrumenten",
+		"description" : "Alle hulpmiddelen (zoals beheersmaatregelen, metadataschema en autorisatieschema) die vereist en nodig zijn om te kunnen voldoen aan de eisen van kwalitatief verantwoord informatiebeheer.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bevoegdheid",
+		"description" : "Recht tot uitvoeren van een bepaalde activiteit. Een bevoegdheid is delegeerbaar (wordt dan mandaat), een verantwoordelijkheid niet.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Bijzondere informatie",
+		"description" : "Informatie waar kennisname door niet geautoriseerden nadelige gevolgen kan hebben voor de belangen van de overheid.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Bronproces",
+		"description" : "Eerste proces waarin een informatieobject is ontstaan.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Businesswaarde",
+		"description" : "Is de waarde die een activiteit binnen een process toevoegt, die uitsluitend voor de business van belang is (niet voor de klant). Komt vaak voort uit wettelijke bepalingen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Presenteren",
+		"description" : "Het raadpleegbaar en interpreteerbaar maken van informatie.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Context",
+		"description" : "De entiteiten die direct en\/of indirect de inhoud, structuur en wijze van bevraging van een informatieobject bepalen.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Beslistermijn bijstand",
+		"description" : "Een aanvraag voor de bijstand wordt in principe binnen 8 weken afgehandeld. Dit is de termijn die volgens de Algemene wet bestuursrecht geldt voor de afhandeling van aanvragen.",
+		"url" : ""
+	},
+	{
+		"label" : "Hersteltermijn",
+		"description" : "De hersteltermijn is de termijn waarbinnen een werkzoekende het verzuim, zoals bedoeld in artikel 54 lid 2 van de Participatiewet en artikel 17, lid 2 van de lOAW en IOAZ, kan herstellen. Als er bewijsstukken ontbreken, biedt de consulent een hersteltermijn aan de klant aan. De klant kan dan de bewijsstukken alsnog binnen een bepaalde termijn inleveren.",
+		"url" : ""
+	},
+	{
+		"label" : "Participatiewet (Pw)",
+		"description" : "De Participatiewet (Pw) is ingegaan op 1 januari 2015. De Participatiewet heeft tot doel om zoveel mogelijk mensen, met en zonder arbeidsbeperking, weer aan de arbeidsmarkt deel te laten nemen.",
+		"url" : ""
+	},
+	{
+		"label" : "Werkopdracht",
+		"description" : "De werkopdrachten hebben als doel het primaire proces te ondersteunen bij het volgen van mutaties in het dossier in de applicatie Socrates.",
+		"url" : ""
+	},
+	{
+		"label" : "Proceslandschap",
+		"description" : "Is een overzicht van de processen binnen de gemeentelijke context, in een ArchiMate-diagram.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Wet werk en inkomen naar arbeidsvermogen (WIA)",
+		"description" : "De WIA (Wet werk en inkomen naar arbeidsvermogen) bestaat uit twee delen: de IVA ( indien volledig en duurzaam arbeidsongeschikt) en de WGA ( gedeeltelijk of wel volledig maar niet duurzaam arbeidsongeschikt). De WIA is een werknemersverzekering en wordt door het UWV uitgevoerd.",
+		"url" : ""
+	},
+	{
+		"label" : "Werkloosheidswet (WW)",
+		"description" : "Als een werknemer geheel of gedeeltelijk werkloos wordt, bestaat er mogelijk recht op een WW-uitkering. Hiervoor moet men aan een aantal voorwaarden voldoen. De WW is een werknemersverzekering en wordt uitgevoerd door het UWV.",
+		"url" : ""
+	},
+	{
+		"label" : "Behandeltijd",
+		"description" : "De tijd die een organisatie nodig heeft om een product te kunnen strekken of een dienst te kunnen verlenen aan de klant.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Besluittype",
+		"description" : "De generieke aanduiding van de aard van een besluit (bv. vaststelling, buiten behandeling, gegrond etc.).  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bewaarschema",
+		"description" : "Een systematisch overzicht waarin de bewaartermijn van informatieobjecten is aangegeven.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bewerkingstijd",
+		"description" : "De tijd die men echt bezig is om een (reeks) handeling(en) te voltooien.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Business",
+		"description" : "Organisatieonderdelen (eindgebruikers, middel- en hoger management) die verantwoordelijk zijn voor de uitvoering van de bedrijfsprocessen die door BCO\/IIFO\/IBP worden ondersteund.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Classificatieschema",
+		"description" : "Een codering waarmee de identificatie en ordening van informatieobjecten wordt uitgevoerd.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Coderingsschema",
+		"description" : "Een protocol om (lees)tekens om te zetten in computertaal.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Controleren (inhoudelijk)",
+		"description" : "Het controleren van informatieobjecten en hun metagegevens op volledigheid en juistheid en op de aanwezigheid van essentiële kenmerken. Met die kenmerken kan de authenticiteit, betrouwbaarheid, integriteit en bruikbaarheid van de informatieobjecten worden vastgesteld.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Beheerdomein",
+		"description" : "Binnen informatievoorziening worden drie aandachtsgebieden onderkend: technisch beheer, applicatiebeheer en functioneel beheer.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Beheeromgeving",
+		"description" : "Geheel van voorzieningen en functionaliteiten waar een beheerder over kan beschikken om informatieobjecten tot het moment van verwijdering te beheren en beschikbaar te stellen.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bewaring",
+		"description" : "Processen en activiteiten gericht op de zorg voor technische en intellectuele instandhouding van authentieke informatieobjecten door de tijd heen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Bot(net)",
+		"description" : "Een bot(net) is een (verzameling) geïnfecteerde computer(s) die op afstand, met kwade bedoelingen, bestuurd kan\/kunnen worden en dienen als infrastructuur voor veel vormen van internetcriminaliteit.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Processtap",
+		"description" : "Is een reeks handelingen die achtereenvolgend worden uitgevoerd door één persoon\/programma.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Business Process Model and Notation (BPMN)",
+		"description" : "De Business Process Model and Notation (BPMN) is een grafische standaardtaal voor procesmodellering.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Classificatie",
+		"description" : "Het indelen, het classificeren of clusteren van objecten, verschijnselen of processen in groepen op grond van overeenkomsten of verwantschap in eigenschappen of kenmerken  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Controleren (technisch)",
+		"description" : "Het controleren van de technische integriteitskenmerken en de bruikbaarheid van een informatieobject.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Conversie",
+		"description" : "Het proces van omzetting van digitale bestanden van het ene medium naar het andere of van het ene bestandsformaat naar het andere.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Cookie",
+		"description" : "Is informatie die op de computer van een eindgebruiker wordt opgeslagen en bij een volgend bezoek weer kan worden opgevraagd teneinde gebruikersinstellingen te bewaren en de gebruiker te volgen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Cybercrime",
+		"description" : "Vorm van criminaliteit waarbij een ICT-systeem of de informatie die daardoor wordt verwerkt, het doelwit is.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Cyberincident",
+		"description" : "Een ICT-verstoring in de dienstverlening waardoor de te verwachten beschikbaarheid van de dienstverlening (deels) is verdwenen, en\/of informatieongeoorloofd openbaar is gemaakt.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Cybersecurity",
+		"description" : "Het vrij zijn van gevaar of schade (beperking van integriteit, beschikbaar-, betrouwbaar- en\/of vertrouwelijkheid) door verstoring, uitval of misbruik van ICT.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Cybersecuritydreiging",
+		"description" : "Het volgende kan oa de bedoeling zijn van de daders: verstevigen van de concurrentiepositie, politiek\/landelijk gewin, maatschappelijke ontwrichting, levensbedreiging. Ze worden oa ingedeeld als: digitale spionage, -sabotage en -verstoring, publicatie van vertrouwelijke gegevens, cybercrime en indirecte verstoringen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Data breach",
+		"description" : "Het opzettelijk of onopzettelijk naar buiten komen van vertrouwelijke gegevens.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Deelproces",
+		"description" : "Is een geordende reeks processtappen, afgebakend door een significant tussenresultaat tbv het product\/dienst voor de klant. (GEMMA 2.0 > werkproces)  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Dienst",
+		"description" : "Hierbij wordt een inspaning gelverd aan een klant, al dan niet tegen betaling. Een niet tastbaar resultaat.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Digitaal bestand",
+		"description" : "Een informatieobject dat door een computer gelezen kan worden.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Doel (proces)",
+		"description" : "Geeft aan waarom dit proces wordt uitgevoerd.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Dossier",
+		"description" : "Verzameling van gerelateerde informatieobjecten.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Duurzaam informatieobject",
+		"description" : "Informatieobject dat voldoet aan de daaraan gestelde kwaliteitscriteria gedurende de hele beoogde levensduur  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "File Inclusion",
+		"description" : "Aanvalstechniek die voornamelijk bij webapplicaties wordt toegepast, waarbij een gebruiker een bestand met eigen code kan toevoegen om de werking van de applicatie te beïnvloeden.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Fuzzing",
+		"description" : "Het aanbieden van onjuiste (input)informatie aan een systeem om te bepalen hoe dit met onjuiste invoer omgaat.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Gerubriceerde gegevens",
+		"description" : "In een beveiligingsrubricering gewaarmerkte gegevens (documenten\/materiaal) die beschermd moeten worden tegen ongeoorloofde openbaarmaking.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Hacker",
+		"description" : "Iemand die met kwaadaardige bedoelingen probeert in te breken in computersystemen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Hoofdzaak en deelzaak",
+		"description" : "Een hoofdzaak omvat het gehele proces en een deelzaak omvat delen van een proces.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Hotspot ",
+		"description" : "Hiermee wordt een gebeurtenis of kwestie bedoeld die leidt tot een opvallende of intensieve interactie tussen overheid en burger of tussen burgers onderling. Het gaat dus om zaken die veel maatschappelijke beroering veroorzaken.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Overbrengen",
+		"description" : "Overbrengen is het vervoeren van, zowel analoge als digitale informatieobjecten van de ene naar de andere locatie.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Identificeren",
+		"description" : "Bepalen of informatieobjecten in een gecontroleerde beheeromgeving (applicatie of systeem) moeten worden opgenomen met als doel de informatieobjecten te beheren en beschikbaar te kunnen stellen.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Documenttype",
+		"description" : "De generieke aanduiding van de aard van een informatieobject (bv. aanvraag, besluit etc.).  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Dossierinventaris",
+		"description" : "De beschrijving van dossiers in een archief. Het geeft de toegang tot dossiers weer.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Eerste Keer Goed (EKG)",
+		"description" : "Geeft in een percentage aan, hoe vaak de processtap in één keer goed wordt uitgevoerd.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "End of Life",
+		"description" : "De datum waarop een product niet langer door de leverancier als gangbare software wordt beschouwd en over het algemeen geen ondersteuning meer wordt geleverd.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Exporteren",
+		"description" : "Overzetten van informatieobjecten naar een ander informatiesysteem.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Functioneel applicatiebeheer ",
+		"description" : "Het verhelpen van (niet technische) fouten in de software. Voert het voorbereiden, ondersteunen en implementeren van het inrichten en gebruiken van applicaties uit.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Gebruikersprofiel",
+		"description" : "Een gebruikersprofiel is een of meer rollen die aan een gebruiker zijn toegekend.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Handeling",
+		"description" : "Is een op zich staande, kleine eenheid van werk.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Historische versie",
+		"description" : "Voorgaande versie van een informatieobject.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Hotspot-monitor",
+		"description" : "Is gericht op het identificeren van gebeurtenissen en kwesties in de samenleving die grote invloed hebben uitgeoefend op de activiteiten van de organisatie die de selectielijst opstelt. Het gaat daarbij om de hotspots binnen het functionele werkingsgebied van de zorgdrager. Het doel van de hotspot-monitor is om ervoor te zorgen dat de archiefbescheiden die betrekking hebben op hotspots worden aangewezen voor blijvende bewaring. De hotspotmonitor moet regelmatig worden herhaald om actueel te blijven.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Importeren",
+		"description" : "Informatieobjecten binnenhalen vanuit een ander informatiesysteem.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Document Management Systeem (DMS)",
+		"description" : "Is een applicatie voor het selecteren, beheren, ontsluiten, toegankelijk maken en beschikbaarstellen -in welke vorm dan ook- van inkomend, interne en uitgaande informatieobjecten bij een organisatie met het doel om informatie in de juiste context te verstrekken aan een gebruiker of groep van gebruikers op het juiste moment.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Doel procesvastlegging",
+		"description" : "Geeft aan met welk beoogd resultaat het proces wordt vastgelegd.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Records management",
+		"description" : "Het managen van records.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Duurzaam bestandsformaat",
+		"description" : "Bestandsformaat dat als geschikt is beoordeeld voor de vastlegging van een duurzaam informatieobject.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "e-Depot",
+		"description" : "Locatie waar digitale informatieobjecten, die permanent bewaard moeten blijven, worden opgeslagen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Functiestroomschema",
+		"description" : "In een functiestroomschema worden de procesactiviteiten weergegeven op basis van de functionaris die ze uitvoert.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Gerelateerde zaak",
+		"description" : "Een gerelateerde zaak is een zaak die betrekking heeft op een andere zaak en aan elkaar worden gerelateerd.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Hersteltijd",
+		"description" : "De tijd dat het kost om onvoldoende kwaliteit cq fouten te herstellen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Indexering",
+		"description" : "Vaststellen van zoekkenmerken om het zoeken van archiefbescheiden en\/of informatie te vergemakkelijken.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Documentanalyse",
+		"description" : "Zie: Informatieanalyse  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Domeinarchitectuur",
+		"description" : "Overzicht en samenhang van bedrijfsfuncties van een afgebakend taakgebied, gebaseerd op Gemma.  #Informatiemanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Dossierbeheer",
+		"description" : "Controle over een dossier ongeacht het middel waarmee het is gecreeerd.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Duurzaam toegankelijk",
+		"description" : "Vindbaar en bruikbaar voor degenen die er recht op hebben, vanaf het moment van ontstaan en voor zo lang als noodzakelijk.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Encryptie",
+		"description" : "Het versleutelen van informatie om deze onleesbaar te maken voor onbevoegden.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Exploit(code)",
+		"description" : "Software, gegevens of commando’s die gebruikmaken van een kwetsbaarheid in software en\/of hardware om ongewenste functies en\/of gedrag te veroorzaken.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Functie",
+		"description" : "Een functie is een verzameling van taken die een persoon binnen het Concern Rotterdam heeft. Deze komt overeen met de 'functieroepnaam' van het functiehuis.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Functioneel proces",
+		"description" : "Een proces waarbij alleen de activiteiten (het wát) zijn benoemd en nog geen verdere data (het wíe, hóe etc.). Vaak de eerste fase van het vastleggen van een proces.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Gegevensbeheer",
+		"description" : "Het gedurende de levenscyclus in goede staat behouden van een informatieobject.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Governance van het proces",
+		"description" : "Korte samenvatting van de taken, bevoegdheden en verantwoordelijkheden van de belangrijkste functies in het proces.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Herstelwachttijd",
+		"description" : "De extra wachttijd dat het kost om onvoldoende kwaliteit cq fouten te herstellen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Hoofdproces",
+		"description" : "Zie: Bedrijfsproces  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie",
+		"description" : "Een op zichzelf staand geheel van gegevens met een eigen identiteit, vorm en metadata.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie compromittering",
+		"description" : "De (mogelijkheid tot) kennisname van bijzondere informatie door een niet-gerechtigde.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie- en archiefmanagement",
+		"description" : "Management verantwoordelijk voor de efficiënte en systematische controle over het opmaken, ontvangen, onderhouden, gebruiken en schonen van archiefstukken, inclusief de processen voor het vastleggen en onderhouden van bewijs van en informatie over bedrijfsactiviteiten en transacties in de vorm van archiefstukken.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie integriteit",
+		"description" : "Synoniem voor betrouwbaarheid = Juist (rechtmatigheid), Volledig (niet te veel\/te weinig), Tijdig (op tijd) en Geautoriseerd (gemuteerd door een gerechtigd).  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie kwetsbaarheid",
+		"description" : "Eigenschap die een kwaadwillende partij de kans geeft om de legitieme toegang tot informatie of functionaliteit te verhinderen en te beïnvloeden dan wel ongeautoriseerd te benaderen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie merking",
+		"description" : "Geeft een bepaalde wijze van behandelen van bijzondere informatie weer.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie ontgooglen",
+		"description" : "Informatie over personen of zaken van het internet verwijderen met het doel dat deze inhoud ook uit zoekresultaten verdwijnt.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Procestype",
+		"description" : "Een classificatie van bedrijfsprocessen, onderverdeeld in sturende, uitvoerende (primaire) en ondersteunende processen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Informatie rubricering",
+		"description" : "Vaststellen en aangeven dat een gegeven ‘bijzondere informatie’ is en bepalen\/aangeven van de mate van beveiliging die aan deze informatie moet worden gegeven.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiebeleid",
+		"description" : "De beschrijvingen van ontwikkelingen, visies, de gewenste informatievoorziening, en de wijze waarop sturing en realisatie plaatsvindt.   #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiemanagement",
+		"description" : "Het richting geven en bewaken van de inhoud en vorm van de informatievoorziening en het bepalen van de meest geëigende organisatie om deze inhoud en vorm te realiseren.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiesysteem",
+		"description" : "Een informatiesysteem is een systeem van documentatie, procedures, apparatuur en programmatuur, met behulp waarvan informatie kan worden vervaardigd, bewerkt, verzonden, ontvangen en geraadpleegd.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Input ",
+		"description" : "Geeft aan welke informatie nodig is om het proces te starten en\/of verder te laten lopen.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Ketenpartner",
+		"description" : "Individu of organisatie waarmee samengewerkt wordt binnen een proces. Zie ook: Ketenproces  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Knelpunt",
+		"description" : "Punt in het proces die zorgen voor verspillingen. Zie ook: Verspillingen  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Lean Management",
+		"description" : "Lean Management richt zich op het elimineren van verspillingen in een proces en zet daarbij de klant centraal.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Man in the Middle (MITM)",
+		"description" : "Een aanvalstechniek waarbij de aanvaller zich tussen twee partijen (bv winkel en klant) bevindt en zich voordoet als de één of ander. Als ‘tussenpersoon’ kan deze nu gegevens afluisteren en\/of manipuleren.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Metagegevens ",
+		"description" : "Gegevens die context, inhoud en structuur van informatieobjecten en hun beheer door de tijd heen beschrijven.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Opdrachtgever (Gedelegeerd)",
+		"description" : "Degene die (in naam van) opdracht geeft tot het beschrijven van het proces.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Overdragen",
+		"description" : "Overdragen is de verandering in de zorg, eigendom en\/of verantwoordelijkheid van beheer van zowel analoge als digitale archiefbescheiden.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatieanalyse",
+		"description" : "Analyse van een proces om te bepalen: wanneer, in welk systeem, op welke wijze, door wie, welke informatie in een proces wordt gecreëerd en opgeslagen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiebeheerplan (IBP)",
+		"description" : "Een informatiebeheerplan geeft een overzicht van de in de processen van de organisatie aanwezige informatieobjecten en -systemen, inclusief de bewaartermijnen.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiebeveiliging",
+		"description" : "Het vaststellen van de vereiste kwaliteit (integriteit, vertrouwelijk-, beschikbaar-, onweerlegbaar- en controleerbaarheid) van informatie(systemen), alsmede het treffen, onderhouden en controleren van beveiligingsmaatregelen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatieplan",
+		"description" : "Het plan waarin staat hoe de informatievoorziening er binnen drie tot vijf jaar uit gaat zien en de weg waarlangs dat wordt gerealiseerd.   #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Initiator",
+		"description" : "Een initiator is iemand die de eerste aanzet voor een handeling of onderneming geeft of er de eerste stap toe zet bij het starten van een zaak.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "ITIL (Information Technology Infrastructure Library)",
+		"description" : "Een handreiking voor de opzet en inhoud van het technisch beheer van de ICT organisatie.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Kaizen (event)",
+		"description" : "Een Kaizen event is een 3- tot 5 dagen durend project dat van probleem tot en met de implementatie van oplossingen loopt.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Ketenproces",
+		"description" : "Is één proces, uitgevoerd door verschillende organisaties. Eén van die organisaties levert het product of dienst aan de klant.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Klantwaarde",
+		"description" : "Is de waarde die een activiteit binnen een proces toevoegt, die vooral voor de klant van belang is (kan ook voor de business waarde hebben). Dit is waar de klant voor wilt betalen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Kritische Prestatie indicator (KPI)",
+		"description" : "Geeft aan op welk gebied binnen dit bedrijfs\/werkproces gestuurd wordt.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Kwaliteitssysteem",
+		"description" : "Het geheel van samenhangende of elkaar beïnvloedende elementen waarmee het organisatiebeleid en doelstellingen bepaalt voor de kwaliteit van het informatiebeheer, inclusief het behalen van deze doelstellingen.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Mandaat (volmacht \/ machtiging)",
+		"description" : "Is het gedelegeerde recht tot het uitvoeren van specifieke bevoegdheden namens het college of de burgemeester.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Migratie",
+		"description" : "Een handeling waarbij informatieobjecten worden overgezet van het ene systeem naar het andere, met behoud van authenticiteit, integriteit, betrouwbaarheid en bruikbaarheid.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Ondersteunend Proces",
+		"description" : "De resultaten worden geleverd aan de interne klant. Ze leveren daarmee essentiële ondersteuning voor alle overige processen van het Concern.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Output",
+		"description" : "Geeft aan welke informatie het proces oplevert. Zie ook: Resultaat  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Post(stukken)",
+		"description" : "Analoge of digitale informatieobjecten die via een postkanaal zijn ontvangen.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiearchitectuur",
+		"description" : "Overzicht en samenhang van de door informatiesystemen ondersteunde bedrijfsfuncties, van de verschillende organisatieonderdelen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiebeveiligingsincident",
+		"description" : "Is een gebeurtenis die een significante kans geeft op het compromitteren van de bedrijfsprocessen- en beveiliging.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatieobject",
+		"description" : "Een op zichzelf staand geheel van gegevens met een eigen identiteit, vorm en metadata.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Interne wachttijd",
+		"description" : "De tijd dat het proces stilstaat binnen de processtap.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Kaizen",
+		"description" : "Kaizen betekent ‘continu verbeteren’ en is een georganiseerd gebruik van gezond verstand om kosten te besparen, kwaliteit te verhogen, levertijden te verkorten en klanttevredenheid te vergroten.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Klant, intern",
+		"description" : "Is iemand van binnen het concern Rotterdam. Geen ketenpartner!  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Malware",
+		"description" : "Samentrekking van ‘malicious’ en ‘software’, kortom: kwaadaardige software (virussen, wormen en Trojaanse paarden).  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Metadataschema",
+		"description" : "Het metadataschema geeft een overzicht van de generieke metadata die nodig zijn voor het beheer en de bewaring van de informatieobjecten die in een proces gecreëerd worden.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Opslaan",
+		"description" : "De digitale opslag van informatie in een veilige en geschikte omgeving.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Parameter",
+		"description" : "Instelbare variabele waarmee de wijze waarop een softwarepakket werkt kan worden ingesteld.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiebeheer",
+		"description" : "Informatiebeheer is het systematisch verzamelen, verwerken, toegankelijk maken, gebruiken, onderhouden en verwijderen van informatie, opdat deze duurzaam toegankelijk en betrouwbaar is.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiebestand ",
+		"description" : "Informatie waarin een bepaalde fysieke of logische ordening is, of kan worden aangebracht.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Preservering",
+		"description" : "Processen en activiteiten die betrekking hebben op de zorg voor de technische en intellectuele instandhouding van authentieke archiefstukken door de tijd heen  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiehuishouding",
+		"description" : "Een informatiehuishouding is het geheel aan maatregelen om de informatie in duurzame, geordende en toegankelijke staat te brengen en te bewaren gedurende de wettelijk bepaalde termijn.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Informatiestrategie",
+		"description" : "De wijze waarop gesignaleerde ontwikkelingen over de informatievoorziening worden vertaald naar vernieuwingen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Informatievoorziening",
+		"description" : "Het geheel aan processen, bekeken vanuit de gebruikersorganisatie, inclusief infrastructuur en informatiesystemen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Ist",
+		"description" : "Een procesbeschijving die de huidige situatie weergeeft, zoals die daadwerkelijk wordt uitgevoerd. Zie ook: Procesbeschrijving  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Kaders",
+		"description" : "Relevante wet- en regelgeving waar men zich aan moet houden.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Kerngebruiker\/Key user ",
+		"description" : "(Eind)gebruiker met meer dan gemiddelde inhoudelijk kennis van (een deel van) de informatievoorziening.   #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Klant",
+		"description" : "Degene die het (deel)product of de (deel)dienst ontvangt. Een proces kan meerdere klanten hebben.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Klant, extern",
+		"description" : "Is iemand van buiten het concern Rotterdam (burger, bedrijf, instelling).  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Klasse",
+		"description" : "Een klasse is een onderdeel van een classificatie; zaken die bij elkaar horen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Kritieke Prestatie Indicator (KPI)",
+		"description" : "Kwantificering van de uitwerking van een toetsbare eis.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Map",
+		"description" : "Middel om documenten die logisch bij elkaar horen fysiek of digitaal bijeen te houden.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Metadata",
+		"description" : "Gegevens die context, inhoud en structuur van informatieobjecten en hun beheer door de tijd heen beschrijven.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Modelleerapplicatie",
+		"description" : "De applicatie waarmee een proces (met alle bijbehorende data) vastgelegd kan worden.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Niet waarde toevoegend",
+		"description" : "Alle activiteiten binnen een proces die geen waarde toevoegen voor de klant noch voor de business (verspilling).  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Omschrijving processtap",
+		"description" : "Dit is een beknopte toelichting van de handeling\/proces.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Ordeningsstructuur",
+		"description" : "Een ordeningsstructuur is het geheel aan maatregelen om de informatie in duurzame, geordende en toegankelijke staat te brengen en te bewaren gedurende de wettelijk bepaalde termijn.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Organisatieonderdeel",
+		"description" : "De diverse onderdelen waaruit het concern Rotterdam hiërarchisch en functioneel is opgebouwd.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Primair Proces",
+		"description" : "Levert een product\/dienst aan een externe klant (burger\/ondernemer\/ instelling\/samenleving). Zij voegen waarde toe aan de omgeving en hieraan wordt het bestaansrecht van de organisatie ontleent.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Proces ",
+		"description" : "Een reeks van activiteiten met vaste trigger en resultaat, gekenmerkt door volgordelijkheid en afhankelijkheid. Uitgevoerd om bij te dragen aan de doelstelling van de organisatie.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Proces (stap) naam",
+		"description" : "Geeft met een werkwoord en zelfstandig naamwoord, eventueel gevolgd door een bijvoeglijk naamwoord de naam van de proces(stap) aan.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Proces (stap) omschrijving ",
+		"description" : "Dit is een beknopte toelichting van de handeling\/proces.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesanalist",
+		"description" : "De procesanalist: ondersteunt bij de analyse van de werking van het proces en doet voorstellen voor verbetering aan de procesmanager\/opdrachtgever.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesanalyse",
+		"description" : "Analyse van een proces, afhankelijk van het doel van het vastleggen wordt de focus van de te analyseren informatie bepaald.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesapplicatie",
+		"description" : "Een applicatie is een computerprogramma dat ondersteunend aan het proces is en bedoeld is voor gebruikers.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesarchitectuur",
+		"description" : "Een overzicht van alle processen van het concern Rotterdam, ingericht volgens de Gemma Procesarchitectuur. Het overzicht kan op verschillende niveaus weergegevens worden.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesaudit",
+		"description" : "Richt zich op het verloop van een werkproces. Stap voor stap wordt getoetst of de dagelijkse praktijk overeenkomt met de procesbeschrijvingen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesbeheerder",
+		"description" : "De procesbeheerder is verantwoordelijk voor het monitoren van de actualiteit van het proces en dit zonodig aan te (laten) passen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesbeschrijving",
+		"description" : "De grafische en tekstuele weergave van een proces vormen samen de procesbeschrijving.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesbouwsteen",
+		"description" : "Is een helder afgebakend en herbruikbaar 'component' binnen de procesarchitectuur.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesefficiëntie",
+		"description" : "Geeft de efficiëntie van het werkproces aan in percentages. Berekening bewerkingstijd \/ totale doorlooptijd.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Proceseigenaar",
+		"description" : "De proceseigenaar is verantwoordelijk voor het kader en de randvoorwaarden waarbinnen het proces wordt uitgevoerd en voor het vaststellen van de prestatie-indicatoren. Hij is verantwoordelijk voor het eindresultaat van het proces, de diensten en producten die met het proces worden opgeleverd en de klanttevredenheid en controleert of het proces aan de eisen blijft voldoen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Proceshiërarchie",
+		"description" : "Is opgebouwd uit verschillende procestypen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Vertrouwelijkheidsaanduiding",
+		"description" : "Een aanduiding van de mate waarin dossiers voor de openbaarheid bestemd zijn.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Procesmanager",
+		"description" : "De procesmanager is verantwoordelijk voor de uitvoering van het proces conform de gestelde eisen en de implementatie van procesverbeteringen en -vernieuwingen en de optimale inzet van resources.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesresultaat",
+		"description" : "Het (half)product of de dienst die het werkproces oplevert aan de klant.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Relevantie",
+		"description" : "Geeft de verhouding weer tussen dreigingen, dreigers en doelwitten. Incidenten en dreigingen worden binnen de analyses gewogen met de criteria van ‘laag’, ‘midden’ en ‘hoog’.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Risico",
+		"description" : "Een gebeurtenis met een ongewenst gevolg op het behalen van de doelstelling.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Soll",
+		"description" : "Een procesbeschijving die de toekomstige situatie weergeeft, zoals die daadwerkelijk zal worden uitgevoerd.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Stepping stone",
+		"description" : "Een (keten)aanval via meerdere systemen\/organisaties. In een serie van eerder gehackte machines komt een kwaadwillende uiteindelijk bij het doel. Het is ook een hulpmiddel om de eigen ware identiteit te verbergen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Substitutie",
+		"description" : "De procedure waarbij papieren originelen mogen vervangen worden door digitale kopieën (vervanging).  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Throughput ",
+		"description" : "De informatie die binnen het proces ontstaat.   #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Versie",
+		"description" : "Geeft de relevante gegevens over de huidige beschrijving (nummer, datum, vast\/opsteller, opdrachtgever etc.). Eventueel ook van eerdere versies.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesmanagement",
+		"description" : "Het indentificeren, beschrijven, ontwerpen, implementeren, beheersen en verbeteren van de bedrijfs- en werkprocessen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesontwerp",
+		"description" : "De grafische weergave van het proces die de toekomstige situatie weergeeft.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Product",
+		"description" : "Het tastbare (tussen)resultaat van een proces, voor de interne of externe klant.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Registreren",
+		"description" : "Toekennen van een (unieke) identificatie en contextuele metadata aan informatieobjecten op het moment van opname in een systeem.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Resultaattype",
+		"description" : "Een resultaattype is een generieke aanduiding van een resultaat.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Skimmen",
+		"description" : "Het onrechtmatig kopiëren van de gegevens van bijvoorbeeld een pinpas of creditcard.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Status",
+		"description" : "Geeft aan welk recht aan het vastgelegde proces ontleend kan worden (concept\/definitief\/vastgesteld).  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Sturende processen ",
+		"description" : "Brengen de kaders en doelen voort en geven daarmee sturing aan de primaire en ondersteunende processen. Het gaat hierbij om het vormen van de strategie, het programmeren van de inzet en het evalueren hiervan.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Technisch applicatiebeheer ",
+		"description" : "Zorgt ervoor dat applicaties beschikbaar en up-to-date zijn en verhelpen storingen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Trigger",
+		"description" : "Is de gebeurtenis waardoor het proces start.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Procesmodel",
+		"description" : "De grafische weergave van het proces die de huidige situatie weergeeft.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Record",
+		"description" : "Een op zichzelf staand geheel van gegevens met een eigen identiteit, vorm en metadata.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Revisiedatum\/termijn",
+		"description" : "Met proceseigenaar afgesproken datum\/termijn waarop proces gereviseerd moet worden.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Rol",
+		"description" : "Medewerkers die binnen of naast hun functie, specifieke taken hebben binnen een proces, die regelmatig terugkomen. Zie ook: functie  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Schaduwarchief",
+		"description" : "Een schaduwarchief is (een deel van) een archief in gekopieerde vorm.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Social engineering",
+		"description" : "Een aanvalstechniek waarbij misbruik wordt gemaakt van menselijke eigenschappen als nieuwsgierigheid, vertrouwen en hebzucht met als doel vertrouwelijke informatie te verkrijgen of het slachtoffer een bepaalde handeling te laten verrichten.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Technisch beheer",
+		"description" : "Zorgt dat de technische (ICT) infrastructuur van de organisatie op orde is.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Toegang",
+		"description" : "Toegang is het recht, gelegenheid of hulpmiddel voor het vinden, gebruiken of terugzoeken van informatie.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Vaststeller",
+		"description" : "Degene (functie\/gremium\/naam) die de procesbeschrijving heeft vastgesteld.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Verplaatsen",
+		"description" : "Migreren of exporteren van het informatieobject naar een ander informatiesysteem (digitaal). Het betreft ook de overdracht van verantwoordelijkheid voor de zorg of het beheer van de informatie.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Processchema",
+		"description" : "Zie: Procesmodel en procesontwerp.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Public Key Infrastructure (PKI)",
+		"description" : "Is een verzameling middelen waarmee je betrouwbaar zaken kunt regelen, zoals het versleutelen en ondertekenen van informatie en het vaststellen van de identiteit van een partij.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Referentieproces",
+		"description" : "Is generiek beschreven, mogelijk zonder of met beperkte inhoud en dient als 'model'. Met name gebruikt binnen zaakgericht werken.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Richting",
+		"description" : "De richting van een informatieobject: inkomend, intern of uitgaand.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Rootkit",
+		"description" : "Een stuk software dat een aanvaller meer rechten op een computersysteem geeft, terwijl de aanwezigheid van deze software wordt verborgen voor het besturingssysteem.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Selectie",
+		"description" : "Geheel van activiteiten gericht op het scheiden van voor blijvende bewaring en voor vernietiging te eniger tijd bestemde archiefbescheiden  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Spoofen\/IP-Spoofing",
+		"description" : "Is het ‘je voordoen als een ander’, meestal in kwaadaardige zin. Bv IP-Spoofing, waarbij het IP-adres van een andere computer wordt gebruikt om de herkomst van netwerkverkeer te maskeren of om de computer als een andere computer voor te laten doen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Thema",
+		"description" : "Een clustering van Bedrijfsprocessen en\/of onderwerpen die soortgelijk zijn van aard, doel en\/of werkgebied.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Verantwoordelijkheid",
+		"description" : "Bevoegdheden en verantwoordelijkheden met algemeen karakter volgen uit de aanstelling als medewerker van de organisatie.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Verspilling",
+		"description" : "Alle activiteiten binnen een proces die geen waarde toevoegen voor de klant noch voor de business. Zie ook: Lean Management  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Release",
+		"description" : "Een verzameling van wijzigingen in de informatievoorziening die op eenzelfde moment in gebruik worden genomen.  #Informatiemanagement ",
+		"url" : ""
+	},
+	{
+		"label" : "Risicoanalyse",
+		"description" : "Analyse van de risico's in een proces met betrekking tot informatiebeheer.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Scannen",
+		"description" : "Scannen is het digitaal maken van analoge documenten.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Selectielijst",
+		"description" : "Een selectielijst is een systematisch overzicht waarin de duur van bewaren van informatieobjecten is aangegeven.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "SQL-Injectie",
+		"description" : "Aanvalstechniek waarbij de communicatie tussen een applicatie en achterliggende database wordt beïnvloed door de gebruiker om gegevens hierin te manipuleren\/te stelen.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Taak",
+		"description" : "De activiteiten die men in het kader van zijn functie uit moet voeren.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Throughput ",
+		"description" : "De activiteiten die binnen het proces plaatsvinden om van aanleiding tot resultaat te komen.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Tweefactoren authenticatie",
+		"description" : "Een manier van authentiseren waarbij twee onafhankelijke bewijzen voor een identiteit zijn vereist.  #Informatiebeveiliging ",
+		"url" : ""
+	},
+	{
+		"label" : "Vernietigen",
+		"description" : "Vernietigen is het proces van het definitief verwijderen van archiefbescheiden zonder dat zij weer gereconstrueerd kunnen worden.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Vervangen",
+		"description" : "Reproductie van informatieobjecten met als doel tot vernietiging van de oorspronkelijke objecten te kunnen overgaan. Door de vernietiging worden de nieuwe objecten rechtsgeldig.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Vervanging",
+		"description" : "De procedure waarbij papieren originelen mogen vervangen worden door digitale kopieën.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Vervreemding",
+		"description" : "Vervreemding is het in eigendom overdragen van informatieobjecten.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Vindbaar maken",
+		"description" : "Aanwezigheid van functionaliteiten voor zoeken en vinden in systemen.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Voortgangsbewaking",
+		"description" : "Voortgangsbewaking is het proces waarin tijdslimieten worden bewaakt en opgelegd aan degenen die taken uitvoeren.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Waarde toevoegend",
+		"description" : "Een processtap die aan het proces, waarde voor de klant of business toevoegt. Zie ook Klantwaarde, Businesswaarde  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Waardering (selectie)",
+		"description" : "Activiteiten gericht op het bepalen van de bewaartermijnen van archiefbescheiden, het uitvoeren van voorselectie en-of selectie, het uitvoeren van de feitelijke vernietiging en het overbrengen van permanent te bewaren archiefbescheiden naar de archiefbewaarplaats.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Waardestroom analyse",
+		"description" : "Een visuele procesweergave waarbij allerlei data in beeld gebracht wordt, gerelateerd aan de processtappen. Vaak om knelpunten te kunnen achterhalen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Wachttijd",
+		"description" : "De tijd dat het proces stilstaat voordat aan de bewerking wordt begonnen.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Werkinstructie",
+		"description" : "Beschrijft op detailniveau wat binnen een processtap\/handeling uitgevoerd moetn worden.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Zaaknummer",
+		"description" : "Een zaaknummer is een unieke identificatie(code) voor een zaak.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Werkproces",
+		"description" : "Is een reeks volgordelijke en van elkaar afhankelijke processtappen, die leiden tot een (half)product of dienst.   #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Zaaktypecatalogus",
+		"description" : "Een zaaktypecatalogus is verzameling van actuele zaaktypes.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Workflow (management)",
+		"description" : "Het (digitaal ondersteund) regelen van de beweging van informatie, zodat deze op de juiste wijze van medewerker naar medewerker gaat.  #Procesmanagement",
+		"url" : ""
+	},
+	{
+		"label" : "Zorg",
+		"description" : "De algemene bestuurlijke verantwoordelijkheid van de overheidsorganen voor de uitvoering van de Archiefwet, elk op eigen terrein.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Zaak",
+		"description" : "Een zaak is een samenhangende hoeveelheid werk met een welgedefinieerde aanleiding en een wel gedefinieerd eindresultaat, waarvan kwaliteit en doorlooptijd moeten worden bewaakt.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Zaaktypecode",
+		"description" : "Een zaaktypecode is een unieke identificatiecode van een zaaktype.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Zorgdrager",
+		"description" : "Degene die bij of krachtens de wet belast is met de zorg voor de archiefbescheiden.  #Informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Zaaktype",
+		"description" : "Een zaaktype is een generieke aanduiding van de aard van een zaak.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Zaaktypesjabloon",
+		"description" : "Een zaaktypesjabloon is een sjabloon dat gebruikt wordt om het ontwerp van een zaaktype in vast te leggen.  #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Toegankelijkheidsniveau",
+		"description" : "Beschrijving van een verzameling kwaliteitseisen ten aanzien van de duurzame toegankelijkheid van informatie. #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Volgen (inhoudelijk & technisch)",
+		"description" : "Het monitoren van geplande en uitgevoerde beheeractiviteiten op zowel inhoudelijk als technisch vlak. #informatiehuishouding",
+		"url" : ""
+	},
+	{
+		"label" : "Uitkeringsgerechtigde",
+		"description" : "* 1) Mensen met recht op een uitkering \r\n* 2) Werkloze",
+		"url" : ""
+	},
+	{
+		"label" : "Algemene bijstand",
+		"description" : "Algemene bijstand is de bijstand ter voorziening in de algemeen noodzakelijke kosten van het bestaan. Daartoe wordt verstaan de bestaanskosten die kunnen worden gerekend tot het op minimumniveau algemeen gangbare bestedingspatroon. De bijstand is aanvullend op eventueel aanwezig inkomen.",
+		"url" : ""
+	},
+	{
+		"label" : "Besluit bijstandverlening zelfstandigen (Bbz)",
+		"description" : "Het Besluit bijstandverlening zelfstandigen 2004 geeft regels met betrekking tot het verlenen van bijstand aan zelfstandigen. Het Bbz onderscheidt een aantal groepen:\r\n• Bijstandsgerechtigde tijdens de voorbereidingsperiode Bbz;\r\n• Startende zelfstandige;\r\n• Gevestigde zelfstandige;\r\n• Oudere zelfstandige;\r\n• Beëindigende zelfstandige.",
+		"url" : ""
+	},
+	{
+		"label" : "Bundeling Uitkeringen Inkomensvoorzieningen Gemeenten (BUIG)",
+		"description" : "Gemeenten ontvangen van het Rijk een gebundelde uitkering (BUIG) voor het bekostigen van de uitkeringen in het kader van de Participatiewet, IOAW, IOAZ en Bbz 2004 (levensonderhoud startende ondernemers) en voor de inzet van loonkostensubsidie.",
+		"url" : ""
+	},
+	{
+		"label" : "GALO",
+		"description" : "GALO staat voor 'Geautomatiseerde Aanvraag Levensonderhoud'. Een Rotterdammer kan daarmee een digitale aanvraag doen voor de algemene bijstand.",
+		"url" : ""
+	},
+	{
+		"label" : "Huishouden",
+		"description" : "Volgens de Participatiewet is sprake van een gezamenlijke huishouding indien twee personen hun hoofdverblijf in dezelfde woning hebben (huisvestingscriterium) en zij blijk geven zorg te dragen voor elkaar door middel van het leveren van een bijdrage in de kosten van de huishouding dan wel anderszins (zorgcriterium). Als aan beide criteria wordt voldaan, kan een gezamenlijke huishouding worden aangenomen.",
+		"url" : ""
+	},
+	{
+		"label" : "Loonkostensubsidie",
+		"description" : "Mensen met een arbeidsbeperking kunnen via de gemeente een beroep doen op ondersteuning om aan het werk te gaan. Voor diegenen die niet zelfstandig het wettelijk minimumloon kunnen verdienen, zetten gemeenten loonkostensubsidie in. Loonkostensubsidie compenseert de werkgever bij verminderde productiviteit van een werknemer. De loonkostensubsidie die een werkgever van de gemeente krijgt, is het verschil tussen het wettelijk minimumloon en de loonwaarde van de werknemer.",
+		"url" : ""
+	},
+	{
+		"label" : "Uitkeringscomponent",
+		"description" : "De uitkeringscomponent is een rekenregel die invloed kan hebben op de hoogte van de uitkering.",
+		"url" : ""
+	},
+	{
+		"label" : "Individuele inkomenstoeslag (IIT)",
+		"description" : "De individuele inkomenstoeslag (IIT) is een bijzondere vorm van bijzondere bijstand. Het is een tegemoetkoming voor mensen van 21 jaar of ouder, maar jonger dan de AOW-leeftijd, die langdurig een laag inkomen hebben en geen uitzicht hebben op inkomensverbetering.  \r\n\r\nHet bedrag van de IIT is voor elke situatie (alleenstaande, alleenstaande ouder of gehuwden tezamen) gelijk.",
+		"url" : ""
+	},
+	{
+		"label" : "IOAZ",
+		"description" : "IOAZ staat voor Wet inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte gewezen zelfstandigen. De IOAZ is bedoeld voor oudere zelfstandigen (55 plus) die noodgedwongen hun bedrijf (of zelfstandig beroep) moeten beëindigen, omdat de inkomsten daaruit onvoldoende zijn. Zij kunnen onder bepaalde voorwaarden een uitkering krijgen op grond van deze wet.",
+		"url" : ""
+	},
+	{
+		"label" : "Krediethypotheek",
+		"description" : "Wanneer een betrokkene een eigen woning (of woonwagen, of woonboot) met overwaarde bezit dan kan de gemeente bijstand verstrekken in de vorm van een geldlening met een krediethypotheek als zekerheid. De gemeente kan een krediethypotheek vestigen met de woning als onderpand, om zo de terugbetaling van de lening zeker te stellen.",
+		"url" : ""
+	},
+	{
+		"label" : "Statushouder",
+		"description" : "Een statushouder is een vluchteling met een voorlopige of voorwaardelijke verblijfsvergunning op basis van asiel, en aanverwante\/nagereisde vluchtelingen die een reguliere verblijfsstatus krijgen. Een statushouder behoort tot de doelgroep zodra hij door het COA aan de gemeente Rotterdam is gekoppeld en het eerste contact wordt gelegd.",
+		"url" : ""
+	},
+	{
+		"label" : "Wet kinderopvang (WKO)",
+		"description" : "De Wetkinderopvang regelt de kwaliteit, het toezicht en de financiering van kinderopvang. Uitgangspunt van de wet is dat kinderopvang een zaak is van ouders, werkgevers en overheid samen. Het gaat om formele kinderopvang voor werkende ouders en ouders die een studie of traject volgen om (weer) aan het werk te gaan. De overheidsbijdrage aan de kosten voor kinderopvang, de kinderopvangtoeslag, is in de wet geregeld.",
+		"url" : ""
+	},
+	{
+		"label" : "NPRZ",
+		"description" : "Bij de uitvoering van het Nationaal Programma staan de bewoners van Rotterdam Zuid Centraal. Dit doormiddel van 3 pijlers; scholing, wonen en werk.",
+		"url" : ""
+	},
+	{
+		"label" : "Bijzonder Onderzoek (BO)",
+		"description" : "Bijzonder Onderzoek (BO) onderzoekt vermoedens van fraude. Deze vermoedens komen voort uit tips en kunnen het resultaat zijn van bestandskoppelingen met andere basisregistraties. Daarnaast adviseert en ondersteunt BO bij rechtmatigheidsonderzoeken en andere handhavingsactiviteiten.",
+		"url" : ""
+	},
+	{
+		"label" : "Wet sociale werkvoorziening (Wsw)",
+		"description" : "Sinds 1 januari 2015 is de Wet sociale werkvoorziening dichtgezet. Vanaf die datum kunnen er geen mensen meer instromen in de WSW. De rechten en plichten blijven voor degenen die voor 1 januari 2015 onder de WSW vielen, na die datum ongewijzigd van kracht. De Wet sociale werkvoorziening (WSW) is bedoeld voor mensen die door een lichamelijke, psychische of verstandelijke handicap in aangepaste omstandigheden kunnen werken. Dit kan in een sociale werkvoorziening (SW), maar kan ook onder begeleiding bij een reguliere werkgever worden vormgegeven. ",
+		"url" : ""
+	},
+	{
+		"label" : "Wettelijk voorschot",
+		"description" : "Een wettelijk voorschot wordt door de gemeente verstrekt, wanneer niet binnen vier weken na bijstandsaanvraag het recht op bijstand is vastgesteld. Dit is een wettelijke verplichting. De hoogte van het voorschot bedraagt in ieder geval 90% van de toepasselijke bijstandsnorm.",
+		"url" : ""
+	},
+	{
+		"label" : "IOAW",
+		"description" : "De Wet inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte werkloze werknemers (IOAW) is bedoeld voor oudere werkloze werknemers die de volledige uitkeringsduur van de WW hebben doorlopen. Ook oudere werkloze werknemers die gedeeltelijk arbeidsongeschikt zijn en geen recht meer hebben op een loongerelateerde werkhervattingsuitkering (WGA-uitkering), kunnen in aanmerking komen voor een IOAW-uitkering.",
+		"url" : ""
+	},
+	{
+		"label" : "Social Return on Investment (SROI)",
+		"description" : "Met Social Return on Investment (SROI) gebruikt Rotterdam haar inkoopkracht om meer werkgelegenheid te creëren voor mensen met een grote(re) afstand tot de arbeidsmarkt. Door social return bij inkoopopdrachten als voorwaarde mee te nemen, worden opdrachtnemers van de gemeente verplicht om mensen die aan de kant staan een werkplek te geven in de eigen organisatie of op een andere manier een bijdrage te leveren.",
+		"url" : ""
+	},
+	{
+		"label" : "Niet-uitkeringsgerechtigde",
+		"description" : "We spreken van een niet-uitkeringsgerechtigde wanneer iemand voldoet aan alle volgende voorwaarden:\r\n\r\n* jonger dan de pensioengerechtigde leeftijd; \r\n* staat als werkloze werkzoekende geregistreerd bij UWV; \r\n* heeft geen recht op een uitkering of ondersteuning op grond van de PW, WW, Wajong, WIA, ANW of een vergelijkbare regeling.\r\n\r\nIn de wandelgangen worden ze nuggers genoemd.",
+		"url" : ""
+	},
+	{
+		"label" : "Bijzondere bijstand",
+		"description" : "Naast bijstand voor de algemene noodzakelijke kosten van het bestaan is het mogelijk bijstand te krijgen voor de bijzondere noodzakelijke kosten van het bestaan (bijzondere bijstand). \r\n\r\nNiet alleen mensen met een bijstandsuitkering kunnen bijzondere bijstand aanvragen. Mensen met een laag inkomen of een andere kleine uitkering komen ook in aanmerking voor bijzondere bijstand. \r\n\r\nDe hoogte van de bijstand wordt bepaald door de draagkracht die men heeft.\r\nDe hoofdregel is dat bijstand om niet verstrekt wordt. Dit betekent dat de ontvanger de bijstand niet terug hoeft te betalen. Onder bepaalde voorwaarden wordt de bijstand in de vorm van een geldlening of borgtocht verleend.",
+		"url" : ""
+	},
+	{
+		"label" : "Jongerenloket",
+		"description" : "Rotterdamse jongeren in de leeftijd van 18 tot en met 26 jaar kunnen met hun vragen op het gebied van wonen, geldzaken, inkomen, werk en opleiding, zorg en hulp terecht bij het Jongerenloket. Samen met jongeren wordt besproken wat er mogelijk is om aan de eigen toekomst te werken.",
+		"url" : ""
+	},
+	{
+		"label" : "Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo)",
+		"description" : "De Tozo is een tijdelijke regeling voor zelfstandig ondernemers met een eigen bedrijf of beroep die door de coronacrisis in financiële nood zijn gekomen. De Tozo voorziet in een aanvullende uitkering voor levensonderhoud en in een lening voor bedrijfskapitaal.",
+		"url" : ""
+	},
+	{
+		"label" : "Uitstroom uitkering",
+		"description" : "Uitstroom uitkering wordt bepaald door het moment dat in het uitkeringensysteem de uitkering is beëindigd. Deze datum is niet gelijk aan de datum einde uitkering. De datum uitstroom kan na de datum einde uitkering liggen. De uitkering wordt dan met terugwerkende kracht beëindigd.",
+		"url" : ""
+	},
+	{
+		"label" : "WerkgeversServicepunt Rijnmond (WSPR)",
+		"description" : "Het WerkgeversServicepunt Rijnmond (WSPR) is een samenwerkingsverband tussen UWV en clustergemeenten uit de regio Rijnmond. Samen bundelen ze de krachten om de werkgever zo goed mogelijk bij te staan bij personeelsvraagstukken. Het WSPR biedt hulp, advies en praktische ondersteuning. ",
+		"url" : ""
+	},
+	{
+		"label" : "Vermogenstoets bijstand",
+		"description" : "Bij het aanvragen van een algemene bijstandsuitkering kijkt de gemeente of de inwoner niet te veel eigen vermogen heeft. Hoeveel vermogen iemand mag hebben hangt af van de grootte van het huishouden. Het vermogen wordt berekent op het moment dat een uitkering wordt aangevraagd. Een gedeelte van het vermogen wordt vrijgelaten. De gemeente houdt rekening met de wettelijk vastgestelde vrijlatingsbedragen.",
+		"url" : ""
+	},
+	{
+		"label" : "Inlichtingenbureau",
+		"description" : "Het Inlichtingenbureau is een centraal informatieknooppunt voor gemeenten. Het Inlichtingenbureau ondersteunt gemeenten bij het uitvoeren van wettelijke taken op het gebied van de Participatiewet. Dit doen ze door gegevens te verzamelen bij verschillende bronnen zoals UWV, de Belastingdienst of RDW. Door het combineren van deze gegevens ontstaan signalen die geautomatiseerd worden aangeleverd bij gemeenten. Het is aan de gemeente om vast te stellen wat met deze signalen moet worden gedaan.",
+		"url" : ""
+	},
+	{
+		"label" : "Levensonderhoud",
+		"description" : "De algemene bijstand is bedoeld om in de kosten van levensonderhoud te voorzien. In de Participatiewet is niet vermeld welke kosten tot de kosten van levensonderhoud worden gerekend. Hier is geen limitatieve lijst van te geven. In het algemeen kan gezegd worden dat met kosten van levensonderhoud de algemeen noodzakelijke kosten van het bestaan worden bedoeld. Dat zijn bijvoorbeeld: dagelijkse boodschappen, huur, gas, water, licht, premie verzekeringen, kleding en schoeisel, witgoed, televisie.",
+		"url" : ""
+	},
+	{
+		"label" : "bronhouderschap",
+		"description" : "Eigenaarschap en daarmee het formeel\r\nnemen van verantwoordelijkheid in gebruik, definitie en\r\nkwaliteit van de databron",
+		"url" : ""
+	},
+	{
+		"label" : "Gegevenscatalogus",
+		"description" : "De Gegevenscatalogus is een website waarop gezocht kan worden naar bestaande datasets. Iedere dataset wordt beschreven aan de hand van een aantal metadata gegevens zoals de eigenaar, het onderwerp, de classificatie (privacy\/security) en kwaliteitskenmerken.",
+		"url" : "https:\/\/catalogus-rotterdam.dataplatform.nl\/"
+	},
+	{
+		"label" : "Bounding boxes",
+		"description" : "Een rechthoek dat een object omlijnt, om een positie, type en zekerheid (waarschijnijkheid dat object op locatie is). \r\nBounding boxes worden gebruikt voor object detectie en om een snelle filtering toe te passen op andere datasets.",
+		"url" : ""
+	},
+	{
+		"label" : "Datacatalogus ",
+		"description" : "De Datacatalogus is een website waarop gezocht kan worden naar bestaande datasets. Iedere dataset wordt beschreven aan de hand van een aantal metadata gegevens zoals de eigenaar, het onderwerp, de classificatie (privacy\/security) en kwaliteitskenmerken.",
+		"url" : "https:\/\/catalogus-rotterdam.dataplatform.nl\/"
+	},
+	{
+		"label" : "Betrouwbaarheidslabel",
+		"description" : "Een betrouwbaarheidslabel voor een informatieproduct zegt iets over de balans tussen het kunnen halen van waarde uit data én de risico's op het gebied van veiligheid, privacy, datakwaliteit, ethiek en reputatie.\r\n\r\n\r\nDe gemeente Rotterdam ontwikkelt op dit moment een betrouwbaarheidslabel voor informatieproducten. Het label bestaat uit de waarden A, B, C, D of E. Afhankelijk van de kwaliteitseisen die nodig zijn voor het gebruik van de data wordt een informatieproduct met een hoger dan wel lagere waarde geadviseerd. \r\n\r\n\r\nBijvoorbeeld wil je data gebruiken voor het experimenteren\/testen met een algoritme? Dan volstaat een product met label D wellicht. Heb je data nodig ter ondersteuning van je primaire proces, dan is label A  of B waarschijnlijk het gewenste label voor jouw data.\r\n\r\nLees het artikel via onderstaande URL of mail naar het team Datadiensten (datadiensten@rotterdam.nl) voor meer informatie over de toepassing van het label.",
+		"url" : "https:\/\/rio.rotterdam.nl\/Project\/InformatiegestuurdWerkenIGW\/Documents?path=%2F2.%20Artikelen&preview=o91Mq_F3skyMm1qDYYFKyg"
+	}
+]

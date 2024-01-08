@@ -1,0 +1,9 @@
+{% extends "snippets/activities/_definition_base.html" %}
+
+{% block activity_text %}
+  {{ _('{actor} added the definition {definition} to the dataset {dataset}').format(
+      actor=ah.actor(activity),
+      dataset=ah.dataset(activity),
+      definition=definition(activity, False)
+    )|safe }}
+{% endblock %}

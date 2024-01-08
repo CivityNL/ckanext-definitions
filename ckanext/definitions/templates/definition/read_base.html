@@ -10,11 +10,14 @@
 {% block content_action %}
 
   {% if h.check_access('definition_update', {'id': definition_dict.id}) %}
-    {% link_for _('Edit Definition'), named_route='definition.edit', definition_id=definition_dict.id, class_='btn', icon='wrench' %}
+    {% link_for _('Manage'), named_route='definition.edit', definition_id=definition_dict.id, class_='btn btn-default', icon='wrench' %}
   {% endif %}
 {% endblock %}
 
 {% block content_primary_nav %}
+  {{ h.build_nav_icon('definition.read', _('Definition'), definition_id=definition_dict.id, icon='info-circle') }}
+  {{ h.build_nav_icon('definition.read', _('Datasets'), definition_id=definition_dict.id, icon='sitemap') }}
+  {{ h.build_nav_icon('definition.activity', _('Activity Stream'), definition_id=definition_dict.id, offset=0, icon='clock-o') }}
 {% endblock %}
 
 {% block secondary_content %}

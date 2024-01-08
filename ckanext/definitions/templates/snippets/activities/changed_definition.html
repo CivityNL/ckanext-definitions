@@ -1,0 +1,17 @@
+{% extends "snippets/activities/_definition_base.html" %}
+
+{% block activity_text %}
+    {{ _('{actor} updated the definition {definition}').format(
+      actor=ah.actor(activity),
+      definition=definition(activity, True)
+    )|safe }}
+{% endblock %}
+
+{% block activity_actions %}
+  {% if can_show_activity_detail %}
+  &nbsp;|&nbsp;
+  <a href="{{ h.url_for('definition.read', definition_id=activity.object_id, activity_id=activity.id) }}">
+    {{ _('View this version') }}
+  </a>
+  {% endif %}
+{% endblock %}

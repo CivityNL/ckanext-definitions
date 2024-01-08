@@ -15,7 +15,7 @@
                         {% link_for _('Add Definition'), named_route='definition.new', class_='btn btn-primary', icon='plus-square' %}
                     {% endif %}
 
-                    {% if h.check_access('data_officer_read') %}
+                    {% if h.check_access('definition_data_officer_list') %}
                         {% link_for _('Data Officers'), named_route='data_officer.index', class_='btn btn-primary pull-right', icon='fa fa-info-circle' %}
                     {% endif %}
                 </div>
@@ -68,26 +68,14 @@
     {% endblock %}
 
     {% block definition_facets %}
-        {% set alternative_url= '/definition' %}
-
-        <div class="filters">
-            <div>
-                {% for facet in c.facet_titles %}
-                    {% if facet == 'creator_id' %}
-                        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, label_function=h.definition_user_facet_list_help, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id}) }}
-                    {% elif facet == 'enabled' %}
-                        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, label_function=h.definition_enabled_facet_show, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id}) }}
-                    {% else %}
-                        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, alternative_url=alternative_url, extras={'extras_definition':definition_dict.id}) }}
-                    {%- endif %}
-
-                {% endfor %}
-            </div>
-            <a class="close no-text hide-filters">
-                <i class="fa fa-times-circle"></i>
-                <span class="text">close</span>
-            </a>
+      <div class="filters">
+        <div>
+          {% for facet in facet_titles %}
+            {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, search_facets=search_facets) }}
+          {% endfor %}
         </div>
+        <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
+      </div>
     {% endblock %}
 
 {% endblock %}

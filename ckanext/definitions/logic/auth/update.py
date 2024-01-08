@@ -1,18 +1,10 @@
-import logging
-from ckanext.definitions.logic.auth.create import definition_create
-
-log = logging.getLogger(__name__)
+from ckanext.definitions.logic.auth import auth_is_data_officer
+from ckan.plugins import toolkit
 
 
 def definition_update(context, data_dict):
-    '''
-    Only for Data Officers
-    '''
-    return definition_create(context, data_dict)
-
-
-def data_officer_manage(context, data_dict):
-    '''
-    SysAdmin Only
-    '''
-    return {'success': False}
+    user = context.get('user')
+    if not auth_is_data_officer(context):
+        msg = toolkit._('User {user} is not authorized to edit definitions'.format(user=user))
+        return {'success': False, 'msg': msg}
+    return {'success': True}
