@@ -12,10 +12,10 @@
       {% block page_primary_action %}
           <div class="page_primary_action">
             {% if h.check_access('data_officer_manage') %}
-              {% link_for _('Manage'), controller='ckanext.definitions.controllers.data_officer:DataOfficerController', action='edit', class_='btn btn-primary', icon='fa fa-wrench' %}
+              {% link_for _('Manage'), named_route='data_officer.edit', class_='btn btn-primary', icon='fa fa-wrench' %}
             {% endif %}
             {% if h.check_access('definition_read') %}
-              {% link_for _('Back to Definitions list'), controller='ckanext.definitions.controllers.definition:DefinitionController', action='search', class_='btn pull-right', icon='arrow-left'%}
+              {% link_for _('Back to Definitions list'), named_route='definition.search', class_='btn pull-right', icon='arrow-left'%}
             {% endif %}
           </div>
       {% endblock %}

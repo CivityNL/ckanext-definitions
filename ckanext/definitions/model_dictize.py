@@ -12,21 +12,18 @@ The basic recipe is to call:
 which builds the dictionary by iterating over the table columns.
 '''
 
-import ckan.lib.dictization as d
+import ckan.lib.dictization as dictization
 
+
+def definition_dictize(definition, context):
+    result = None
+    if context.get('with_capacity'):
+        definition, capacity = definition
+        result = dictization.table_dictize(definition, context, capacity=capacity)
+    else:
+        result = dictization.table_dictize(definition, context)
+    return result
 
 
 def definition_list_dictize(definition_list, context):
-
-    result_list = []
-    for definition in definition_list:
-        if context.get('with_capacity'):
-            definition, capacity = definition
-            dictized = d.table_dictize(definition, context, capacity=capacity)
-        else:
-            dictized = d.table_dictize(definition, context)
-
-        result_list.append(dictized)
-
-    return result_list
-
+    return [definition_dictize(definition, context) for definition in definition_list]

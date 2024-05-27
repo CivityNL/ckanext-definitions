@@ -5,6 +5,8 @@ import ckanext.definitions.model.definition as definition_model
 import ckan.lib.dictization as dictization
 import logging
 
+from lib.search import index_for
+
 log = logging.getLogger(__name__)
 
 
@@ -47,7 +49,7 @@ def definition_create(context, data_dict):
         label=data_dict['label'],
         description=data_dict['description'],
         url=data_dict['url'],
-        enabled=data_dict['enabled'],
+        enabled=toolkit.asbool(data_dict['enabled']),
         creator_id=user_id,
 
         #additional metadata from customers
@@ -68,85 +70,50 @@ def data_officer_create(context, data_dict):
     :param data_dict: contains 'user_id'
     :return: the definition added to the DB
     '''
-
     # check for valid input
-    try:
-        user_id = toolkit.get_or_bust(data_dict, ['user_id'])
-    except toolkit.ValidationError:
-        return {'success': False, 'msg': 'Input was not right'}
+    user_id = toolkit.get_or_bust(data_dict, 'user_id')
 
-    # check if User exists
+    # check if user exists
     try:
-        toolkit.get_action("user_show")(data_dict={"id": user_id})
+        user_dict = toolkit.get_action("user_show")(context, {"id": user_id, "include_plugin_extras": True})
     except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'User Not Found'}
+        return {'success': False, 'msg': toolkit._('User Not Found')}
 
-    user_extras = \
-    toolkit.get_action('user_extra_show')(context, {"user_id": user_id})[
-        'extras']
+    user_plugin_extras = user_dict.get('plugin_extras', {}) or {}
+    definition_plugin_extras = user_plugin_extras.get('definition', {})
 
-    for extra_dict in user_extras:
-        if extra_dict['key'] == 'Data Officer':
-            if extra_dict['value'] == 'True':
-                return {'success': True,
-                        'msg': 'User is already a Data Officer'}
-            else:
-                _data_dict = {"user_id": user_id, "extras": [
-                    {"key": "Data Officer", "new_value": "True"}]}
-                toolkit.get_action('user_extra_update')(context, _data_dict)
-                return {'success': True,
-                        'msg': 'User added Successfuly to the Data Officers List.'}
-
-    _data_dict = {"user_id": user_id,
-                  "extras": [{"key": "Data Officer", "value": "True"}]}
-    result = toolkit.get_action('user_extra_create')(context, _data_dict)
-    return {'success': True,
-            'msg': 'User added Successfuly to the Data Officers List.'}
+    if 'data_officer' in definition_plugin_extras and definition_plugin_extras.get('data_officer'):
+        return {'success': True, 'msg': 'User is already a Data Officer'}
+    else:
+        definition_plugin_extras['data_officer'] = True
+        user_plugin_extras['definition'] = definition_plugin_extras
+        toolkit.get_action('user_patch')(context, {"id": user_id, 'plugin_extras': user_plugin_extras})
+        return {'success': True, 'msg': 'User added Successfully to the Data Officers List.'}
 
 
 def package_definition_create(context, data_dict):
     # check for valid input
+    model = context['model']
+
     try:
-        package_id, definition_id = toolkit.get_or_bust(data_dict,
-                                                        ['package_id',
-                                                         'definition_id'])
+        package_id, definition_id = toolkit.get_or_bust(data_dict, ['package_id', 'definition_id'])
     except toolkit.ValidationError:
         return {'success': False, 'msg': 'Input was not right'}
 
-    # check if package exists
-    try:
-        pkg_dict = toolkit.get_action("package_show")(
-            data_dict={"id": package_id, "internal_call": True})
-    except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'Package Not Found'}
+    package = model.Package.get(package_id)
+    if package is None:
+        raise toolkit.ObjectNotFound(toolkit._('Package not found'))
+    definition = definition_model.Definition.get(definition_id)
+    if definition is None:
+        raise toolkit.ObjectNotFound(toolkit._('Definition not found'))
 
-    # check if definition exists
-    try:
-        toolkit.get_action("definition_show")(data_dict={"id": definition_id})
-    except toolkit.ObjectNotFound:
-        return {'success': False, 'msg': 'Definition Not Found'}
+    if package in definition.packages_all:
+        raise toolkit.ValidationError(toolkit._("Package is already linked to this definition"))
 
-    #  Check if 'definition' field is already in package
-    try:
-        definitions = toolkit.get_or_bust(pkg_dict, ['definition'])
-        if definitions:
-            definitions = ast.literal_eval(definitions)
-        else:
-            definitions = list()
-    except toolkit.ValidationError:
-        definitions = list()
-    except SyntaxError:
-        definitions = list()
+    definition.packages_all.append(package)
+    model.Session.commit()
 
-    #  Add the new definition in case it does not exist there yet
-    if definition_id not in definitions:
-        definitions.append(definition_id)
+    package_index = index_for(model.Package)
+    package_index.update_dict(package)
 
-        pkg_dict['definition'] = unicode(definitions)
-
-        # TODO Replace with patch?
-        pkg_dict = toolkit.get_action("package_update")(context,
-                                                        data_dict=pkg_dict)
-        return pkg_dict
-
-    return pkg_dict
+    return package.as_dict()

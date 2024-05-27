@@ -3,5 +3,5 @@
 {% block content_primary_nav %}
     {{ super() }}
     {% set definition_count = h.package_definition_count(pkg.name) %}
-    {{ h.build_nav_icon('dataset_definition_read', _('Definitions') + ' ({0})'.format(definition_count), package_id=pkg.name) }}
+    {{ h.build_nav_icon('package_definition.read', _('Definitions') + ' ({0})'.format(definition_count), package_id=pkg.name) }}
 {% endblock %}

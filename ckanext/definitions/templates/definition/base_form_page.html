@@ -4,9 +4,12 @@
   <section class="module">
     {% block page_header %}{% endblock %}
     <div class="module-content">
+      {{ "base_form_page" }}
       {% block primary_content_inner %}
+      {{ form_snippet }}
+      {{ form_vars }}
         {% block form %}
-          {{- h.snippet('definition/snippets/definition_form.html', c=c) -}}
+          {{- h.snippet(form_snippet, **form_vars) -}}
         {% endblock %}
       {% endblock %}
     </div>
